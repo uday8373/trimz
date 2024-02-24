@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@fontsource/public-sans": "^5.0.16",
+    "@headlessui/react": "^1.7.18",
     "@next/font": "^14.1.0",
     "autoprefixer": "^10.4.17",
     "dotenv": "^16.4.4",

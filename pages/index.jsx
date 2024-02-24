@@ -1,18 +1,18 @@
 "use client";
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import React from "react";
 import Layout from "../components/Layout";
-import { ToastContainer, toast } from "react-toastify";
+import {ToastContainer, toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { BASE_URL } from "../constants";
-import { FaLink } from "react-icons/fa";
+import {BASE_URL} from "../constants";
+import {FaLink} from "react-icons/fa";
 import Image from "next/image";
 import dbConnect from "../utils/dbConnect";
 
-import { PiCopySimpleLight, PiCopySimpleFill } from "react-icons/pi";
-import { MdOutlineQrCode, MdOutlineContentCopy } from "react-icons/md";
-import { IoAnalyticsOutline } from "react-icons/io5";
-import { IoMdShare } from "react-icons/io";
+import {PiCopySimpleLight, PiCopySimpleFill} from "react-icons/pi";
+import {MdOutlineQrCode, MdOutlineContentCopy} from "react-icons/md";
+import {IoAnalyticsOutline} from "react-icons/io5";
+import {IoMdShare} from "react-icons/io";
 
 const Home = () => {
   const [originalUrl, setOriginalUrl] = useState("");
@@ -37,11 +37,9 @@ const Home = () => {
       return;
     }
     try {
-      const ipAddressResponse = await fetch(
-        "https://api.ipify.org?format=json"
-      );
+      const ipAddressResponse = await fetch("https://api.ipify.org?format=json");
 
-      const { ip } = await ipAddressResponse.json();
+      const {ip} = await ipAddressResponse.json();
 
       const response = await fetch("/api/shorten", {
         method: "POST",
@@ -105,8 +103,7 @@ const Home = () => {
     <Layout>
       <section
         id="home"
-        className="relative min-h-screen items-center flex justify-center w-full  bg-bghero"
-      >
+        className="relative min-h-screen items-center flex justify-center w-full  bg-bghero">
         <ToastContainer position="bottom-right" />
 
         <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col-reverse md:flex-row w-full flex items-center max-w-screen-2xl">
@@ -120,8 +117,8 @@ const Home = () => {
               Trimz short URL & QR <br /> code generator
             </h1>
             <h1 className="font-sans font-medium text-[18px] text-gray pt-5">
-              A short link allows you to collect so much data about your
-              customers & their behaviors.
+              A short link allows you to collect so much data about your customers & their
+              behaviors.
             </h1>
             <div className="w-full py-5">
               <div>
@@ -139,13 +136,12 @@ const Home = () => {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="bg-primary text-white font-sans font-semibold text-[14px] py-3 p-10 m-2 rounded-[100px] hover:bg-bghover transition-all duration-500"
-                    >
+                      className="bg-primary text-white font-sans font-semibold text-[14px] py-3 p-10 m-2 rounded-[100px] hover:bg-bghover transition-all duration-500">
                       {loading ? "Generating..." : "Generate"}
                     </button>
                   </div>
 
-                  <div className="w-full flex items-center pt-5 ">
+                  <div className="flex items-center w-full pt-5 ">
                     <input
                       type="checkbox"
                       checked={isCustom}
@@ -154,8 +150,7 @@ const Home = () => {
                     />
                     <label
                       htmlFor="customUrl"
-                      className="ml-2 font-sans text-[16px] font-medium text-black "
-                    >
+                      className="ml-2 font-sans text-[16px] font-medium text-black ">
                       Customize your short link
                     </label>
                   </div>
@@ -169,7 +164,7 @@ const Home = () => {
                       required
                     />
                   )}
-                  <div className="w-full flex items-center pt-5">
+                  <div className="flex items-center w-full pt-5">
                     <input
                       type="checkbox"
                       checked={isOneTime}
@@ -181,7 +176,7 @@ const Home = () => {
                     </label>
                   </div>
 
-                  <div className="w-full flex items-center pt-5">
+                  <div className="flex items-center w-full pt-5">
                     <input
                       type="checkbox"
                       checked={isIpAddress}
@@ -223,8 +218,7 @@ const Home = () => {
                       </h1>
                       <button
                         onClick={copyToClipboard}
-                        className="text-primary hover:text-blue-700 ml-1 focus:outline-none font-bold"
-                      >
+                        className="text-primary hover:text-blue-700 ml-1 focus:outline-none font-bold">
                         {copied ? (
                           <PiCopySimpleFill size={25} />
                         ) : (
@@ -264,12 +258,7 @@ const Home = () => {
             </div>
           </div>
           <div className="w-full h-full flex justify-end items-center">
-            <Image
-              src="/url.svg"
-              width={600}
-              height={600}
-              alt="Picture of the author"
-            />
+            <Image src="/url.svg" width={600} height={600} alt="Picture of the author" />
           </div>
         </div>
       </section>
