@@ -91,12 +91,12 @@ const Home = () => {
     <Layout>
       <section
         id="home"
-        className="relative h-full flex justify-center w-full py-20 bg-bghero"
+        className="relative flex justify-center w-full h-full py-20 bg-bghero"
       >
         <ToastContainer position="bottom-right" />
 
         <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-row w-full flex items-center max-w-screen-2xl">
-          <div className="w-full h-full flex flex-col mt-10">
+          <div className="flex flex-col w-full h-full mt-10">
             <div className="flex">
               <h1 className="font-sans font-bold text-[12px] text-pink bg-pink bg-opacity-15 rounded-3xl py-2 px-5 text-left">
                 Easy link Shortening
@@ -131,7 +131,7 @@ const Home = () => {
                     </button>
                   </div>
 
-                  <div className="w-full flex items-center pt-5 ">
+                  <div className="flex items-center w-full pt-5 ">
                     <input
                       type="checkbox"
                       checked={isCustom}
@@ -155,7 +155,7 @@ const Home = () => {
                       required
                     />
                   )}
-                  <div className="w-full flex items-center pt-5">
+                  <div className="flex items-center w-full pt-5">
                     <input
                       type="checkbox"
                       checked={isOneTime}
@@ -167,7 +167,7 @@ const Home = () => {
                     </label>
                   </div>
 
-                  <div className="w-full flex items-center pt-5">
+                  <div className="flex items-center w-full pt-5">
                     <input
                       type="checkbox"
                       checked={isIpAddress}
@@ -208,7 +208,7 @@ const Home = () => {
                     </h1>
                     <button
                       onClick={copyToClipboard}
-                      className="text-blue-500 hover:text-blue-700 ml-1 focus:outline-none font-bold"
+                      className="ml-1 font-bold text-blue-500 hover:text-blue-700 focus:outline-none"
                     >
                       {copied ? "Copied!" : "Copy"}
                     </button>
@@ -217,7 +217,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="w-full h-full hidden md:flex justify-end items-center">
+          <div className="items-center justify-end hidden w-full h-full md:flex">
             <Image
               src="/url.svg"
               width={600}

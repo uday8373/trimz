@@ -1,18 +1,20 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { navLinks } from "../constants";
-import { AnimatePresence, delay, motion } from "framer-motion";
-import { Link, Link as ScrollLink } from "react-scroll";
-import { RxCross2 } from "react-icons/rx";
-import { CgMenuRightAlt } from "react-icons/cg";
+import React, {useEffect, useState} from "react";
+import {navLinks} from "../constants";
+import {AnimatePresence, delay, motion} from "framer-motion";
+import {Link, Link as ScrollLink} from "react-scroll";
+import {RxCross2} from "react-icons/rx";
+import {CgMenuRightAlt} from "react-icons/cg";
 import Image from "next/image";
-import { menuSilde } from "../constants";
-import { useRouter } from "next/navigation";
+import {menuSilde} from "../constants";
+import {useRouter} from "next/navigation";
+import {Modal} from "./LoginModels";
 
 const Nav = () => {
   const router = useRouter();
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleNavLinkClick = (id) => {
     localStorage.setItem("active", id);
@@ -32,14 +34,13 @@ const Nav = () => {
   const handleMobileNavLinkClick = () => {
     setToggle(!toggle);
     handleNavLinkClick("");
+    setIsOpen(!isOpen);
   };
   return (
     <nav
-      className={` w-full flex items-center justify-center border-b-2 2xl:border-b-4 bg-bghero border-none fixed py-2 top-0 z-[999] md:py-4 `}
-    >
+      className={` w-full flex items-center justify-center border-b-2 2xl:border-b-4 bg-bghero border-none fixed py-2 top-0 z-[999] md:py-4 `}>
       <div
-        className={`2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6  w-full flex justify-between  max-w-screen-2xl items-center`}
-      >
+        className={`2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6  w-full flex justify-between  max-w-screen-2xl items-center`}>
         <Link
           href="/"
           className="flex items-center"
@@ -47,8 +48,7 @@ const Nav = () => {
             setActive("");
             router.push("/");
             window.scrollTo(0, 0);
-          }}
-        >
+          }}>
           <img
             src="https://res.cloudinary.com/dtwvobf3j/image/upload/v1706284707/geo-span-measure_cikupf.png"
             width={0}
@@ -63,9 +63,7 @@ const Nav = () => {
             return (
               <ScrollLink
                 key={index}
-                className={`${
-                  active === nav.id ? "text-primary" : "text-heading"
-                }
+                className={`${active === nav.id ? "text-primary" : "text-heading"}
                hover:text-primary text-[16px] lg:text-[18px] px-4 py-4 font-regular font-roboto cursor-pointer  `}
                 to={nav.id}
                 spy={true}
@@ -74,8 +72,7 @@ const Nav = () => {
                 duration={300}
                 onClick={() => {
                   handleMobileNavLinkClick(nav.id);
-                }}
-              >
+                }}>
                 {nav.title}
               </ScrollLink>
             );
@@ -86,13 +83,13 @@ const Nav = () => {
             spy={true}
             offset={-90}
             smooth={true}
-            duration={300}
-          >
-            <button className="relative flex h-[44px] rounded-[100px] w-32 items-center justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-pink  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
-              <span className="relative z-10 font-roboto text-[16px]">
-                Sign In
-              </span>
+            duration={300}>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="relative flex h-[44px] rounded-[100px] w-32 items-center justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-pink  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
+              <span className="relative z-10 font-roboto text-[16px]">Sign In</span>
             </button>
+            <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
           </ScrollLink>
         </div>
 
@@ -113,11 +110,9 @@ const Nav = () => {
                 animate="enter"
                 exit="exit"
                 initial="initial"
-                className={`py-2 bg-background absolute top-0 left-0 w-screen h-screen z-10 menu `}
-              >
+                className={`py-2 bg-background absolute top-0 left-0 w-screen h-screen z-10 menu `}>
                 <div
-                  className={`flex items-center  w-full px-6  pt-1 pb-6 justify-between border-b-2   border-watermark `}
-                >
+                  className={`flex items-center  w-full px-6  pt-1 pb-6 justify-between border-b-2   border-watermark `}>
                   <img
                     src="https://res.cloudinary.com/dtwvobf3j/image/upload/v1706284707/geo-span-measure_cikupf.png"
                     alt="logo"
@@ -136,7 +131,7 @@ const Nav = () => {
                     return (
                       <motion.div
                         key={index}
-                        initial={{ x: 100, opacity: 0 }}
+                        initial={{x: 100, opacity: 0}}
                         animate={{
                           x: 0,
                           opacity: 1,
@@ -154,22 +149,18 @@ const Nav = () => {
                             ease: [0.65, 0, 0.35, 1],
                             delay: 0.3 * index,
                           },
-                        }}
-                      >
+                        }}>
                         <ScrollLink
                           onClick={() => handleMobileNavLinkClick(nav.id)}
                           key={index}
                           className={`${
-                            active === nav.title
-                              ? "text-heading"
-                              : "text-heading"
+                            active === nav.title ? "text-heading" : "text-heading"
                           } hover:text-primary text-[24px] mt-5 font-medium font-roboto uppercase cursor-pointer w-full  flex`}
                           to={nav.id}
                           spy={true}
                           smooth={true}
                           offset={-70}
-                          duration={300}
-                        >
+                          duration={300}>
                           {nav.title}
                         </ScrollLink>
                       </motion.div>
@@ -181,16 +172,15 @@ const Nav = () => {
                   spy={true}
                   smooth={true}
                   offset={-70}
-                  duration={300}
-                >
+                  duration={300}>
                   <button
-                    onClick={() => handleMobileNavLinkClick("#contact")}
-                    className="relative my-8 mx-6 flex h-[50px] w-40 items-center justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-primary  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56"
-                  >
-                    <span className="relative z-10 font-roboto text-[20px]">
-                      Contact Us
-                    </span>
+                    onClick={() => {
+                      handleMobileNavLinkClick("#contact");
+                    }}
+                    className="relative my-8 mx-6 flex h-[50px] w-40 items-center justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-primary  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
+                    <span className="relative z-10 font-roboto text-[20px]">Sign In</span>
                   </button>
+                  <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
                 </ScrollLink>
               </motion.div>
             )}
