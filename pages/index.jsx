@@ -22,7 +22,7 @@ const Home = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+    //
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
     if (!urlRegex.test(originalUrl)) {
