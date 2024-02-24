@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import Layout from "../components/Layout";
 import { ToastContainer, toast } from "react-toastify";
@@ -7,6 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from "../constants";
 import { FaLink } from "react-icons/fa";
 import Image from "next/image";
+import dbConnect from "../utils/dbConnect";
+
+import { PiCopySimpleLight, PiCopySimpleFill } from "react-icons/pi";
+import { MdOutlineQrCode, MdOutlineContentCopy } from "react-icons/md";
+import { IoAnalyticsOutline } from "react-icons/io5";
+import { IoMdShare } from "react-icons/io";
 
 const Home = () => {
   const [originalUrl, setOriginalUrl] = useState("");
@@ -87,15 +93,23 @@ const Home = () => {
       });
   };
 
+  // const connectionDB = async () => {
+  //   await dbConnect();
+  // };
+
+  // useEffect(() => {
+  //   connectionDB();
+  // }, []);
+
   return (
     <Layout>
       <section
         id="home"
-        className="relative h-full flex justify-center w-full py-20 bg-bghero"
+        className="relative min-h-screen items-center flex justify-center w-full  bg-bghero"
       >
         <ToastContainer position="bottom-right" />
 
-        <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-row w-full flex items-center max-w-screen-2xl">
+        <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col-reverse md:flex-row w-full flex items-center max-w-screen-2xl">
           <div className="w-full h-full flex flex-col mt-10">
             <div className="flex">
               <h1 className="font-sans font-bold text-[12px] text-pink bg-pink bg-opacity-15 rounded-3xl py-2 px-5 text-left">
@@ -140,7 +154,7 @@ const Home = () => {
                     />
                     <label
                       htmlFor="customUrl"
-                      className="ml-2 pb-[2px] font-sans text-[16px] font-medium text-black "
+                      className="ml-2 font-sans text-[16px] font-medium text-black "
                     >
                       Customize your short link
                     </label>
@@ -162,7 +176,7 @@ const Home = () => {
                       onChange={(e) => setIsOneTime(e.target.checked)}
                       className="w-5 h-5 bg-black ease-soft"
                     />
-                    <label className="ml-2 pb-[2px] font-sans text-[16px] font-medium text-black ">
+                    <label className="ml-2  font-sans text-[16px] font-medium text-black ">
                       Make this a one-time link that expires after one visit
                     </label>
                   </div>
@@ -174,7 +188,7 @@ const Home = () => {
                       onChange={(e) => setIsIpAddress(e.target.checked)}
                       className="w-5 h-5 bg-black ease-soft"
                     />
-                    <label className="ml-2 pb-[2px] font-sans text-[16px] font-medium  text-black">
+                    <label className="ml-2  font-sans text-[16px] font-medium  text-black">
                       Restrict this link to only work for specific IP addresses
                     </label>
                   </div>
@@ -201,23 +215,55 @@ const Home = () => {
                   </h1> */}
                 </form>
                 {shortUrl && (
-                  <div className="text-black text-[16px] w-full flex justify-between bg-watermark rounded-xl py-3 mt-3 px-5">
-                    <h1 className="font-semibold">
-                      {BASE_URL}
-                      {shortUrl}
-                    </h1>
-                    <button
-                      onClick={copyToClipboard}
-                      className="text-blue-500 hover:text-blue-700 ml-1 focus:outline-none font-bold"
-                    >
-                      {copied ? "Copied!" : "Copy"}
-                    </button>
-                  </div>
+                  <>
+                    <div className="text-black text-[16px] w-full flex justify-between bg-white drop-shadow-lg rounded-xl py-5 border-2 border-dotted border-opacity-50 border-primary mt-3 px-5">
+                      <h1 className="font-semibold">
+                        {BASE_URL}
+                        {shortUrl}
+                      </h1>
+                      <button
+                        onClick={copyToClipboard}
+                        className="text-primary hover:text-blue-700 ml-1 focus:outline-none font-bold"
+                      >
+                        {copied ? (
+                          <PiCopySimpleFill size={25} />
+                        ) : (
+                          <PiCopySimpleLight size={25} />
+                        )}
+                      </button>
+                    </div>
+                    <div className="flex flex-row items-center justify-between overflow-hidden w-full my-5 ">
+                      <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500 ">
+                        <MdOutlineQrCode size={25} color="white" />
+                        <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
+                          QR
+                        </h1>
+                      </button>
+                      <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
+                        <IoAnalyticsOutline size={25} color="white" />
+                        <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
+                          Analytics
+                        </h1>
+                      </button>
+                      <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
+                        <IoMdShare size={25} color="white" />
+                        <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
+                          Share
+                        </h1>
+                      </button>
+                      <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
+                        <MdOutlineContentCopy size={25} color="white" />
+                        <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
+                          Copy
+                        </h1>
+                      </button>
+                    </div>
+                  </>
                 )}
               </div>
             </div>
           </div>
-          <div className="w-full h-full hidden md:flex justify-end items-center">
+          <div className="w-full h-full flex justify-end items-center">
             <Image
               src="/url.svg"
               width={600}
