@@ -35,7 +35,7 @@ const Nav = () => {
   };
   return (
     <nav
-      className={` w-full flex items-center justify-center border-b-2 2xl:border-b-4 bg-background border-watermark fixed py-2 top-0 z-[999] md:py-4 `}
+      className={` w-full flex items-center justify-center border-b-2 2xl:border-b-4 bg-bghero border-none fixed py-2 top-0 z-[999] md:py-4 `}
     >
       <div
         className={`2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6  w-full flex justify-between  max-w-screen-2xl items-center`}
@@ -88,7 +88,7 @@ const Nav = () => {
             smooth={true}
             duration={300}
           >
-            <button className="relative flex h-[44px] rounded-[100px] w-32 items-center justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-primary  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
+            <button className="relative flex h-[44px] rounded-[100px] w-32 items-center justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-pink  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
               <span className="relative z-10 font-roboto text-[16px]">
                 Sign In
               </span>

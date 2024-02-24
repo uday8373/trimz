@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       screens: { "2xl": "1636px" },
       colors: {
-        primary: "#4169E1",
+        primary: "#2161DF",
         secondary: "#000000",
         heading: "#1f1f1f",
         subheading: "#9e9e9e",
@@ -20,6 +20,11 @@ module.exports = {
         lightGray: "#AFAFAF",
         watermark: "#F0F2F5",
         bghover: "#19181D",
+        bghero: "#E9F6FF",
+        pink: "#E93266",
+      },
+      fontFamily: {
+        sans: ["Public Sans", "sans-serif"],
       },
     },
   },
