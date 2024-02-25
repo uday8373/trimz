@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Nav from "./Nav";
 
-const Layout = ({ children }) => (
+const Layout = ({children}) => (
   <>
     <Head>
       <title>Trimz | Url Shortener</title>

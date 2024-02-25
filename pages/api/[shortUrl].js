@@ -1,21 +1,21 @@
-import dbConnect from "../../utils/dbConnect";
+import DbConnect from "../../utils/DbConnect";
 import Url from "../../models/Url";
 
 export default async function handler(req, res) {
-  await dbConnect();
+  await DbConnect();
 
-  const { shortUrl, ip } = req.query;
+  const {shortUrl, ip} = req.query;
 
   try {
-    const url = await Url.findOne({ shortUrl });
+    const url = await Url.findOne({shortUrl});
 
     if (!url) {
-      return res.status(404).json({ error: "URL not found" });
+      return res.status(404).json({error: "URL not found"});
     }
 
     if (url.isIpAddress) {
       if (url.ipAddress !== ip) {
-        return res.status(404).json({ error: "URL is privact" });
+        return res.status(404).json({error: "URL is privact"});
       }
     }
 
@@ -26,6 +26,7 @@ export default async function handler(req, res) {
       const clickInfo = {
         browser: browserInfo,
         clickedAt: new Date(),
+        clickIp: ip,
       };
       url.clickDetails.push(clickInfo);
     }
@@ -33,12 +34,12 @@ export default async function handler(req, res) {
     await url.save();
 
     if (url.isOneTime) {
-      await Url.findOneAndDelete({ shortUrl });
+      await Url.findOneAndDelete({shortUrl});
     }
 
-    res.json({ originalUrl: url.originalUrl });
+    res.json({originalUrl: url.originalUrl});
   } catch (error) {
     console.error("Error retrieving URL:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({error: "Internal server error"});
   }
 }

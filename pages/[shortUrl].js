@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/router";
 import Router from "next/router";
+import Image from "next/image";
 
 export default function RedirectPage() {
   const router = useRouter();
@@ -9,13 +10,11 @@ export default function RedirectPage() {
 
   useEffect(() => {
     async function fetchMyAPI() {
-      const ipAddressResponse = await fetch(
-        "https://api.ipify.org?format=json"
-      );
+      const ipAddressResponse = await fetch("https://api.ipify.org?format=json");
 
-      const { ip } = await ipAddressResponse.json();
+      const {ip} = await ipAddressResponse.json();
 
-      const { shortUrl } = router.query;
+      const {shortUrl} = router.query;
       if (shortUrl) {
         fetch(`/api/${shortUrl}?ip=${ip}`)
           .then((response) => {
@@ -43,8 +42,8 @@ export default function RedirectPage() {
     return (
       <>
         <div className="w-full h-screen flex justify-center items-center flex-col bg-background">
-          <img
-            src="https://res.cloudinary.com/dtwvobf3j/image/upload/v1708350678/404_page_b3r8pd.svg"
+          <Image
+            src="/404_page.svg"
             width={0}
             height={0}
             alt="logo"
@@ -55,8 +54,7 @@ export default function RedirectPage() {
           </h1>
           <button
             onClick={() => Router.push("/")}
-            className=" bg-primary mt-5 text-white px-10 py-3 rounded-xl text-[16px] font-semibold hover:bg-bghover transition-all duration-500"
-          >
+            className=" bg-primary mt-5 text-white px-10 py-3 rounded-xl text-[16px] font-semibold hover:bg-bghover transition-all duration-500">
             Go Home
           </button>
         </div>

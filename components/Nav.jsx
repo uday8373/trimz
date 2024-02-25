@@ -43,28 +43,28 @@ const Nav = () => {
         className={`2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6  w-full flex justify-between  max-w-screen-2xl items-center`}>
         <Link
           href="/"
+          to="/"
           className="flex items-center"
           onClick={() => {
             setActive("");
             router.push("/");
             window.scrollTo(0, 0);
           }}>
-          <img
-            src="https://res.cloudinary.com/dtwvobf3j/image/upload/v1706284707/geo-span-measure_cikupf.png"
-            width={0}
-            height={0}
+          <Image
+            src="/mainlogo.png"
+            width={1024}
+            height={1024}
             alt="logo"
             className="sm:w-[110px]  sm:h-auto w-[80px]  h-[54px] object-contain"
           />
         </Link>
         <div className="flex-row hidden gap-4 list-none lg:gap-6 xl:gap-10 md:flex">
           {navLinks.map((nav, index) => {
-            console.log("nav", nav.id);
             return (
               <ScrollLink
                 key={index}
                 className={`${active === nav.id ? "text-primary" : "text-heading"}
-               hover:text-primary text-[16px] lg:text-[18px] px-4 py-4 font-regular font-roboto cursor-pointer  `}
+               hover:text-primary text-[16px] lg:text-[18px] px-4 py-4 font-medium font-roboto cursor-pointer  `}
                 to={nav.id}
                 spy={true}
                 smooth={true}
@@ -77,7 +77,7 @@ const Nav = () => {
               </ScrollLink>
             );
           })}
-          <ScrollLink
+          {/* <ScrollLink
             className="pt-2 leading-loose"
             to="sign"
             spy={true}
@@ -90,7 +90,7 @@ const Nav = () => {
               <span className="relative z-10 font-roboto text-[16px]">Sign In</span>
             </button>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
-          </ScrollLink>
+          </ScrollLink> */}
         </div>
 
         {/* mobile */}
@@ -167,7 +167,7 @@ const Nav = () => {
                     );
                   })}
                 </ul>
-                <ScrollLink
+                {/* <ScrollLink
                   to="contact"
                   spy={true}
                   smooth={true}
@@ -181,7 +181,7 @@ const Nav = () => {
                     <span className="relative z-10 font-roboto text-[20px]">Sign In</span>
                   </button>
                   <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
-                </ScrollLink>
+                </ScrollLink> */}
               </motion.div>
             )}
           </AnimatePresence>

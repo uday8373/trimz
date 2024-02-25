@@ -2,17 +2,19 @@
 import {useState, useEffect} from "react";
 import React from "react";
 import Layout from "../components/Layout";
-import {ToastContainer, toast} from "react-toastify";
+import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {BASE_URL} from "../constants";
 import {FaLink} from "react-icons/fa";
 import Image from "next/image";
-import dbConnect from "../utils/dbConnect";
-
-import {PiCopySimpleLight, PiCopySimpleFill} from "react-icons/pi";
-import {MdOutlineQrCode, MdOutlineContentCopy} from "react-icons/md";
+import {IoListSharp} from "react-icons/io5";
+import {LuCopy, LuCopyCheck} from "react-icons/lu";
+import {Puff} from "react-loader-spinner";
+import {MdOutlineQrCode} from "react-icons/md";
 import {IoAnalyticsOutline} from "react-icons/io5";
 import {IoMdShare} from "react-icons/io";
+import Popover from "react-popover";
+import {useQRCode} from "next-qrcode";
 
 const Home = () => {
   const [originalUrl, setOriginalUrl] = useState("");
@@ -24,6 +26,11 @@ const Home = () => {
   const [isIpAddress, setIsIpAddress] = useState(false);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [qrIsOpen, setQrIsOpen] = useState(false);
+  const [shareIsOpen, setShareIsOpen] = useState(false);
+  const [copyIsOpen, setCopyIsOpen] = useState(false);
+  const [isQr, setIsQr] = useState(false);
+  const [baseUrl, setBaseUrl] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,9 +88,10 @@ const Home = () => {
 
   const copyToClipboard = () => {
     navigator.clipboard
-      .writeText(`${BASE_URL}${shortUrl}`)
+      .writeText(`${baseUrl}${shortUrl}`)
       .then(() => {
         setCopied(true);
+        toast.success("Copy Successfully");
         setTimeout(() => setCopied(false), 2000);
       })
       .catch((error) => {
@@ -91,23 +99,45 @@ const Home = () => {
       });
   };
 
-  // const connectionDB = async () => {
-  //   await dbConnect();
-  // };
+  const handleQrMouseEnter = () => {
+    setQrIsOpen(true);
+  };
 
-  // useEffect(() => {
-  //   connectionDB();
-  // }, []);
+  const handleQrMouseLeave = () => {
+    setQrIsOpen(false);
+  };
+
+  const handleShareMouseEnter = () => {
+    setShareIsOpen(true);
+  };
+
+  const handleShareMouseLeave = () => {
+    setShareIsOpen(false);
+  };
+  const handleCopyMouseEnter = () => {
+    setCopyIsOpen(true);
+  };
+
+  const handleCopyMouseLeave = () => {
+    setCopyIsOpen(false);
+  };
+  const {Canvas} = useQRCode();
+  const handleQR = () => {
+    setIsQr(!isQr);
+  };
+
+  useEffect(() => {
+    console.log("object", window?.location?.href);
+    setBaseUrl(window?.location.href);
+  }, []);
 
   return (
     <Layout>
       <section
         id="home"
-        className="relative min-h-screen items-center flex justify-center w-full  bg-bghero">
-        <ToastContainer position="bottom-right" />
-
-        <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col-reverse md:flex-row w-full flex items-center max-w-screen-2xl">
-          <div className="w-full h-full flex flex-col mt-10">
+        className="relative min-h-screen  items-center flex justify-center w-full  bg-bghero">
+        <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col-reverse xl:flex-row w-full flex items-center max-w-screen-2xl">
+          <div className="w-full h-full flex flex-col lg:mt-10 mt-5">
             <div className="flex">
               <h1 className="font-sans font-bold text-[12px] text-pink bg-pink bg-opacity-15 rounded-3xl py-2 px-5 text-left">
                 Easy link Shortening
@@ -116,41 +146,53 @@ const Home = () => {
             <h1 className="font-sans font-bold text-[32px] md:text-[48px] text-black pt-5 leading-[42px] md:leading-[54px]">
               Trimz short URL & QR <br /> code generator
             </h1>
-            <h1 className="font-sans font-medium text-[18px] text-gray pt-5">
+            <h1 className="font-sans font-medium text-[16px] lg:text-[18px] text-gray pt-5">
               A short link allows you to collect so much data about your customers & their
               behaviors.
             </h1>
             <div className="w-full py-5">
               <div>
                 <form onSubmit={handleSubmit}>
-                  <div className="bg-white border-2 border-primary border-opacity-50 rounded-[100px] relative flex flex-row justify-center items-center ">
-                    <FaLink size={30} color="#637887" className="ml-8" />
+                  <div className="bg-white border-2 border-primary border-opacity-50 rounded-[100px] relative flex flex-row justify-center items-center p-2 ">
+                    <FaLink size={30} color="#637887" className="mx-5" />
                     <input
                       type="text"
                       value={originalUrl}
                       onChange={(e) => setOriginalUrl(e.target.value)}
-                      className=" text-black text-[16px] placeholder-gray-[#637887] w-full py-5 font-sans font-medium px-5  relative focus:outline-none "
+                      className=" text-black text-[16px] placeholder-gray-[#637887] bg-transparent w-full py-3 font-sans font-medium  relative focus:outline-none "
                       placeholder="Paste a link to shorten it"
                       required
                     />
                     <button
                       type="submit"
                       disabled={loading}
-                      className="bg-primary text-white font-sans font-semibold text-[14px] py-3 p-10 m-2 rounded-[100px] hover:bg-bghover transition-all duration-500">
-                      {loading ? "Generating..." : "Generate"}
+                      className="bg-primary hidden md:flex w-44 justify-center items-center text-white font-sans font-semibold text-[16px] py-3 rounded-[100px] hover:bg-bghover transition-all duration-500">
+                      {loading ? (
+                        <Puff
+                          visible={true}
+                          height="24"
+                          width="24"
+                          color="#fff"
+                          ariaLabel="puff-loading"
+                          wrapperStyle={{}}
+                          wrapperClass=""
+                        />
+                      ) : (
+                        "Shorten"
+                      )}
                     </button>
                   </div>
 
-                  <div className="flex items-center w-full pt-5 ">
+                  <div className="flex items-center w-full mt-5 ">
                     <input
                       type="checkbox"
                       checked={isCustom}
                       onChange={(e) => setIsCustom(e.target.checked)}
-                      className="w-5 h-5 bg-black ease-soft"
+                      className="w-5 h-5 md:w-6 md:h-6 bg-black ease-soft"
                     />
                     <label
                       htmlFor="customUrl"
-                      className="ml-2 font-sans text-[16px] font-medium text-black ">
+                      className="ms-2 font-sans text-[16px] font-medium text-black ">
                       Customize your short link
                     </label>
                   </div>
@@ -164,29 +206,30 @@ const Home = () => {
                       required
                     />
                   )}
-                  <div className="flex items-center w-full pt-5">
+                  <div className="flex items-start w-full mt-5">
                     <input
                       type="checkbox"
                       checked={isOneTime}
                       onChange={(e) => setIsOneTime(e.target.checked)}
-                      className="w-5 h-5 bg-black ease-soft"
+                      className="w-6 h-6 bg-black ease-soft"
                     />
                     <label className="ml-2  font-sans text-[16px] font-medium text-black ">
                       Make this a one-time link that expires after one visit
                     </label>
                   </div>
 
-                  <div className="flex items-center w-full pt-5">
+                  <div className="flex items-start w-full mt-5">
                     <input
                       type="checkbox"
                       checked={isIpAddress}
                       onChange={(e) => setIsIpAddress(e.target.checked)}
-                      className="w-5 h-5 bg-black ease-soft"
+                      className="w-6 h-6 bg-black ease-soft"
                     />
-                    <label className="ml-2  font-sans text-[16px] font-medium  text-black">
+                    <label className="ml-2 font-sans text-[16px] font-medium text-black">
                       Restrict this link to only work for specific IP addresses
                     </label>
                   </div>
+
                   {isIpAddress && (
                     <input
                       type="text"
@@ -198,67 +241,137 @@ const Home = () => {
                     />
                   )}
 
-                  {/* <button
+                  <button
                     type="submit"
-                    className="w-full bg-primary mt-5 text-white px-5 py-3 rounded-xl text-[16px] font-semibold hover:bg-bghover transition-all duration-500"
-                    disabled={loading}
-                  >
-                    {loading ? "Generating..." : "Generate"}
+                    className="w-full md:hidden flex bg-primary justify-center items-center mt-5 text-white h-16 rounded-[100px] text-[18px] font-semibold hover:bg-bghover transition-all duration-500"
+                    disabled={loading}>
+                    {loading ? (
+                      <Puff
+                        visible={true}
+                        height="24"
+                        width="24"
+                        color="#fff"
+                        ariaLabel="puff-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                      />
+                    ) : (
+                      "Shorten"
+                    )}
                   </button>
-                  <h1 className="text-[#637887] text-[14px] text-center font-sans mt-2">
-                    Short links are easier to share and remember
-                  </h1> */}
                 </form>
                 {shortUrl && (
                   <>
-                    <div className="text-black text-[16px] w-full flex justify-between bg-white drop-shadow-lg rounded-xl py-5 border-2 border-dotted border-opacity-50 border-primary mt-3 px-5">
-                      <h1 className="font-semibold">
-                        {BASE_URL}
-                        {shortUrl}
-                      </h1>
-                      <button
-                        onClick={copyToClipboard}
-                        className="text-primary hover:text-blue-700 ml-1 focus:outline-none font-bold">
-                        {copied ? (
-                          <PiCopySimpleFill size={25} />
-                        ) : (
-                          <PiCopySimpleLight size={25} />
-                        )}
-                      </button>
-                    </div>
-                    <div className="flex flex-row items-center justify-between overflow-hidden w-full my-5 ">
-                      <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500 ">
-                        <MdOutlineQrCode size={25} color="white" />
-                        <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
-                          QR
+                    <div className="mb-5">
+                      <div className="text-black text-[16px] w-full flex items-center justify-between bg-white drop-shadow-lg rounded-xl py-5 border-2 border-dotted border-opacity-50 border-primary mt-3 px-5">
+                        <h1 className="font-semibold">
+                          {baseUrl}
+                          {shortUrl}
                         </h1>
-                      </button>
-                      <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
+                        <div
+                          onMouseEnter={handleCopyMouseEnter}
+                          onMouseLeave={handleCopyMouseLeave}>
+                          <Popover
+                            isOpen={copyIsOpen}
+                            body={
+                              <div className="popover-content bg-bghover text-white py-2 px-4 rounded-md shadow-xl">
+                                Copy to clipboard
+                              </div>
+                            }>
+                            <button
+                              onClick={copyToClipboard}
+                              className="text-primary hover:text-blue-700 ml-1 focus:outline-none font-bold flex items-center">
+                              {copied ? <LuCopyCheck size={25} /> : <LuCopy size={25} />}
+                            </button>
+                          </Popover>
+                        </div>
+                      </div>
+                      <div className="flex flex-row items-center justify-between overflow-hidden w-full mt-5 ">
+                        <div
+                          onMouseEnter={handleQrMouseEnter}
+                          onMouseLeave={handleQrMouseLeave}>
+                          <Popover
+                            isOpen={qrIsOpen}
+                            // preferPlace="below"
+                            body={
+                              <div className="popover-content bg-bghover text-white py-2 px-4 rounded-md shadow-xl">
+                                Generate QR code
+                              </div>
+                            }>
+                            <button
+                              onClick={handleQR}
+                              className="flex flex-row justify-center items-center gap-3 bg-pink px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
+                              <MdOutlineQrCode size={25} color="white" />
+                              <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
+                                QR
+                              </h1>
+                            </button>
+                          </Popover>
+                          {/* {isQr && (
+                            <div className="absolute">
+                              <Canvas
+                                text={"https://github.com/bunlong/next-qrcode"}
+                                options={{
+                                  errorCorrectionLevel: "M",
+                                  margin: 3,
+                                  scale: 4,
+                                  width: 200,
+                                  color: {
+                                    dark: "#000000",
+                                    light: "",
+                                  },
+                                }}
+                              />
+                            </div>
+                          )} */}
+                        </div>
+
+                        {/* <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
                         <IoAnalyticsOutline size={25} color="white" />
                         <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
                           Analytics
                         </h1>
-                      </button>
-                      <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
-                        <IoMdShare size={25} color="white" />
+                      </button> */}
+                        {/* <div
+                        onMouseEnter={handleShareMouseEnter}
+                        onMouseLeave={handleShareMouseLeave}>
+                        <Popover
+                          isOpen={shareIsOpen}
+                          preferPlace="below"
+                          body={
+                            <div className="popover-content bg-bghover text-white py-2 px-4 rounded-md shadow-xl">
+                              Share your short URL
+                            </div>
+                          }>
+                          <button className="flex flex-row justify-center items-center gap-3 bg-pink px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
+                            <IoMdShare size={25} color="white" />
+                            <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
+                              Share
+                            </h1>
+                          </button>
+                        </Popover>
+                      </div> */}
+                        {/* <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
+                        <IoListSharp size={25} color="white" />
                         <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
-                          Share
+                          My URLs
                         </h1>
-                      </button>
-                      <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
-                        <MdOutlineContentCopy size={25} color="white" />
-                        <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
-                          Copy
-                        </h1>
-                      </button>
+                      </button> */}
+                      </div>
                     </div>
                   </>
                 )}
               </div>
             </div>
           </div>
-          <div className="w-full h-full flex justify-end items-center">
-            <Image src="/url.svg" width={600} height={600} alt="Picture of the author" />
+          <div className="w-full h-full flex justify-center  items-center">
+            <Image
+              src="/url.svg"
+              width={600}
+              height={600}
+              alt="Picture of the author"
+              // className="flex lg:fixed"
+            />
           </div>
         </div>
       </section>

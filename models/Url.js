@@ -52,6 +52,10 @@ const UrlSchema = new mongoose.Schema(
           required: true,
           default: Date.now,
         },
+        clickIp: {
+          type: String,
+          required: true,
+        },
       },
     ],
   },

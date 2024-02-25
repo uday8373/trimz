@@ -1,6 +1,6 @@
 // pages/api/signin.js
 
-import dbConnect from "../../utils/dbConnect";
+import DbConnect from "../../utils/DbConnect";
 import User from "../../models/User";
 import jwt from "jsonwebtoken";
 import {hash, compare} from "bcrypt";
@@ -10,7 +10,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export default async function handler(req, res) {
-  await dbConnect();
+  await DbConnect();
 
   if (req.method === "POST") {
     const {email, password, ipAddress} = req.body;

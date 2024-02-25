@@ -1,30 +1,23 @@
 import shortid from "shortid";
 import Url from "../../models/Url";
-import dbConnect from "../../utils/dbConnect";
+import DbConnect from "../../utils/DbConnect";
 
 const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
 
 export default async function handler(req, res) {
-  await dbConnect();
+  await DbConnect();
 
   if (req.method === "POST") {
-    const {
-      originalUrl,
-      userIp,
-      isCustom,
-      customUrl,
-      isOneTime,
-      ipAddress,
-      isIpAddress,
-    } = req.body;
+    const {originalUrl, userIp, isCustom, customUrl, isOneTime, ipAddress, isIpAddress} =
+      req.body;
 
     if (!urlRegex.test(originalUrl)) {
-      return res.status(400).json({ error: "Invalid URL" });
+      return res.status(400).json({error: "Invalid URL"});
     }
 
     try {
       const existingUrl = await Url.findOne({
-        $or: [{ originalUrl }, { customUrl }],
+        $or: [{originalUrl}, {customUrl}],
       });
 
       if (existingUrl) {
@@ -34,15 +27,11 @@ export default async function handler(req, res) {
             url: existingUrl,
           });
         } else if (existingUrl.customUrl === customUrl) {
-          return res
-            .status(200)
-            .json({ message: "Custom short ID already exists" });
+          return res.status(200).json({message: "Custom short ID already exists"});
         }
       }
 
-      const shortUrl = isCustom
-        ? customUrl
-        : shortid.generate().substring(0, 4);
+      const shortUrl = isCustom ? customUrl : shortid.generate().substring(0, 4);
 
       const url = await Url.create({
         originalUrl,
@@ -58,10 +47,10 @@ export default async function handler(req, res) {
       const successMessage = isCustom
         ? "Custom URL created successfully"
         : "Short link created successfully";
-      res.status(200).json({ message: successMessage, url });
+      res.status(200).json({message: successMessage, url});
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({error: "Internal server error"});
     }
   }
 }

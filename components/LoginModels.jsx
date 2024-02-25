@@ -2,30 +2,19 @@ import React, {useState} from "react";
 import {Dialog} from "@headlessui/react";
 import {motion, AnimatePresence} from "framer-motion";
 import {RxCross2} from "react-icons/rx";
-import {FaGoogle} from "react-icons/fa";
+import {FaGoogle, FaEyeSlash, FaEye} from "react-icons/fa";
 import {MdEmail} from "react-icons/md";
-import {FaEye} from "react-icons/fa";
-import {FaEyeSlash} from "react-icons/fa";
-import {ToastContainer, toast} from "react-toastify";
+import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {FallingLines} from "react-loader-spinner";
-import {signIn} from "next-auth/react";
 
 export const Modal = ({isOpen, setIsOpen}) => {
   const [isVisible, setVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const handleSignup = async () => {
-    const result = await signIn("google");
-    if (result?.error) {
-      console.error("Sign in error:", result.error);
-    } else if (result?.token) {
-      localStorage.setItem("token", result.token);
-    }
-  };
 
-  const handleSignIn = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -45,7 +34,8 @@ export const Modal = ({isOpen, setIsOpen}) => {
         localStorage.setItem("token", data.token);
         toast.success(data.message);
       } else {
-        toast.error(data.message);
+        toast.success(data.message);
+        localStorage.setItem("token", data.token);
       }
     } catch (error) {
       console.error("Error signing in:", error);
@@ -62,7 +52,6 @@ export const Modal = ({isOpen, setIsOpen}) => {
   };
   return (
     <AnimatePresence>
-      <ToastContainer position="bottom-right" />
       {isOpen && (
         <Dialog
           open={isOpen}
@@ -126,7 +115,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
                     </div>
                   </div>
                   <div className="px-10 py-10 bg-bghero">
-                    <button onClick={handleSignup} className="w-full drop-shadow-md">
+                    <button className="w-full drop-shadow-md">
                       <div className="flex w-full rounded-[10px] bg-pink ">
                         <div className="flex items-center justify-center w-1/5 h-12 px-2 border-r-2 border-white border-opacity-45">
                           <FaGoogle size={25} color="#ffffff" />
@@ -184,7 +173,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
                       {/* *********************************************************************************** */}
                       <button
                         type="submit"
-                        onClick={handleSignIn}
+                        onClick={handleSignUp}
                         disabled={loading}
                         className="w-full h-12 justify-center items-center flex drop-shadow-md text-white font-sans font-semibold text-lg rounded-[10px] bg-primary">
                         {loading ? (

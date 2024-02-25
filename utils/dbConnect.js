@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 const connection = {};
 
-async function dbConnect() {
+async function DbConnect() {
   // console.log("Connection", connection.isConnected);
   if (connection.isConnected) {
     return;
@@ -12,7 +12,7 @@ async function dbConnect() {
 
   try {
     const db = await mongoose.connect(
-      "mongodb+srv://shadab:shadab2000@trimo.7xivtjo.mongodb.net/trimo"
+      "mongodb+srv://shadab:shadab2000@trimo.7xivtjo.mongodb.net/trimo",
     );
     connection.isConnected = db.connections[0].readyState;
     console.log("MongoDB connected successfully");
@@ -23,4 +23,4 @@ async function dbConnect() {
   }
 }
 
-export default dbConnect;
+export default DbConnect;
