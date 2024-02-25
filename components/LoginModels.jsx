@@ -6,15 +6,63 @@ import {FaGoogle} from "react-icons/fa";
 import {MdEmail} from "react-icons/md";
 import {FaEye} from "react-icons/fa";
 import {FaEyeSlash} from "react-icons/fa";
+import {ToastContainer, toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {FallingLines} from "react-loader-spinner";
+import {signIn} from "next-auth/react";
 
 export const Modal = ({isOpen, setIsOpen}) => {
   const [isVisible, setVisible] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const handleSignup = async () => {
+    const result = await signIn("google");
+    if (result?.error) {
+      console.error("Sign in error:", result.error);
+    } else if (result?.token) {
+      localStorage.setItem("token", result.token);
+    }
+  };
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const ipAddressResponse = await fetch("https://api.ipify.org?format=json");
+
+      const {ip} = await ipAddressResponse.json();
+
+      const response = await fetch("/api/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({email, password, ipAddress: ip}),
+      });
+      const data = await response.json();
+      if (data.success) {
+        localStorage.setItem("token", data.token);
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.error("Error signing in:", error);
+    } finally {
+      setEmail("");
+      setPassword("");
+      setLoading(false);
+      setIsOpen(!isOpen);
+    }
+  };
 
   const toggle = () => {
     setVisible(!isVisible);
   };
   return (
     <AnimatePresence>
+      <ToastContainer position="bottom-right" />
       {isOpen && (
         <Dialog
           open={isOpen}
@@ -29,7 +77,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
             </div>
 
             <motion.div
-              className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 md:pb-0 text-cente sm:block sm:p-0"
+              className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 md:pb-0 text-cente sm:block sm:p-0  "
               initial={{
                 opacity: 0,
                 scale: 0.75,
@@ -56,12 +104,12 @@ export const Modal = ({isOpen, setIsOpen}) => {
                 &#8203;
               </span>
               <div
-                className="inline-block overflow-hidden align-bottom transition-all transform   rounded-[15px] shadow-xl bg-bghero sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                className="inline-block overflow-hidden align-bottom transition-all transform border-2 border-gray border-opacity-25  rounded-[15px] shadow-xl bg-bghero sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="modal-headline">
-                <div className="md:w-[400px] w-full h-auto">
-                  <div className="relative flex w-full px-4 py-4 border-b-2 border-dashed border-lightGray ">
+                <div className="md:w-[400px] w-full h-auto ">
+                  <div className="relative flex w-full px-4 py-4 border-b-2 border-dotted border-lightGray ">
                     <div className="flex items-center justify-center w-full ">
                       <p className="font-sans text-2xl font-semibold text-gray ">
                         Sign In
@@ -78,7 +126,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
                     </div>
                   </div>
                   <div className="px-10 py-10 bg-bghero">
-                    <button className="w-full drop-shadow-md">
+                    <button onClick={handleSignup} className="w-full drop-shadow-md">
                       <div className="flex w-full rounded-[10px] bg-pink ">
                         <div className="flex items-center justify-center w-1/5 h-12 px-2 border-r-2 border-white border-opacity-45">
                           <FaGoogle size={25} color="#ffffff" />
@@ -100,7 +148,9 @@ export const Modal = ({isOpen, setIsOpen}) => {
                       <div className="flex w-full ">
                         <div className="w-4/5 font-sans  rounded-l-[10px]">
                           <input
-                            type="text"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            type="email"
                             placeholder="Email"
                             className="w-full h-12  rounded-l-[10px] pl-5  outline-none bg-white"
                           />
@@ -111,8 +161,10 @@ export const Modal = ({isOpen, setIsOpen}) => {
                       </div>
                       {/* ************** */}
                       <div className="flex w-full drop-shadow-md ">
-                        <div className="w-4/5 font-sans   rounded-l-[10px] bg-purple-400">
+                        <div className="w-4/5 font-sans rounded-l-[10px] bg-purple-400">
                           <input
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             type={!isVisible ? "password" : "text"}
                             placeholder="Password"
                             className="w-full h-12  rounded-l-[10px] pl-5  outline-none bg-white"
@@ -130,8 +182,21 @@ export const Modal = ({isOpen, setIsOpen}) => {
                       </div>
 
                       {/* *********************************************************************************** */}
-                      <button className="w-full h-12 drop-shadow-md text-white font-sans font-semibold text-lg rounded-[10px] bg-primary">
-                        Sign In
+                      <button
+                        type="submit"
+                        onClick={handleSignIn}
+                        disabled={loading}
+                        className="w-full h-12 justify-center items-center flex drop-shadow-md text-white font-sans font-semibold text-lg rounded-[10px] bg-primary">
+                        {loading ? (
+                          <FallingLines
+                            color="#fff"
+                            width="45"
+                            visible={true}
+                            ariaLabel="falling-circles-loading"
+                          />
+                        ) : (
+                          "Sign In"
+                        )}
                       </button>
                     </div>
                   </div>

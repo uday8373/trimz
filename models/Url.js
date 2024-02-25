@@ -56,8 +56,8 @@ const UrlSchema = new mongoose.Schema(
     ],
   },
   {
-    timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
-  }
+    timestamps: {createdAt: "created_at", updatedAt: "updated_at"},
+  },
 );
 
 export default mongoose.models.Url || mongoose.model("Url", UrlSchema);
