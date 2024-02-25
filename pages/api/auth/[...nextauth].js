@@ -4,6 +4,7 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import dbConnect from "../../../utils/dbConnect";
 import User from "../../../models/User";
+import {signIn} from "next-auth/react";
 
 export default NextAuth({
   providers: [
@@ -12,6 +13,7 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn(user, account, profile) {
       const {email, image, name} = user;
