@@ -365,13 +365,7 @@ const Home = () => {
             </div>
           </div>
           <div className="w-full h-full flex justify-center  items-center">
-            <Image
-              src="/url.svg"
-              width={600}
-              height={600}
-              alt="Picture of the author"
-              // className="flex lg:fixed"
-            />
+            <Image src="/url.svg" width={600} height={600} alt="Picture of the author" />
           </div>
         </div>
       </section>
