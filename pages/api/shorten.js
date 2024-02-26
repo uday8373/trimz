@@ -2,18 +2,12 @@ import shortid from "shortid";
 import Url from "../../models/Url";
 import DbConnect from "../../utils/DbConnect";
 
-const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
-
 export default async function handler(req, res) {
   await DbConnect();
 
   if (req.method === "POST") {
     const {originalUrl, userIp, isCustom, customUrl, isOneTime, ipAddress, isIpAddress} =
       req.body;
-
-    if (!urlRegex.test(originalUrl)) {
-      return res.status(400).json({error: "Invalid URL"});
-    }
 
     try {
       const existingUrl = await Url.findOne({

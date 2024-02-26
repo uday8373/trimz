@@ -38,7 +38,7 @@ const Nav = () => {
   };
   return (
     <nav
-      className={` w-full flex items-center justify-center border-b-2 2xl:border-b-4 bg-bghero border-none fixed py-2 top-0 z-[999] md:py-4 `}>
+      className={` w-full border-b-2 border-primary border-opacity-20 flex items-center justify-center 2xl:border-b-4 bg-bghero fixed py-2 top-0 z-[999] md:py-4 `}>
       <div
         className={`2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6  w-full flex justify-between  max-w-screen-2xl items-center`}>
         <Link
@@ -51,11 +51,11 @@ const Nav = () => {
             window.scrollTo(0, 0);
           }}>
           <Image
-            src="/mainlogo.png"
+            src="/Trimz_Logo.png"
             width={1024}
             height={1024}
             alt="logo"
-            className="sm:w-[110px]  sm:h-auto w-[80px]  h-[54px] object-contain"
+            className="sm:w-[110px]  sm:h-auto w-[80px] object-contain"
           />
         </Link>
         <div className="flex-row hidden gap-4 list-none lg:gap-6 xl:gap-10 md:flex">

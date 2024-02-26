@@ -4,7 +4,6 @@ import React from "react";
 import Layout from "../components/Layout";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {BASE_URL} from "../constants";
 import {FaLink} from "react-icons/fa";
 import Image from "next/image";
 import {IoListSharp} from "react-icons/io5";
@@ -14,7 +13,8 @@ import {MdOutlineQrCode} from "react-icons/md";
 import {IoAnalyticsOutline} from "react-icons/io5";
 import {IoMdShare} from "react-icons/io";
 import Popover from "react-popover";
-import {useQRCode} from "next-qrcode";
+
+import {QrModal} from "../components/QrModal";
 
 const Home = () => {
   const [originalUrl, setOriginalUrl] = useState("");
@@ -29,7 +29,8 @@ const Home = () => {
   const [qrIsOpen, setQrIsOpen] = useState(false);
   const [shareIsOpen, setShareIsOpen] = useState(false);
   const [copyIsOpen, setCopyIsOpen] = useState(false);
-  const [isQr, setIsQr] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
   const [baseUrl, setBaseUrl] = useState("");
 
   const handleSubmit = async (e) => {
@@ -121,15 +122,17 @@ const Home = () => {
   const handleCopyMouseLeave = () => {
     setCopyIsOpen(false);
   };
-  const {Canvas} = useQRCode();
-  const handleQR = () => {
-    setIsQr(!isQr);
-  };
 
   useEffect(() => {
-    console.log("object", window?.location?.href);
-    setBaseUrl(window?.location.href);
+    const fetchUrl = window?.location.href;
+    const modifiedUrl = fetchUrl.replace(/www\./, "");
+    setBaseUrl(modifiedUrl);
   }, []);
+
+  const handleQrModal = () => {
+    setQrIsOpen(false);
+    setIsOpen(!isOpen);
+  };
 
   return (
     <Layout>
@@ -137,7 +140,7 @@ const Home = () => {
         id="home"
         className="relative min-h-screen  items-center flex justify-center w-full  bg-bghero">
         <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col-reverse xl:flex-row w-full flex items-center max-w-screen-2xl">
-          <div className="w-full h-full flex flex-col lg:mt-10 mt-5">
+          <div className="w-full h-full flex flex-col lg:mt-0 mt-5">
             <div className="flex">
               <h1 className="font-sans font-bold text-[12px] text-pink bg-pink bg-opacity-15 rounded-3xl py-2 px-5 text-left">
                 Easy link Shortening
@@ -183,12 +186,12 @@ const Home = () => {
                     </button>
                   </div>
 
-                  <div className="flex items-center w-full mt-5 ">
+                  <div className="flex items-start w-full mt-5 ">
                     <input
                       type="checkbox"
                       checked={isCustom}
                       onChange={(e) => setIsCustom(e.target.checked)}
-                      className="w-5 h-5 md:w-6 md:h-6 bg-black ease-soft"
+                      className="w-5 h-5 lg:w-6 lg:h-6 bg-black ease-soft"
                     />
                     <label
                       htmlFor="customUrl"
@@ -299,7 +302,7 @@ const Home = () => {
                               </div>
                             }>
                             <button
-                              onClick={handleQR}
+                              onClick={handleQrModal}
                               className="flex flex-row justify-center items-center gap-3 bg-pink px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
                               <MdOutlineQrCode size={25} color="white" />
                               <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
@@ -307,23 +310,12 @@ const Home = () => {
                               </h1>
                             </button>
                           </Popover>
-                          {/* {isQr && (
-                            <div className="absolute">
-                              <Canvas
-                                text={"https://github.com/bunlong/next-qrcode"}
-                                options={{
-                                  errorCorrectionLevel: "M",
-                                  margin: 3,
-                                  scale: 4,
-                                  width: 200,
-                                  color: {
-                                    dark: "#000000",
-                                    light: "",
-                                  },
-                                }}
-                              />
-                            </div>
-                          )} */}
+                          <QrModal
+                            isOpen={isOpen}
+                            setIsOpen={setIsOpen}
+                            BaseUrl={baseUrl}
+                            shortUrl={shortUrl}
+                          />
                         </div>
 
                         {/* <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">

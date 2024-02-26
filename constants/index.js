@@ -17,5 +17,3 @@ export const navLinks = [
   //   title: "Resources",
   // },
 ];
-
-// export const BASE_URL = window?.location?.href;
