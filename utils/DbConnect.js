@@ -1,6 +1,9 @@
 // utils/dbConnect.js
 
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const connection = {};
 
@@ -11,9 +14,8 @@ async function DbConnect() {
   }
 
   try {
-    const db = await mongoose.connect(
-      "mongodb+srv://shadab:shadab2000@trimo.7xivtjo.mongodb.net/trimo",
-    );
+    const mongoURL = process.env.MONGODB_URI;
+    const db = await mongoose.connect(mongoURL);
     connection.isConnected = db.connections[0].readyState;
     console.log("MongoDB connected successfully");
   } catch (error) {

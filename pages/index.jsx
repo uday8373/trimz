@@ -148,7 +148,7 @@ const Home = () => {
               </h1>
             </div>
             <h1 className="font-sans font-bold text-[32px] md:text-[48px] text-black pt-5 leading-[42px] md:leading-[54px]">
-              Trimz short URL & QR <br /> code generator
+              <span className="">Trimz</span> short URL & QR <br /> code generator
             </h1>
             <h1 className="font-sans font-medium text-[16px] lg:text-[18px] text-gray pt-5">
               A short link allows you to collect so much data about your customers & their
@@ -163,7 +163,7 @@ const Home = () => {
                       type="text"
                       value={originalUrl}
                       onChange={(e) => setOriginalUrl(e.target.value)}
-                      className=" text-black text-[16px] placeholder-gray-[#637887] bg-transparent w-full py-3 font-sans font-medium  relative focus:outline-none "
+                      className=" text-black text-[16px] placeholder-gray-[#637887] bg-transparent w-full pr-2 py-3 font-sans font-medium  relative focus:outline-none "
                       placeholder="Paste a link to shorten it"
                       required
                     />
@@ -188,7 +188,7 @@ const Home = () => {
                   </div>
 
                   <div className="flex items-start w-full mt-5 ">
-                    <div class="checkbox path">
+                    <div className="checkbox path">
                       <input
                         type="checkbox"
                         checked={isCustom}
@@ -200,7 +200,7 @@ const Home = () => {
                     </div>
                     <label
                       htmlFor="customUrl"
-                      className="ms-2 font-sans text-[16px] font-medium text-black ">
+                      className="ml-2 font-sans text-[16px] font-medium text-black ">
                       Customize your short link
                     </label>
                   </div>
@@ -215,7 +215,7 @@ const Home = () => {
                     />
                   )}
                   <div className="flex items-start w-full mt-5">
-                    <div class="checkbox path">
+                    <div className="checkbox path">
                       <input
                         type="checkbox"
                         checked={isOneTime}
@@ -231,7 +231,7 @@ const Home = () => {
                   </div>
 
                   <div className="flex items-start w-full mt-5">
-                    <div class="checkbox path">
+                    <div className="checkbox path">
                       <input
                         type="checkbox"
                         checked={isIpAddress}
