@@ -55,7 +55,7 @@ const Nav = () => {
             width={1024}
             height={1024}
             alt="logo"
-            className="sm:w-[110px]  sm:h-auto w-[80px] object-contain"
+            className="sm:w-[160px]  sm:h-auto w-[110px] object-contain"
           />
         </Link>
         <div className="flex-row hidden gap-4 list-none lg:gap-6 xl:gap-10 md:flex">
@@ -94,7 +94,7 @@ const Nav = () => {
         </div>
 
         {/* mobile */}
-        <div className="flex items-center justify-end flex-1 w-screen md:hidden">
+        <div className="flex items-center justify-end flex-1 w-screen py-2 md:py-0 md:hidden">
           <div className=" md:hidden" onClick={handleMobileNavLinkClick}>
             {toggle ? (
               <CgMenuRightAlt color={"#4169E1"} size={30} />

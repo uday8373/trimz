@@ -29,8 +29,8 @@ export const QrModal = ({isOpen, setIsOpen, BaseUrl, shortUrl}) => {
           open={isOpen}
           onClose={setIsOpen}
           as="div"
-          className="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto backdrop-blur-sm">
-          <div className="flex flex-col h-full px-8 pt-5 overflow-hidden text-center lg:pt-10 lg:pb-8 md:pt-14 md:pb-8 ">
+          className="fixed inset-0 z-10 flex items-center justify-center overflow-hidden backdrop-blur-sm">
+          <div className="flex flex-col h-full px-8 overflow-hidden text-center lg:pt-10 lg:pb-8 md:pt-14 md:pb-8 ">
             <Dialog.Overlay />
 
             <button
@@ -41,7 +41,7 @@ export const QrModal = ({isOpen, setIsOpen, BaseUrl, shortUrl}) => {
             </button>
 
             <motion.div
-              className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 md:pb-0 text-cente sm:block sm:p-0"
+              className="flex items-center justify-center min-h-screen px-4 md:pb-0 text-cente sm:block sm:p-0"
               initial={{
                 opacity: 0,
                 scale: 0.75,
@@ -68,17 +68,18 @@ export const QrModal = ({isOpen, setIsOpen, BaseUrl, shortUrl}) => {
                 &#8203;
               </span>
               <div
-                className="inline-block overflow-hidden align-bottom transition-all transform border-2 border-gray border-opacity-25  rounded-[15px] shadow-xl bg-bghero sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                className="inline-block overflow-hidden align-bottom transition-all transform  shadow-3xl  rounded-[15px]  bg-bghero sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="modal-headline">
                 <div className="md:w-[400px] w-full h-auto ">
-                  <div className="relative flex w-full px-4 py-4 border-b-2 border-dotted border-lightGray ">
+                  <div className="relative flex w-full px-4 py-4 border-b border-dashed border-lightGray ">
                     <div className="flex items-center justify-center w-full ">
                       <p className="font-sans text-2xl font-semibold text-gray ">
                         QR Code
                       </p>
                     </div>
+
                     <div className="absolute right-5 ">
                       <button
                         type="button"
@@ -89,7 +90,7 @@ export const QrModal = ({isOpen, setIsOpen, BaseUrl, shortUrl}) => {
                       </button>
                     </div>
                   </div>
-                  <div className="px-10 py-5 bg-bghero flex flex-col justify-center items-center">
+                  <div className="flex flex-col items-center justify-center px-10 py-5 bg-bghero">
                     <h1 className="text-black font-sans font-medium text-[18px] mb-3">
                       {BaseUrl}
                       {shortUrl}
@@ -100,7 +101,7 @@ export const QrModal = ({isOpen, setIsOpen, BaseUrl, shortUrl}) => {
                         height={500}
                         src={qrCodeData}
                         alt="QR Code"
-                        className="lg:w-56 w-40"
+                        className="w-40 lg:w-56"
                       />
                     </div>
                     <a

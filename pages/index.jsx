@@ -139,9 +139,9 @@ const Home = () => {
     <Layout>
       <section
         id="home"
-        className="relative min-h-screen  items-center flex justify-center w-full  bg-bghero">
+        className="relative flex items-center justify-center w-full min-h-screen pt-10 md:pt-24 bg-bghero">
         <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col-reverse xl:flex-row w-full flex items-center max-w-screen-2xl">
-          <div className="w-full h-full flex flex-col lg:mt-0 mt-5">
+          <div className="flex flex-col w-full h-full mt-5 lg:mt-0">
             <div className="flex">
               <h1 className="font-sans font-bold text-[12px] text-pink bg-pink bg-opacity-15 rounded-3xl py-2 px-5 text-left">
                 Easy link Shortening
@@ -188,12 +188,16 @@ const Home = () => {
                   </div>
 
                   <div className="flex items-start w-full mt-5 ">
-                    <input
-                      type="checkbox"
-                      checked={isCustom}
-                      onChange={(e) => setIsCustom(e.target.checked)}
-                      className="w-5 h-5 lg:w-6 lg:h-6 bg-black ease-soft"
-                    />
+                    <div class="checkbox path">
+                      <input
+                        type="checkbox"
+                        checked={isCustom}
+                        onChange={(e) => setIsCustom(e.target.checked)}
+                      />
+                      <svg viewBox="0 0 21 21">
+                        <path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
+                      </svg>
+                    </div>
                     <label
                       htmlFor="customUrl"
                       className="ms-2 font-sans text-[16px] font-medium text-black ">
@@ -211,24 +215,32 @@ const Home = () => {
                     />
                   )}
                   <div className="flex items-start w-full mt-5">
-                    <input
-                      type="checkbox"
-                      checked={isOneTime}
-                      onChange={(e) => setIsOneTime(e.target.checked)}
-                      className="w-6 h-6 bg-black ease-soft"
-                    />
+                    <div class="checkbox path">
+                      <input
+                        type="checkbox"
+                        checked={isOneTime}
+                        onChange={(e) => setIsOneTime(e.target.checked)}
+                      />
+                      <svg viewBox="0 0 21 21">
+                        <path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
+                      </svg>
+                    </div>
                     <label className="ml-2  font-sans text-[16px] font-medium text-black ">
                       Make this a one-time link that expires after one visit
                     </label>
                   </div>
 
                   <div className="flex items-start w-full mt-5">
-                    <input
-                      type="checkbox"
-                      checked={isIpAddress}
-                      onChange={(e) => setIsIpAddress(e.target.checked)}
-                      className="w-6 h-6 bg-black ease-soft"
-                    />
+                    <div class="checkbox path">
+                      <input
+                        type="checkbox"
+                        checked={isIpAddress}
+                        onChange={(e) => setIsIpAddress(e.target.checked)}
+                      />
+                      <svg viewBox="0 0 21 21">
+                        <path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
+                      </svg>
+                    </div>
                     <label className="ml-2 font-sans text-[16px] font-medium text-black">
                       Restrict this link to only work for specific IP addresses
                     </label>
@@ -278,19 +290,19 @@ const Home = () => {
                           <Popover
                             isOpen={copyIsOpen}
                             body={
-                              <div className="popover-content bg-bghover text-white py-2 px-4 rounded-md shadow-xl">
+                              <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
                                 Copy to clipboard
                               </div>
                             }>
                             <button
                               onClick={copyToClipboard}
-                              className="text-primary hover:text-blue-700 ml-1 focus:outline-none font-bold flex items-center">
+                              className="flex items-center ml-1 font-bold text-primary hover:text-blue-700 focus:outline-none">
                               {copied ? <LuCopyCheck size={25} /> : <LuCopy size={25} />}
                             </button>
                           </Popover>
                         </div>
                       </div>
-                      <div className="flex flex-row items-center justify-between overflow-hidden w-full mt-5 ">
+                      <div className="flex flex-row items-center justify-between w-full mt-5 overflow-hidden ">
                         <div
                           onMouseEnter={handleQrMouseEnter}
                           onMouseLeave={handleQrMouseLeave}>
@@ -298,7 +310,7 @@ const Home = () => {
                             isOpen={qrIsOpen}
                             // preferPlace="below"
                             body={
-                              <div className="popover-content bg-bghover text-white py-2 px-4 rounded-md shadow-xl">
+                              <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
                                 Generate QR code
                               </div>
                             }>
@@ -332,7 +344,7 @@ const Home = () => {
                           isOpen={shareIsOpen}
                           preferPlace="below"
                           body={
-                            <div className="popover-content bg-bghover text-white py-2 px-4 rounded-md shadow-xl">
+                            <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
                               Share your short URL
                             </div>
                           }>
@@ -357,11 +369,12 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="w-full h-full flex justify-center  items-center">
+          <div className="flex items-center justify-center w-full h-full">
             <Image src="/url.svg" width={600} height={600} alt="Picture of the author" />
           </div>
         </div>
       </section>
+      <section className="w-full h-full bg-bghero"></section>
     </Layout>
   );
 };
