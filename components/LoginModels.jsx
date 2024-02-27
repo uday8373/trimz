@@ -13,6 +13,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isOpenSignUp, setIsOpenSingUp] = useState(false);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -50,6 +51,10 @@ export const Modal = ({isOpen, setIsOpen}) => {
   const toggle = () => {
     setVisible(!isVisible);
   };
+  const handleClick = () => {
+    setIsOpenSingUp(!isOpenSignUp);
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -66,7 +71,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
             </div>
 
             <motion.div
-              className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 md:pb-0 text-cente sm:block sm:p-0  "
+              className="flex items-center justify-center min-h-screen px-4 md:pb-0 text-cente sm:block sm:p-0 "
               initial={{
                 opacity: 0,
                 scale: 0.75,
@@ -93,12 +98,12 @@ export const Modal = ({isOpen, setIsOpen}) => {
                 &#8203;
               </span>
               <div
-                className="inline-block overflow-hidden align-bottom transition-all transform border-2 border-gray border-opacity-25  rounded-[15px] shadow-xl bg-bghero sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                className="inline-block overflow-hidden align-bottom transition-all  transform   rounded-[15px] shadow-3xl bg-bghero sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="modal-headline">
                 <div className="md:w-[400px] w-full h-auto ">
-                  <div className="relative flex w-full px-4 py-4 border-b-2 border-dotted border-lightGray ">
+                  <div className="relative flex w-full px-4 py-4 border-b border-dashed border-opacity-70 border-lightGray ">
                     <div className="flex items-center justify-center w-full ">
                       <p className="font-sans text-2xl font-semibold text-gray ">
                         Sign In
@@ -133,8 +138,8 @@ export const Modal = ({isOpen, setIsOpen}) => {
                     </div>
                     {/* *********************************************************************************** */}
 
-                    <div className="flex flex-col w-full gap-6 drop-shadow-md">
-                      <div className="flex w-full ">
+                    <div className="flex flex-col w-full gap-6 ">
+                      <div className="flex w-full shadow-3xl   rounded-[10px] ">
                         <div className="w-4/5 font-sans  rounded-l-[10px]">
                           <input
                             value={email}
@@ -149,8 +154,8 @@ export const Modal = ({isOpen, setIsOpen}) => {
                         </div>
                       </div>
                       {/* ************** */}
-                      <div className="flex w-full drop-shadow-md ">
-                        <div className="w-4/5 font-sans rounded-l-[10px] bg-purple-400">
+                      <div className="flex w-full shadow-3xl rounded-[10px] ">
+                        <div className="w-4/5 font-sans rounded-l-[10px] ">
                           <input
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -175,7 +180,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
                         type="submit"
                         onClick={handleSignUp}
                         disabled={loading}
-                        className="w-full h-12 justify-center items-center flex drop-shadow-md text-white font-sans font-semibold text-lg rounded-[10px] bg-primary">
+                        className="w-full h-12 justify-center items-center flex shadow-3xl text-white font-sans font-semibold text-lg rounded-[10px] bg-primary">
                         {loading ? (
                           <FallingLines
                             color="#fff"
@@ -188,6 +193,18 @@ export const Modal = ({isOpen, setIsOpen}) => {
                         )}
                       </button>
                     </div>
+                  </div>
+                </div>
+                <div className="flex justify-start w-full px-5 py-2 border-t border-dashed border-lightGray border-opacity-70">
+                  <div className="flex gap-1">
+                    <p className="font-sans text-secondary">New Here?</p>
+                    <button
+                      onClick={() => {
+                        handleClick(isOpenSignUp);
+                      }}
+                      className="font-sans text-primary">
+                      Sign Up
+                    </button>
                   </div>
                 </div>
               </div>

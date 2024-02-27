@@ -77,7 +77,7 @@ const Nav = () => {
               </ScrollLink>
             );
           })}
-          {/* <ScrollLink
+          <ScrollLink
             className="pt-2 leading-loose"
             to="sign"
             spy={true}
@@ -90,7 +90,7 @@ const Nav = () => {
               <span className="relative z-10 font-roboto text-[16px]">Sign In</span>
             </button>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
-          </ScrollLink> */}
+          </ScrollLink>
         </div>
 
         {/* mobile */}
@@ -114,11 +114,11 @@ const Nav = () => {
                 <div
                   className={`flex items-center  w-full px-6  pt-1 pb-6 justify-between border-b-2   border-watermark `}>
                   <img
-                    src="https://res.cloudinary.com/dtwvobf3j/image/upload/v1706284707/geo-span-measure_cikupf.png"
+                    src="/Trimz_Logo.png"
                     alt="logo"
                     className={`sm:w-[85px]  sm:h-auto w-[120px]  object-contain `}
                   />
-                  <div className="pt-4">
+                  <div className="pt-2">
                     <RxCross2
                       color={"#4169E1"}
                       size={30}
@@ -167,7 +167,7 @@ const Nav = () => {
                     );
                   })}
                 </ul>
-                {/* <ScrollLink
+                <ScrollLink
                   to="contact"
                   spy={true}
                   smooth={true}
@@ -181,7 +181,7 @@ const Nav = () => {
                     <span className="relative z-10 font-roboto text-[20px]">Sign In</span>
                   </button>
                   <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
-                </ScrollLink> */}
+                </ScrollLink>
               </motion.div>
             )}
           </AnimatePresence>
