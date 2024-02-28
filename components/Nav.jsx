@@ -15,6 +15,7 @@ const Nav = () => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isToken, setIsToken] = useState(false);
 
   const handleNavLinkClick = (id) => {
     localStorage.setItem("active", id);
@@ -22,9 +23,29 @@ const Nav = () => {
   };
 
   useEffect(() => {
+    const handleLoginSuccess = (event) => {
+      if (event.data.type === "LOGIN_SUCCESS") {
+        setIsToken(true);
+      }
+    };
+
+    window.addEventListener("message", handleLoginSuccess);
+
+    return () => {
+      window.removeEventListener("message", handleLoginSuccess);
+    };
+  }, []);
+
+  useEffect(() => {
     const storedActive = localStorage.getItem("active");
+    const token = localStorage.getItem("token");
     if (storedActive) {
       setActive(storedActive);
+    }
+    if (token) {
+      setIsToken(true);
+    } else {
+      setIsToken(false);
     }
     return () => {
       localStorage.removeItem("active");
@@ -34,7 +55,17 @@ const Nav = () => {
   const handleMobileNavLinkClick = () => {
     setToggle(!toggle);
     handleNavLinkClick("");
+  };
+
+  const handleMobileSign = () => {
+    setToggle(!toggle);
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    alert("Are you sure to logout");
+    localStorage.removeItem("token");
+    setIsToken(false);
   };
   return (
     <nav
@@ -71,26 +102,27 @@ const Nav = () => {
                 offset={-90}
                 duration={300}
                 onClick={() => {
-                  handleMobileNavLinkClick(nav.id);
+                  handleNavLinkClick(nav.id);
                 }}>
                 {nav.title}
               </ScrollLink>
             );
           })}
-          <ScrollLink
-            className="pt-2 leading-loose"
-            to="sign"
-            spy={true}
-            offset={-90}
-            smooth={true}
-            duration={300}>
+          {!isToken ? (
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="relative flex h-[44px] rounded-[100px] w-32 items-center justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-pink  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
+              className="relative mt-2 flex h-[44px] rounded-[100px] w-32 items-center justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-pink  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
               <span className="relative z-10 font-roboto text-[16px]">Sign In</span>
             </button>
-            <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
-          </ScrollLink>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="relative mt-2 flex h-[44px] rounded-[100px] w-32 items-center justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-pink  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
+              <span className="relative z-10 font-roboto text-[16px]">Logout</span>
+            </button>
+          )}
+
+          <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
 
         {/* mobile */}
@@ -167,21 +199,21 @@ const Nav = () => {
                     );
                   })}
                 </ul>
-                <ScrollLink
-                  to="contact"
-                  spy={true}
-                  smooth={true}
-                  offset={-70}
-                  duration={300}>
+                {!isToken ? (
                   <button
-                    onClick={() => {
-                      handleMobileNavLinkClick("#contact");
-                    }}
-                    className="relative my-8 mx-6 flex h-[50px] w-40 items-center justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-primary  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
+                    onClick={handleMobileSign}
+                    className="relative my-8 mx-6 flex h-[50px] w-40 items-center rounded-[10px] justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-pink  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
                     <span className="relative z-10 font-roboto text-[20px]">Sign In</span>
                   </button>
-                  <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
-                </ScrollLink>
+                ) : (
+                  <button
+                    onClick={handleLogout}
+                    className="relative my-8 mx-6 flex h-[50px] w-40 items-center rounded-[10px] justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-pink  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
+                    <span className="relative z-10 font-roboto text-[20px]">Logout</span>
+                  </button>
+                )}
+
+                <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
               </motion.div>
             )}
           </AnimatePresence>

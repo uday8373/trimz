@@ -27,21 +27,18 @@ export default async function handler(req, res) {
 
           const token = jwt.sign({userID: user._id}, process.env.JWT_SECRET);
 
-          return res.status(200).json({message: "Welcome Back", token});
+          return res.status(200).json({success: true, message: "Welcome Back", token});
         } else {
-          return res.status(401).json({success: false, message: "Incorrect password"});
+          return res.status(201).json({success: false, message: "Incorrect password"});
         }
       } else {
-        const hashedPassword = await hash(password, 10);
-        user = await User.create({email, password: hashedPassword, ipAddress});
-
-        const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET);
-
-        return res.status(200).json({message: "Sign In Successfully", token});
+        return res
+          .status(201)
+          .json({success: false, message: "Don't have an account. Sign Up"});
       }
     } catch (error) {
       console.error(error);
-      return res.status(500).json({success: false, message: "Server Error 123"});
+      return res.status(500).json({success: false, message: "Server Error"});
     }
   } else {
     return res.status(405).json({success: false, message: "Method Not Allowed"});
