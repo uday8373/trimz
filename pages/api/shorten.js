@@ -47,4 +47,28 @@ export default async function handler(req, res) {
       res.status(500).json({error: "Internal server error"});
     }
   }
+  if (req.method === "GET") {
+    const {ip, page = 0, sort = "asc"} = req.query;
+    const limit = 5;
+    const skip = page * limit;
+
+    try {
+      const data = await Url.find({userIp: ip})
+        .skip(skip)
+        .limit(limit)
+        .sort({updated_at: sort});
+      if (!data) {
+        return res.status(201).json({success: false, message: "Data not found"});
+      }
+      const count = (await Url.countDocuments({userIp: ip})).toFixed();
+      return res.status(200).json({
+        success: true,
+        message: "Data found successfully",
+        response: {data, totalCount: count, page},
+      });
+    } catch (error) {
+      console.error("Error retrieving URL:", error);
+      res.status(500).json({error: "Internal server error"});
+    }
+  }
 }

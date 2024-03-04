@@ -10,8 +10,10 @@ import {FallingLines, ThreeDots} from "react-loader-spinner";
 import {FaUserLarge} from "react-icons/fa6";
 import {auth} from "../utils/firebase";
 import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import {useRouter} from "next/navigation";
 
 export const Modal = ({isOpen, setIsOpen}) => {
+  const router = useRouter();
   const [isVisible, setVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -40,6 +42,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
         localStorage.setItem("token", data.token);
         toast.success(data.message);
         window.postMessage({type: "LOGIN_SUCCESS"}, "*");
+        router.refresh();
       } else {
         toast.error(data.message);
       }
@@ -74,6 +77,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
         localStorage.setItem("token", data.token);
         toast.success(data.message);
         window.postMessage({type: "LOGIN_SUCCESS"}, "*");
+        router.refresh();
       } else {
         toast.error(data.message);
       }
@@ -124,6 +128,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
         localStorage.setItem("token", data.token);
         toast.success(data.message);
         window.postMessage({type: "LOGIN_SUCCESS"}, "*");
+        router.refresh();
       } else {
         toast.error(data.message);
       }

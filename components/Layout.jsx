@@ -5,8 +5,8 @@ const Layout = ({children}) => (
   <>
     <Head>
       <title>
-        Trimz.me: Powerful URL Shortener, Custom Links, One-Time Link Generator, IP-Based
-        Links, and Advanced Analytics
+        Trimz.me: Free Advance URL Shortener, Custom Links, One-Time Link Generator,
+        IP-Based Links, and Advanced Analytics
       </title>
       <meta
         name="description"

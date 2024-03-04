@@ -14,9 +14,17 @@ import {IoMdShare} from "react-icons/io";
 import Popover from "react-popover";
 import {MdCurrencyRupee} from "react-icons/md";
 import {FaArrowUpLong} from "react-icons/fa6";
+import {
+  FaFacebook,
+  FaSquareXTwitter,
+  FaLinkedin,
+  FaSquareFacebook,
+} from "react-icons/fa6";
+import {FaYoutube} from "react-icons/fa";
 
 import {QrModal} from "../../components/QrModal";
 import {motion} from "framer-motion";
+import {GrInstagram} from "react-icons/gr";
 
 export const Hero = () => {
   const [originalUrl, setOriginalUrl] = useState("");
@@ -140,7 +148,7 @@ export const Hero = () => {
   return (
     <section
       id="home"
-      className="relative flex items-center justify-center w-full min-h-full pt-16 md:pt-20 bg-bghero">
+      className="relative flex items-center justify-center w-full min-h-full pt-16 md:pt-20 bg-bghero select-none">
       <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col-reverse xl:flex-row w-full flex items-center max-w-screen-2xl">
         <div className="flex flex-col w-full h-full py-10 md:py-14">
           <div className="flex">
@@ -159,12 +167,12 @@ export const Hero = () => {
             <div>
               <form onSubmit={handleSubmit}>
                 <div className="bg-white border-2 border-primary border-opacity-50 rounded-[100px] relative flex flex-row justify-center items-center p-2 ">
-                  <FaLink size={30} color="#637887" className="mx-5" />
+                  <FaLink size={28} color="#637887" className="mx-5" />
                   <input
                     type="text"
                     value={originalUrl}
                     onChange={(e) => setOriginalUrl(e.target.value)}
-                    className=" text-black text-[16px] placeholder-gray-[#637887] bg-transparent w-full pr-2 py-3 font-sans font-medium  relative focus:outline-none "
+                    className=" text-black  text-[16px] placeholder-gray-[#637887] bg-transparent w-full pr-2 py-3 font-sans font-medium  relative focus:outline-none "
                     placeholder="Paste a link to shorten it"
                     required
                   />
@@ -188,9 +196,10 @@ export const Hero = () => {
                   </button>
                 </div>
 
-                <div className="flex items-start w-full mt-5 ">
+                <div className="flex items-start w-full mt-5">
                   <div className="checkbox path">
                     <input
+                      id="customUrl"
                       type="checkbox"
                       checked={isCustom}
                       onChange={(e) => setIsCustom(e.target.checked)}
@@ -201,10 +210,12 @@ export const Hero = () => {
                   </div>
                   <label
                     htmlFor="customUrl"
-                    className="ml-2 font-sans text-[16px] font-medium text-black ">
+                    className="ml-2 font-sans text-[16px] font-medium text-black cursor-pointer"
+                    onChange={(e) => setIsCustom(e.target.checked)}>
                     Customize your short link
                   </label>
                 </div>
+
                 {isCustom && (
                   <input
                     type="text"
@@ -218,6 +229,7 @@ export const Hero = () => {
                 <div className="flex items-start w-full mt-5">
                   <div className="checkbox path">
                     <input
+                      id="oneTime"
                       type="checkbox"
                       checked={isOneTime}
                       onChange={(e) => setIsOneTime(e.target.checked)}
@@ -226,7 +238,10 @@ export const Hero = () => {
                       <path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
                     </svg>
                   </div>
-                  <label className="ml-2  font-sans text-[16px] font-medium text-black ">
+                  <label
+                    htmlFor="oneTime"
+                    onChange={(e) => setIsOneTime(e.target.checked)}
+                    className="ml-2  font-sans text-[16px] font-medium text-black cursor-pointer ">
                     Make this a one-time link that expires after one visit
                   </label>
                 </div>
@@ -234,6 +249,7 @@ export const Hero = () => {
                 <div className="flex items-start w-full mt-5">
                   <div className="checkbox path">
                     <input
+                      id="restrict"
                       type="checkbox"
                       checked={isIpAddress}
                       onChange={(e) => setIsIpAddress(e.target.checked)}
@@ -242,7 +258,10 @@ export const Hero = () => {
                       <path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
                     </svg>
                   </div>
-                  <label className="ml-2 font-sans text-[16px] font-medium text-black">
+                  <label
+                    htmlFor="restrict"
+                    onChange={(e) => setIsIpAddress(e.target.checked)}
+                    className="ml-2 font-sans text-[16px] font-medium text-black cursor-pointer">
                     Restrict this link to only work for specific IP addresses
                   </label>
                 </div>
@@ -331,38 +350,87 @@ export const Hero = () => {
                           shortUrl={shortUrl}
                         />
                       </div>
-
-                      {/* <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
+                      <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
                         <IoAnalyticsOutline size={25} color="white" />
                         <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
                           Analytics
                         </h1>
-                      </button> */}
-                      {/* <div
+                      </button>
+                      <div
                         onMouseEnter={handleShareMouseEnter}
                         onMouseLeave={handleShareMouseLeave}>
                         <Popover
                           isOpen={shareIsOpen}
                           preferPlace="below"
                           body={
-                            <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
-                              Share your short URL
+                            <div className=" text-black rounded-md shadow-3xl popover-content bg-white">
+                              <button
+                                onClick={() => {
+                                  window.open(
+                                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                                      baseUrl / shortUrl,
+                                    )}`,
+                                    "_blank",
+                                  );
+                                }}
+                                className="gap-4 border-b-2 border-lightGray border-dotted items-center font-sans font-semibold text-[16px] w-full text-left py-3 px-5 hover:bg-gray-100 focus:outline-none flex">
+                                <FaSquareFacebook size={24} color="#000" /> Facebook
+                              </button>
+
+                              <button
+                                onClick={() => {
+                                  window.open(
+                                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                                      baseUrl / shortUrl,
+                                    )}`,
+                                    "_blank",
+                                  );
+                                }}
+                                className="gap-4 border-b-2 border-lightGray border-dotted items-center font-sans font-semibold text-[16px] w-full text-left py-3 px-5 hover:bg-gray-100 focus:outline-none flex">
+                                <FaYoutube size={24} color="#000" /> Youtube
+                              </button>
+                              <button
+                                onClick={() => {
+                                  window.open(
+                                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                                      baseUrl / shortUrl,
+                                    )}`,
+                                    "_blank",
+                                  );
+                                }}
+                                className="gap-4 border-b-2 border-lightGray border-dotted items-center font-sans font-semibold text-[16px] w-full text-left py-3 px-5 hover:bg-gray-100 focus:outline-none flex">
+                                <FaSquareXTwitter size={24} color="#000" /> Twitter
+                              </button>
+                              <button
+                                onClick={() => {
+                                  window.open(
+                                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                                      baseUrl / shortUrl,
+                                    )}`,
+                                    "_blank",
+                                  );
+                                }}
+                                className="gap-4 items-center font-sans font-semibold text-[16px] w-full text-left py-3 px-5 hover:bg-gray-100 focus:outline-none flex">
+                                <FaLinkedin size={24} color="#000" /> LinkedIn
+                              </button>
                             </div>
                           }>
-                          <button className="flex flex-row justify-center items-center gap-3 bg-pink px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
+                          <button
+                            onClick={handleShareMouseEnter}
+                            className="flex flex-row justify-center items-center gap-3 bg-pink px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
                             <IoMdShare size={25} color="white" />
                             <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
                               Share
                             </h1>
                           </button>
                         </Popover>
-                      </div> */}
-                      {/* <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
+                      </div>
+                      <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
                         <IoListSharp size={25} color="white" />
                         <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
                           My URLs
                         </h1>
-                      </button> */}
+                      </button>
                     </div>
                   </div>
                 </>

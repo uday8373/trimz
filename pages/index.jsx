@@ -6,12 +6,11 @@ import Sales from "../container/sales/Sales";
 import Analytics from "../container/analytics/Analytics";
 
 const Home = () => {
-  //
   return (
     <Layout>
       <Hero />
-      <Sales />
       <Analytics />
+      <Sales />
     </Layout>
   );
 };

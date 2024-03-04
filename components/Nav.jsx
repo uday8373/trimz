@@ -63,13 +63,14 @@ const Nav = () => {
   };
 
   const handleLogout = () => {
-    alert("Are you sure to logout");
+    alert("Are you sure, you want to logout?");
     localStorage.removeItem("token");
     setIsToken(false);
+    router.refresh();
   };
   return (
     <nav
-      className={` w-full border-b-2 border-primary border-opacity-20 flex items-center justify-center 2xl:border-b-4 bg-bghero fixed py-2 top-0 z-[999] md:py-4 `}>
+      className={` w-full select-none border-b-2 border-primary border-opacity-20 flex items-center justify-center 2xl:border-b-2 bg-bghero fixed py-2 top-0 z-[999] md:py-4 `}>
       <div
         className={`2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6  w-full flex justify-between  max-w-screen-2xl items-center`}>
         <Link
