@@ -14,6 +14,7 @@ import {RiExpandUpDownFill} from "react-icons/ri";
 import Image from "next/image";
 import {Link as ScrollLink} from "react-scroll";
 import {GraphModal} from "../../components/GraphModal";
+import {RiShareForwardLine} from "react-icons/ri";
 
 export default function Analytics() {
   const [urlData, setUrlData] = useState([]);
@@ -21,6 +22,7 @@ export default function Analytics() {
   const [popoverOpenIndex, setPopoverOpenIndex] = useState(-1);
   const [popoverInfo, setPopoverInfo] = useState(-1);
   const [popoverQr, setPopoverQr] = useState(-1);
+  const [popoverRedirect, setPopoverRedirect] = useState(-1);
   const [popoverAnalytics, setPopoverAnalytics] = useState(-1);
   const [popoverSort, setPopoverSort] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -47,30 +49,32 @@ export default function Analytics() {
   }, [page, sortOrder]);
 
   const fetchMyUrls = async () => {
-    console.log("Api Call fetchMyUrls");
     try {
+      let headers = {
+        "Content-Type": "application/json",
+      };
+
+      const token = await localStorage.getItem("token");
+
+      if (token) {
+        headers.token = token;
+      }
       const ipAddressResponse = await fetch("https://api.ipify.org?format=json");
       const {ip} = await ipAddressResponse.json();
-
-      console.log("Ip------------>", ip);
 
       const response = await fetch(
         `/api/shorten?ip=${ip}&page=${page}&sort=${sortOrder}`,
         {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: headers,
         },
       );
       const data = await response.json();
-      console.log("data------------>", data);
 
       if (data.success) {
         setUrlData(data.response.data);
         setTotalCount(data.response.totalCount);
         setIsLoading(false);
-        console.log("urlData", urlData);
       } else {
         toast.error(data.message);
       }
@@ -120,7 +124,7 @@ export default function Analytics() {
 
   return (
     <section
-      id="resources"
+      id="myurls"
       className="relative flex items-center justify-center w-full min-h-full py-14 bg-white select-none">
       <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col xl:flex-col w-full flex items-center max-w-screen-2xl">
         <div className="w-full flex flex-col justify-center items-center">
@@ -204,247 +208,372 @@ export default function Analytics() {
             </div>
           ))}
         {urlData && urlData.length > 0 && (
-          <div className="overflow-hidden w-full overflow-x-auto rounded-[10px]">
-            <table className="min-w-full ">
-              <thead className=" bg-pink text-left text-white">
-                <tr>
-                  <th scope="col" className="px-6 py-4 font-sans font-medium select-none">
-                    Short Link
-                  </th>
-                  <th scope="col" className="px-6 py-4 font-sans font-medium select-none">
-                    Original Link
-                  </th>
-                  <th scope="col" className="px-6 py-4 font-sans font-medium select-none">
-                    Clicks
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-4 font-sans font-medium flex items-center select-none">
-                    <p>Date</p>
-                    <div>
-                      <Popover
-                        isOpen={popoverSort}
-                        body={
-                          <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover ">
-                            {sortOrder === "asc" ? "Sort By New" : "Sort By Old"}
-                          </div>
-                        }>
-                        <button
-                          onMouseEnter={() => setPopoverSort(true)}
-                          onMouseLeave={() => setPopoverSort(false)}
-                          onClick={() =>
-                            toggleSortOrder(sortOrder === "asc" ? "desc" : "asc")
-                          }
-                          className="pt-2 pl-2">
-                          <RiExpandUpDownFill size={18} color="#fff" />
-                        </button>
-                      </Popover>
-                    </div>
-                  </th>
-                  <th scope="col" className="px-6 py-4 font-sans font-medium select-none">
-                    Analytics
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {isToken
-                  ? urlData.map((url, index) => (
-                      <tr
-                        key={index}
-                        className="bg-primary border-y-[5px] border-white bg-opacity-10">
-                        <td className="whitespace-nowrap px-6 py-3 font-medium flex flex-row items-center justify-between">
-                          <p>
-                            {baseUrl}
-                            {url.shortUrl}
-                          </p>
-                          <div>
-                            <Popover
-                              isOpen={popoverOpenIndex === index}
-                              body={
-                                <div className="px-4 py-2 text-white rounded-t-md shadow-xl popover-content bg-bghover">
-                                  Copy to clipboard
-                                </div>
-                              }>
-                              <button
-                                onMouseEnter={() => setPopoverOpenIndex(index)}
-                                onMouseLeave={() => setPopoverOpenIndex(-1)}
-                                onClick={() => {
-                                  copyToClipboard(url.shortUrl);
-                                }}
-                                className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
-                                <MdOutlineContentCopy size={20} color="#E93266" />
-                              </button>
-                            </Popover>
-                          </div>
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-3 font-medium  ">
-                          <div className="flex flex-row gap-3">
+          <>
+            <h1 className="text-black font-sans font-bold md:text-[36px] text-[28px] select-none text-center mt-2 mb-6">
+              Tracking Your Shortened Links: A History Log
+            </h1>
+            <div className="overflow-hidden w-full overflow-x-auto rounded-[10px]">
+              <table className="min-w-full ">
+                <thead className=" bg-pink text-left text-white">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-4 font-sans font-medium select-none">
+                      Short Link
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-4 font-sans font-medium select-none">
+                      Original Link
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-4 font-sans font-medium select-none">
+                      Badge
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-4 font-sans font-medium select-none">
+                      Clicks
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-4 font-sans font-medium flex items-center select-none">
+                      <p>Date</p>
+                      <div>
+                        <Popover
+                          isOpen={popoverSort}
+                          body={
+                            <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover ">
+                              {sortOrder === "asc" ? "Sort By New" : "Sort By Old"}
+                            </div>
+                          }>
+                          <button
+                            onMouseEnter={() => setPopoverSort(true)}
+                            onMouseLeave={() => setPopoverSort(false)}
+                            onClick={() =>
+                              toggleSortOrder(sortOrder === "asc" ? "desc" : "asc")
+                            }
+                            className="pt-2 pl-2">
+                            <RiExpandUpDownFill size={18} color="#fff" />
+                          </button>
+                        </Popover>
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-4 font-sans font-medium select-none">
+                      Analytics
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {isToken
+                    ? urlData.map((url, index) => (
+                        <tr
+                          key={index}
+                          className="bg-primary border-y-[5px] border-white bg-opacity-10">
+                          <td className="whitespace-nowrap px-6 py-3 font-medium flex flex-row items-center justify-between">
                             <p>
-                              {url.originalUrl.length > 30
-                                ? `${url.originalUrl.substring(0, 30)}...`
-                                : url.originalUrl}
+                              {baseUrl}
+                              {url.shortUrl}
                             </p>
-                            <div>
+
+                            <div className="gap-2 flex ml-2">
                               <Popover
-                                isOpen={popoverInfo === index}
+                                isOpen={popoverOpenIndex === index}
                                 body={
-                                  <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover ">
-                                    {url.originalUrl}
+                                  <div className="px-4 py-2 text-white rounded-t-md shadow-xl popover-content bg-bghover">
+                                    Copy to clipboard
                                   </div>
                                 }>
                                 <button
-                                  onMouseEnter={() => setPopoverInfo(index)}
-                                  onMouseLeave={() => setPopoverInfo(-1)}>
-                                  <BsInfoCircleFill size={20} color="#9e9e9e" />
+                                  onMouseEnter={() => setPopoverOpenIndex(index)}
+                                  onMouseLeave={() => setPopoverOpenIndex(-1)}
+                                  onClick={() => {
+                                    copyToClipboard(url.shortUrl);
+                                  }}
+                                  className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
+                                  <MdOutlineContentCopy size={20} color="#E93266" />
                                 </button>
                               </Popover>
+                              <Popover
+                                isOpen={popoverRedirect === index}
+                                body={
+                                  <div className="px-4 py-2 text-white rounded-t-md shadow-xl popover-content bg-bghover">
+                                    Click to redirect
+                                  </div>
+                                }>
+                                <a
+                                  href={`${baseUrl}${url.shortUrl}`}
+                                  target="_blank"
+                                  onMouseEnter={() => setPopoverRedirect(index)}
+                                  onMouseLeave={() => setPopoverRedirect(-1)}
+                                  className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
+                                  <RiShareForwardLine size={20} color="#E93266" />
+                                </a>
+                              </Popover>
                             </div>
-                          </div>
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-3 font-medium">
-                          {url.clicks}
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-3 font-medium">
-                          {moment(url.updated_at).format("MMM D, YYYY")}
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-3 font-medium flex flex-row items-center gap-5">
-                          <div>
-                            <Popover
-                              isOpen={popoverQr === index}
-                              body={
-                                <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
-                                  Generate QR Code
-                                </div>
-                              }>
-                              <button
-                                onMouseEnter={() => setPopoverQr(index)}
-                                onMouseLeave={() => setPopoverQr(-1)}
-                                onClick={() => toggleModal("qrModal", url)}
-                                className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
-                                <MdOutlineQrCode size={20} color="#E93266" />
-                              </button>
-                            </Popover>
-                          </div>
-                          <div>
-                            <Popover
-                              isOpen={popoverAnalytics === index}
-                              body={
-                                <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
-                                  See full Analytics
-                                </div>
-                              }>
-                              <button
-                                onMouseEnter={() => setPopoverAnalytics(index)}
-                                onMouseLeave={() => setPopoverAnalytics(-1)}
-                                onClick={() => toggleModal("graphModal", url)}
-                                className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
-                                <IoAnalyticsSharp size={20} color="#E93266" />
-                              </button>
-                            </Popover>
-                          </div>
-                        </td>
-                      </tr>
-                    ))
-                  : urlData.slice(0, 4).map((url, index) => (
-                      <tr
-                        key={index}
-                        className="bg-primary border-y-[5px] border-white bg-opacity-10">
-                        <td className="whitespace-nowrap px-6 py-3 font-medium flex flex-row items-center justify-between">
-                          <p>
-                            {baseUrl}
-                            {url.shortUrl}
-                          </p>
-                          <div>
-                            <Popover
-                              isOpen={popoverOpenIndex === index}
-                              body={
-                                <div className="px-4 py-2 text-white rounded-t-md shadow-xl popover-content bg-bghover">
-                                  Copy to clipboard
-                                </div>
-                              }>
-                              <button
-                                onMouseEnter={() => setPopoverOpenIndex(index)}
-                                onMouseLeave={() => setPopoverOpenIndex(-1)}
-                                onClick={() => {
-                                  copyToClipboard(url.shortUrl);
-                                }}
-                                className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
-                                <MdOutlineContentCopy size={20} color="#E93266" />
-                              </button>
-                            </Popover>
-                          </div>
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-3 font-medium  ">
-                          <div className="flex flex-row gap-3">
-                            <p>
-                              {url.originalUrl.length > 30
-                                ? `${url.originalUrl.substring(0, 30)}...`
-                                : url.originalUrl}
-                            </p>
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-3 font-medium  ">
+                            <div className="flex flex-row gap-3 items-center">
+                              <p>
+                                {url.originalUrl.length > 30
+                                  ? `${url.originalUrl.substring(0, 30)}...`
+                                  : url.originalUrl}
+                              </p>
+                              <div>
+                                <Popover
+                                  isOpen={popoverInfo === index}
+                                  body={
+                                    <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover ">
+                                      {url.originalUrl}
+                                    </div>
+                                  }>
+                                  <button
+                                    onMouseEnter={() => setPopoverInfo(index)}
+                                    onMouseLeave={() => setPopoverInfo(-1)}
+                                    className="pt-[5px]">
+                                    <BsInfoCircleFill size={25} color="#9e9e9e" />
+                                  </button>
+                                </Popover>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-3">
+                            <div className="flex flex-row gap-1">
+                              {url.isCustom === true && (
+                                <Image
+                                  src="/custom.png"
+                                  width={600}
+                                  height={600}
+                                  className="w-10 h-10"
+                                />
+                              )}
+                              {url.isDefault === true && (
+                                <Image
+                                  src="/default.png"
+                                  width={600}
+                                  height={600}
+                                  className="w-10 h-10"
+                                />
+                              )}
+                              {url.isIpAddress === true && (
+                                <Image
+                                  src="/ip.png"
+                                  width={600}
+                                  height={600}
+                                  className="w-10 h-10"
+                                />
+                              )}
+                              {url.isOneTime === true && (
+                                <Image
+                                  src="/onetime.png"
+                                  width={600}
+                                  height={600}
+                                  className="w-10 h-10"
+                                />
+                              )}
+                            </div>
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-3 font-medium">
+                            {url.clicks}
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-3 font-medium">
+                            {moment(url.updated_at).format("MMM D, YYYY")}
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-3 font-medium flex flex-row items-center gap-5">
                             <div>
                               <Popover
-                                isOpen={popoverInfo === index}
+                                isOpen={popoverQr === index}
                                 body={
-                                  <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover ">
-                                    {url.originalUrl}
+                                  <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
+                                    Generate QR Code
                                   </div>
                                 }>
                                 <button
-                                  onMouseEnter={() => setPopoverInfo(index)}
-                                  onMouseLeave={() => setPopoverInfo(-1)}>
-                                  <BsInfoCircleFill size={20} color="#9e9e9e" />
+                                  onMouseEnter={() => setPopoverQr(index)}
+                                  onMouseLeave={() => setPopoverQr(-1)}
+                                  onClick={() => toggleModal("qrModal", url)}
+                                  className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
+                                  <MdOutlineQrCode size={20} color="#E93266" />
                                 </button>
                               </Popover>
                             </div>
-                          </div>
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-3 font-medium">
-                          {url.clicks}
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-3 font-medium">
-                          {moment(url.updated_at).format("MMM D, YYYY")}
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-3 font-medium flex flex-row items-center gap-5">
-                          <div>
-                            <Popover
-                              isOpen={popoverQr === index}
-                              body={
-                                <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
-                                  Generate QR Code
-                                </div>
-                              }>
-                              <button
-                                onMouseEnter={() => setPopoverQr(index)}
-                                onMouseLeave={() => setPopoverQr(-1)}
-                                onClick={() => toggleModal("qrModal", url)}
-                                className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
-                                <MdOutlineQrCode size={20} color="#E93266" />
-                              </button>
-                            </Popover>
-                          </div>
-                          <div>
-                            <Popover
-                              isOpen={popoverAnalytics === index}
-                              body={
-                                <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
-                                  See full Analytics
-                                </div>
-                              }>
-                              <button
-                                onMouseEnter={() => setPopoverAnalytics(index)}
-                                onMouseLeave={() => setPopoverAnalytics(-1)}
-                                onClick={() => toggleModal("graphModal", url)}
-                                className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
-                                <IoAnalyticsSharp size={20} color="#E93266" />
-                              </button>
-                            </Popover>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-              </tbody>
-            </table>
-          </div>
+                            <div>
+                              <Popover
+                                isOpen={popoverAnalytics === index}
+                                body={
+                                  <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
+                                    See full Analytics
+                                  </div>
+                                }>
+                                <button
+                                  onMouseEnter={() => setPopoverAnalytics(index)}
+                                  onMouseLeave={() => setPopoverAnalytics(-1)}
+                                  onClick={() => toggleModal("graphModal", url)}
+                                  className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
+                                  <IoAnalyticsSharp size={20} color="#E93266" />
+                                </button>
+                              </Popover>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    : urlData.slice(0, 4).map((url, index) => (
+                        <tr
+                          key={index}
+                          className="bg-primary border-y-[5px] border-white bg-opacity-10">
+                          <td className="whitespace-nowrap px-6 py-3 font-medium flex flex-row items-center justify-between">
+                            <p>
+                              {baseUrl}
+                              {url.shortUrl}
+                            </p>
+
+                            <div className="gap-2 flex ml-2">
+                              <Popover
+                                isOpen={popoverOpenIndex === index}
+                                body={
+                                  <div className="px-4 py-2 text-white rounded-t-md shadow-xl popover-content bg-bghover">
+                                    Copy to clipboard
+                                  </div>
+                                }>
+                                <button
+                                  onMouseEnter={() => setPopoverOpenIndex(index)}
+                                  onMouseLeave={() => setPopoverOpenIndex(-1)}
+                                  onClick={() => {
+                                    copyToClipboard(url.shortUrl);
+                                  }}
+                                  className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
+                                  <MdOutlineContentCopy size={20} color="#E93266" />
+                                </button>
+                              </Popover>
+                              <Popover
+                                isOpen={popoverRedirect === index}
+                                body={
+                                  <div className="px-4 py-2 text-white rounded-t-md shadow-xl popover-content bg-bghover">
+                                    Click to redirect
+                                  </div>
+                                }>
+                                <a
+                                  href={`${baseUrl}${url.shortUrl}`}
+                                  target="_blank"
+                                  onMouseEnter={() => setPopoverRedirect(index)}
+                                  onMouseLeave={() => setPopoverRedirect(-1)}
+                                  className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
+                                  <RiShareForwardLine size={20} color="#E93266" />
+                                </a>
+                              </Popover>
+                            </div>
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-3 font-medium  ">
+                            <div className="flex flex-row gap-3">
+                              <p>
+                                {url.originalUrl.length > 30
+                                  ? `${url.originalUrl.substring(0, 30)}...`
+                                  : url.originalUrl}
+                              </p>
+                              <div>
+                                <Popover
+                                  isOpen={popoverInfo === index}
+                                  body={
+                                    <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover ">
+                                      {url.originalUrl}
+                                    </div>
+                                  }>
+                                  <button
+                                    onMouseEnter={() => setPopoverInfo(index)}
+                                    onMouseLeave={() => setPopoverInfo(-1)}>
+                                    <BsInfoCircleFill size={20} color="#9e9e9e" />
+                                  </button>
+                                </Popover>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-3">
+                            <div className="flex flex-row gap-1">
+                              {url.isCustom === true && (
+                                <Image
+                                  src="/custom.png"
+                                  width={600}
+                                  height={600}
+                                  className="w-10 h-10"
+                                />
+                              )}
+                              {url.isDefault === true && (
+                                <Image
+                                  src="/default.png"
+                                  width={600}
+                                  height={600}
+                                  className="w-10 h-10"
+                                />
+                              )}
+                              {url.isIpAddress === true && (
+                                <Image
+                                  src="/ip.png"
+                                  width={600}
+                                  height={600}
+                                  className="w-10 h-10"
+                                />
+                              )}
+                              {url.isOneTime === true && (
+                                <Image
+                                  src="/onetime.png"
+                                  width={600}
+                                  height={600}
+                                  className="w-10 h-10"
+                                />
+                              )}
+                            </div>
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-3 font-medium">
+                            {url.clicks}
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-3 font-medium">
+                            {moment(url.updated_at).format("MMM D, YYYY")}
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-3 font-medium flex flex-row items-center gap-5">
+                            <div>
+                              <Popover
+                                isOpen={popoverQr === index}
+                                body={
+                                  <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
+                                    Generate QR Code
+                                  </div>
+                                }>
+                                <button
+                                  onMouseEnter={() => setPopoverQr(index)}
+                                  onMouseLeave={() => setPopoverQr(-1)}
+                                  onClick={() => toggleModal("qrModal", url)}
+                                  className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
+                                  <MdOutlineQrCode size={20} color="#E93266" />
+                                </button>
+                              </Popover>
+                            </div>
+                            <div>
+                              <Popover
+                                isOpen={popoverAnalytics === index}
+                                body={
+                                  <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
+                                    See full Analytics
+                                  </div>
+                                }>
+                                <button
+                                  onMouseEnter={() => setPopoverAnalytics(index)}
+                                  onMouseLeave={() => setPopoverAnalytics(-1)}
+                                  onClick={() => toggleModal("graphModal", url)}
+                                  className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
+                                  <IoAnalyticsSharp size={20} color="#E93266" />
+                                </button>
+                              </Popover>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
 
         {urlData.length > 3 && !isToken && (
@@ -459,7 +588,7 @@ export default function Analytics() {
         )}
         <Modal isOpen={isOpenLogin} setIsOpen={setIsOpenLogin} />
 
-        {isToken && urlData.length > 0 && (
+        {isToken && totalCount > 6 && (
           <div className="bg-primary bg-opacity-10 w-full px-6 py-3 flex flex-row items-center gap-5 justify-center rounded-b-lg h-16">
             {isloading ? (
               <ThreeDots

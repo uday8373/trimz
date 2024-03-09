@@ -1,5 +1,6 @@
 import DbConnect from "../../utils/DbConnect";
 import Url from "../../models/Url";
+import UAParser from "ua-parser-js";
 
 export default async function handler(req, res) {
   await DbConnect();
@@ -15,16 +16,23 @@ export default async function handler(req, res) {
 
     if (url.isIpAddress) {
       if (url.ipAddress !== ip) {
-        return res.status(404).json({error: "URL is privact"});
+        return res.status(404).json({error: "URL is privacy"});
       }
     }
 
     url.clicks += 1;
 
-    const browserInfo = req.headers["user-agent"];
-    if (browserInfo) {
+    const parser = new UAParser();
+    const userAgent = req.headers["user-agent"];
+    const parsedUA = parser.setUA(userAgent).getResult();
+
+    const browserName = parsedUA.browser.name;
+    const systemName = parsedUA.os.name;
+
+    if (browserName) {
       const clickInfo = {
-        browser: browserInfo,
+        browser: browserName,
+        os: systemName,
         clickedAt: new Date(),
         clickIp: ip,
       };

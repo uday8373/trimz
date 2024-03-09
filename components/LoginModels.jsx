@@ -109,7 +109,6 @@ export const Modal = ({isOpen, setIsOpen}) => {
       const ipAddressResponse = await fetch("https://api.ipify.org?format=json");
 
       const {ip} = await ipAddressResponse.json();
-      console.log("result", result);
 
       const response = await fetch("/api/google/signin", {
         method: "POST",
@@ -156,7 +155,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
             </div>
 
             <motion.div
-              className="flex items-center justify-center min-h-screen px-4 md:pb-0 text-cente sm:block sm:p-0 "
+              className="flex items-center justify-center min-h-screen px-4 md:pb-0 text-center sm:block sm:p-0 "
               initial={{
                 opacity: 0,
                 scale: 0.75,

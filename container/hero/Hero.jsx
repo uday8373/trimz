@@ -7,24 +7,14 @@ import {FaLink} from "react-icons/fa";
 import Image from "next/image";
 import {IoListSharp} from "react-icons/io5";
 import {LuCopy, LuCopyCheck} from "react-icons/lu";
-import {Puff} from "react-loader-spinner";
+import {ThreeDots} from "react-loader-spinner";
 import {MdOutlineQrCode} from "react-icons/md";
-import {IoAnalyticsOutline} from "react-icons/io5";
+import {GrPowerReset} from "react-icons/gr";
 import {IoMdShare} from "react-icons/io";
 import Popover from "react-popover";
-import {MdCurrencyRupee} from "react-icons/md";
-import {FaArrowUpLong} from "react-icons/fa6";
-import {
-  FaFacebook,
-  FaSquareXTwitter,
-  FaLinkedin,
-  FaSquareFacebook,
-} from "react-icons/fa6";
-import {FaYoutube} from "react-icons/fa";
-
 import {QrModal} from "../../components/QrModal";
-import {motion} from "framer-motion";
-import {GrInstagram} from "react-icons/gr";
+import {Link as ScrollLink} from "react-scroll";
+import {Modal} from "../../components/LoginModels";
 
 export const Hero = () => {
   const [originalUrl, setOriginalUrl] = useState("");
@@ -38,15 +28,19 @@ export const Hero = () => {
   const [copied, setCopied] = useState(false);
   const [qrIsOpen, setQrIsOpen] = useState(false);
   const [shareIsOpen, setShareIsOpen] = useState(false);
+  const [clearIsOpen, setClearIsOpen] = useState(false);
   const [copyIsOpen, setCopyIsOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isToken, setIsToken] = useState(false);
+  const [popoverUrl, setPopoverUrl] = useState(false);
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
 
   const [baseUrl, setBaseUrl] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    //
+
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
     if (!urlRegex.test(originalUrl)) {
@@ -54,16 +48,24 @@ export const Hero = () => {
       setLoading(false);
       return;
     }
-    try {
-      const ipAddressResponse = await fetch("https://api.ipify.org?format=json");
 
+    try {
+      let headers = {
+        "Content-Type": "application/json",
+      };
+
+      const token = await localStorage.getItem("token");
+
+      if (token) {
+        headers.token = token;
+      }
+
+      const ipAddressResponse = await fetch("https://api.ipify.org?format=json");
       const {ip} = await ipAddressResponse.json();
 
       const response = await fetch("/api/shorten", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: headers,
         body: JSON.stringify({
           originalUrl,
           userIp: ip,
@@ -72,16 +74,18 @@ export const Hero = () => {
           isOneTime,
           isIpAddress,
           ipAddress,
+          isSignIn: isToken,
         }),
       });
+
       const data = await response.json();
-      if (data.message === "Custom short ID already exists") {
-        toast.error("Custom short ID already exists");
-      } else if (data.message === "Invalid URL") {
-        toast.error("Invalid URL");
-      } else {
+
+      if (data.success) {
         setShortUrl(data.url.shortUrl);
+        localStorage.setItem("shortUrl", data.url.shortUrl);
         toast.success(data.message);
+      } else {
+        toast.error(data.message);
       }
     } catch (error) {
       console.error("Error generating short URL:", error);
@@ -132,11 +136,29 @@ export const Hero = () => {
   const handleCopyMouseLeave = () => {
     setCopyIsOpen(false);
   };
+  const handleClearMouseEnter = () => {
+    setClearIsOpen(true);
+  };
+
+  const handleClearMouseLeave = () => {
+    setClearIsOpen(false);
+  };
 
   useEffect(() => {
     const fetchUrl = window?.location.href;
     const modifiedUrl = fetchUrl.replace(/www\./, "");
     setBaseUrl(modifiedUrl);
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsToken(true);
+    } else {
+      setIsToken(false);
+    }
+
+    const storedShortUrl = localStorage.getItem("shortUrl");
+    if (storedShortUrl) {
+      setShortUrl(storedShortUrl);
+    }
   }, []);
 
   const handleQrModal = () => {
@@ -144,7 +166,27 @@ export const Hero = () => {
     setIsOpen(!isOpen);
   };
 
-  //
+  const handleShare = async () => {
+    try {
+      await navigator.share({url: `${baseUrl}${shortUrl}`});
+    } catch (error) {
+      console.error("Error sharing URL:", error);
+      toast.error("Error sharing URL");
+    }
+  };
+
+  const handleClear = () => {
+    setLoading(false);
+    setCustomUrl("");
+    setIsCustom(false);
+    setOriginalUrl("");
+    setIsOneTime(false);
+    setIpAddress("");
+    setIsIpAddress(false);
+    setShortUrl("");
+    localStorage.removeItem("shortUrl");
+  };
+
   return (
     <section
       id="home"
@@ -153,15 +195,15 @@ export const Hero = () => {
         <div className="flex flex-col w-full h-full py-10 md:py-14">
           <div className="flex">
             <h1 className="font-sans font-bold text-[12px] text-pink bg-pink bg-opacity-15 rounded-3xl py-2 px-5 text-left">
-              Easy link Shortening
+              Free link Shortening
             </h1>
           </div>
           <h1 className="font-sans font-bold text-[32px] md:text-[48px] text-black pt-5 leading-[42px] md:leading-[54px]">
             <span className="">Trimz</span> short URL & QR <br /> code generator
           </h1>
           <h1 className="font-sans font-medium text-[16px] lg:text-[18px] text-gray pt-5">
-            A short link allows you to collect so much data about your customers & their
-            behaviors.
+            Advanced free short link generator for individuals & businesses, enhancing URL
+            management and online presence.
           </h1>
           <div className="w-full py-5">
             <div>
@@ -181,12 +223,13 @@ export const Hero = () => {
                     disabled={loading}
                     className="bg-primary hidden md:flex w-44 justify-center items-center text-white font-sans font-semibold text-[16px] py-3 rounded-[100px] hover:bg-bghover transition-all duration-500">
                     {loading ? (
-                      <Puff
+                      <ThreeDots
                         visible={true}
                         height="24"
                         width="24"
                         color="#fff"
-                        ariaLabel="puff-loading"
+                        radius="9"
+                        ariaLabel="three-dots-loading"
                         wrapperStyle={{}}
                         wrapperClass=""
                       />
@@ -202,7 +245,13 @@ export const Hero = () => {
                       id="customUrl"
                       type="checkbox"
                       checked={isCustom}
-                      onChange={(e) => setIsCustom(e.target.checked)}
+                      onChange={(e) => {
+                        if (isToken) {
+                          setIsCustom(e.target.checked);
+                        } else {
+                          setIsOpenLogin(true);
+                        }
+                      }}
                     />
                     <svg viewBox="0 0 21 21">
                       <path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
@@ -211,7 +260,13 @@ export const Hero = () => {
                   <label
                     htmlFor="customUrl"
                     className="ml-2 font-sans text-[16px] font-medium text-black cursor-pointer"
-                    onChange={(e) => setIsCustom(e.target.checked)}>
+                    onChange={(e) => {
+                      if (isToken) {
+                        setIsCustom(e.target.checked);
+                      } else {
+                        setIsOpenLogin(true);
+                      }
+                    }}>
                     Customize your short link
                   </label>
                 </div>
@@ -220,9 +275,10 @@ export const Hero = () => {
                   <input
                     type="text"
                     value={customUrl}
+                    maxlength="10"
                     onChange={(e) => setCustomUrl(e.target.value)}
                     className="bg-white drop-shadow-sm mt-3 font-medium text-black text-[16px] placeholder-gray-[#637887] w-full  px-8 py-3 rounded-[100px] focus:outline-none"
-                    placeholder="example"
+                    placeholder="/example"
                     required
                   />
                 )}
@@ -232,7 +288,13 @@ export const Hero = () => {
                       id="oneTime"
                       type="checkbox"
                       checked={isOneTime}
-                      onChange={(e) => setIsOneTime(e.target.checked)}
+                      onChange={(e) => {
+                        if (isToken) {
+                          setIsOneTime(e.target.checked);
+                        } else {
+                          setIsOpenLogin(true);
+                        }
+                      }}
                     />
                     <svg viewBox="0 0 21 21">
                       <path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
@@ -240,7 +302,13 @@ export const Hero = () => {
                   </div>
                   <label
                     htmlFor="oneTime"
-                    onChange={(e) => setIsOneTime(e.target.checked)}
+                    onChange={(e) => {
+                      if (isToken) {
+                        setIsOneTime(e.target.checked);
+                      } else {
+                        setIsOpenLogin(true);
+                      }
+                    }}
                     className="ml-2  font-sans text-[16px] font-medium text-black cursor-pointer ">
                     Make this a one-time link that expires after one visit
                   </label>
@@ -252,7 +320,13 @@ export const Hero = () => {
                       id="restrict"
                       type="checkbox"
                       checked={isIpAddress}
-                      onChange={(e) => setIsIpAddress(e.target.checked)}
+                      onChange={(e) => {
+                        if (isToken) {
+                          setIsIpAddress(e.target.checked);
+                        } else {
+                          setIsOpenLogin(true);
+                        }
+                      }}
                     />
                     <svg viewBox="0 0 21 21">
                       <path d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186"></path>
@@ -260,7 +334,13 @@ export const Hero = () => {
                   </div>
                   <label
                     htmlFor="restrict"
-                    onChange={(e) => setIsIpAddress(e.target.checked)}
+                    onChange={(e) => {
+                      if (isToken) {
+                        setIsIpAddress(e.target.checked);
+                      } else {
+                        setIsOpenLogin(true);
+                      }
+                    }}
                     className="ml-2 font-sans text-[16px] font-medium text-black cursor-pointer">
                     Restrict this link to only work for specific IP addresses
                   </label>
@@ -282,12 +362,13 @@ export const Hero = () => {
                   className="w-full md:hidden flex bg-primary justify-center items-center mt-5 text-white h-16 rounded-[100px] text-[18px] font-semibold hover:bg-bghover transition-all duration-500"
                   disabled={loading}>
                   {loading ? (
-                    <Puff
+                    <ThreeDots
                       visible={true}
                       height="24"
                       width="24"
                       color="#fff"
-                      ariaLabel="puff-loading"
+                      radius="9"
+                      ariaLabel="three-dots-loading"
                       wrapperStyle={{}}
                       wrapperClass=""
                     />
@@ -328,7 +409,6 @@ export const Hero = () => {
                         onMouseLeave={handleQrMouseLeave}>
                         <Popover
                           isOpen={qrIsOpen}
-                          // preferPlace="below"
                           body={
                             <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
                               Generate QR code
@@ -350,73 +430,19 @@ export const Hero = () => {
                           shortUrl={shortUrl}
                         />
                       </div>
-                      <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
-                        <IoAnalyticsOutline size={25} color="white" />
-                        <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
-                          Analytics
-                        </h1>
-                      </button>
+
                       <div
                         onMouseEnter={handleShareMouseEnter}
                         onMouseLeave={handleShareMouseLeave}>
                         <Popover
                           isOpen={shareIsOpen}
-                          preferPlace="below"
                           body={
-                            <div className=" text-black rounded-md shadow-3xl popover-content bg-white">
-                              <button
-                                onClick={() => {
-                                  window.open(
-                                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                                      baseUrl / shortUrl,
-                                    )}`,
-                                    "_blank",
-                                  );
-                                }}
-                                className="gap-4 border-b-2 border-lightGray border-dotted items-center font-sans font-semibold text-[16px] w-full text-left py-3 px-5 hover:bg-gray-100 focus:outline-none flex">
-                                <FaSquareFacebook size={24} color="#000" /> Facebook
-                              </button>
-
-                              <button
-                                onClick={() => {
-                                  window.open(
-                                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                                      baseUrl / shortUrl,
-                                    )}`,
-                                    "_blank",
-                                  );
-                                }}
-                                className="gap-4 border-b-2 border-lightGray border-dotted items-center font-sans font-semibold text-[16px] w-full text-left py-3 px-5 hover:bg-gray-100 focus:outline-none flex">
-                                <FaYoutube size={24} color="#000" /> Youtube
-                              </button>
-                              <button
-                                onClick={() => {
-                                  window.open(
-                                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                                      baseUrl / shortUrl,
-                                    )}`,
-                                    "_blank",
-                                  );
-                                }}
-                                className="gap-4 border-b-2 border-lightGray border-dotted items-center font-sans font-semibold text-[16px] w-full text-left py-3 px-5 hover:bg-gray-100 focus:outline-none flex">
-                                <FaSquareXTwitter size={24} color="#000" /> Twitter
-                              </button>
-                              <button
-                                onClick={() => {
-                                  window.open(
-                                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                                      baseUrl / shortUrl,
-                                    )}`,
-                                    "_blank",
-                                  );
-                                }}
-                                className="gap-4 items-center font-sans font-semibold text-[16px] w-full text-left py-3 px-5 hover:bg-gray-100 focus:outline-none flex">
-                                <FaLinkedin size={24} color="#000" /> LinkedIn
-                              </button>
+                            <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
+                              Share It
                             </div>
                           }>
                           <button
-                            onClick={handleShareMouseEnter}
+                            onClick={handleShare}
                             className="flex flex-row justify-center items-center gap-3 bg-pink px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
                             <IoMdShare size={25} color="white" />
                             <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
@@ -425,12 +451,51 @@ export const Hero = () => {
                           </button>
                         </Popover>
                       </div>
-                      <button className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
-                        <IoListSharp size={25} color="white" />
-                        <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
-                          My URLs
-                        </h1>
-                      </button>
+
+                      <div>
+                        <Popover
+                          isOpen={popoverUrl}
+                          body={
+                            <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
+                              Go to shorten URL history
+                            </div>
+                          }>
+                          <ScrollLink
+                            onMouseEnter={() => setPopoverUrl(true)}
+                            onMouseLeave={() => setPopoverUrl(false)}
+                            to="myurls"
+                            spy={true}
+                            smooth={true}
+                            offset={-90}
+                            duration={300}
+                            className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500 cursor-pointer">
+                            <IoListSharp size={25} color="white" />
+                            <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
+                              My URLs
+                            </h1>
+                          </ScrollLink>
+                        </Popover>
+                      </div>
+                      <div
+                        onMouseEnter={handleClearMouseEnter}
+                        onMouseLeave={handleClearMouseLeave}>
+                        <Popover
+                          isOpen={clearIsOpen}
+                          body={
+                            <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
+                              Clear it
+                            </div>
+                          }>
+                          <button
+                            onClick={handleClear}
+                            className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
+                            <GrPowerReset size={25} color="white" />
+                            <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
+                              Clear
+                            </h1>
+                          </button>
+                        </Popover>
+                      </div>
                     </div>
                   </div>
                 </>
@@ -441,6 +506,7 @@ export const Hero = () => {
         <div className="flex items-center justify-center w-full h-full">
           <Image src="/url.svg" width={600} height={600} alt="Picture of the author" />
         </div>
+        <Modal isOpen={isOpenLogin} setIsOpen={setIsOpenLogin} />
       </div>
     </section>
   );

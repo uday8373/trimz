@@ -15,6 +15,16 @@ const UrlSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
+    isSignIn: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isDefault: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
     isOneTime: {
       type: Boolean,
       required: true,
@@ -33,6 +43,11 @@ const UrlSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: false,
+    },
     userIp: {
       type: String,
       required: false,
@@ -44,6 +59,10 @@ const UrlSchema = new mongoose.Schema(
     clickDetails: [
       {
         browser: {
+          type: String,
+          required: true,
+        },
+        os: {
           type: String,
           required: true,
         },

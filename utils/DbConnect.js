@@ -8,7 +8,6 @@ dotenv.config();
 const connection = {};
 
 async function DbConnect() {
-  // console.log("Connection", connection.isConnected);
   if (connection.isConnected) {
     return;
   }

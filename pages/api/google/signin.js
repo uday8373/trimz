@@ -17,9 +17,8 @@ export default async function handler(req, res) {
 
       if (user) {
         await User.findOneAndUpdate({email}, {ipAddress, name, image});
-        console.log("env", process.env.JWT_SECRET);
 
-        const token = jwt.sign({userID: user._id}, process.env.JWT_SECRET);
+        const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET);
 
         return res
           .status(200)

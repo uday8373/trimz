@@ -26,8 +26,6 @@ export default function RedirectPage() {
             }
           })
           .then((data) => {
-            console.log("originalUrl", data.originalUrl);
-            console.log("message", data.message);
             window.location.replace(data.originalUrl);
           })
           .catch((error) => {
