@@ -13,7 +13,7 @@ const Layout = ({children}) => (
         name="description"
         content="Elevate your link management with Trimz.me – Your all-in-one URL shortener. Create custom short links, generate one-time links, tailor URLs based on IP, and access comprehensive analytics. Trimz.me is your go-to solution for efficient and effective link optimization."
       />
-      <meta property="og:image" content="/Trimz_Logo.png" />
+      <meta property="og:image" content="/short_logo.png" />
       <meta property="og:title" content="Trimz | Advance URL shortner" />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="http://trimz.me/" />

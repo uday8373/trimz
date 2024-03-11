@@ -15,6 +15,7 @@ import Image from "next/image";
 import {Link as ScrollLink} from "react-scroll";
 import {GraphModal} from "../../components/GraphModal";
 import {RiShareForwardLine} from "react-icons/ri";
+import {motion} from "framer-motion";
 
 export default function Analytics() {
   const [urlData, setUrlData] = useState([]);
@@ -128,66 +129,249 @@ export default function Analytics() {
       className="relative flex items-center justify-center w-full min-h-full py-14 bg-white select-none">
       <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col xl:flex-col w-full flex items-center max-w-screen-2xl">
         <div className="w-full flex flex-col justify-center items-center">
-          <div className="flex mb-3 md:justify-center justify-start w-full select-none">
+          <motion.div
+            initial={{y: 100, opacity: 0}}
+            whileInView={{
+              y: 0,
+              opacity: 1,
+              transition: {
+                duration: 0.8,
+                ease: [0.65, 0, 0.35, 1],
+                delay: 0.1,
+              },
+            }}
+            viewport={{once: true}}
+            className="flex mb-3 md:justify-center justify-start w-full select-none">
             <h1 className="font-sans font-bold text-[12px] text-pink bg-pink bg-opacity-15 rounded-3xl py-2 px-5 text-left select-none">
               My Shorten URLs
             </h1>
-          </div>
-          <h1 className="text-black font-sans font-bold md:text-[36px] text-[28px] select-none">
+          </motion.div>
+          <motion.div
+            initial={{y: -100, opacity: 0}}
+            whileInView={{
+              y: 0,
+              opacity: 1,
+              transition: {
+                duration: 0.8,
+                ease: [0.65, 0, 0.35, 1],
+                delay: 0.2,
+              },
+            }}
+            viewport={{once: true}}
+            className="text-black font-sans font-bold md:text-[36px] text-[28px] select-none">
             One short link, infinite possibilities
-          </h1>
-          <h1 className="md:text-[18px] text-[16px] font-sans font-medium pt-3 md:text-center text-left select-none">
+          </motion.div>
+          <motion.div
+            initial={{y: 100, opacity: 0}}
+            whileInView={{
+              y: 0,
+              opacity: 1,
+              transition: {
+                duration: 0.8,
+                ease: [0.65, 0, 0.35, 1],
+                delay: 0.3,
+              },
+            }}
+            viewport={{once: true}}
+            className="md:text-[18px] text-[16px] font-sans font-medium pt-3 md:text-center text-left select-none">
             A short link is a powerful marketing tool when you use it carefully. It is not
             just a <br className="hidden lg:flex" /> link but a medium between your
             customer and their destination.
-          </h1>
+          </motion.div>
           <div className="w-full flex xl:flex-row justify-between items-center my-8 md:gap-8 flex-col gap-5">
-            <div className="w-full bg-white md:px-8 md:py-10 p-5 rounded-[15px] shadow-3xl select-none">
-              <Image
-                src="/Smart_targeting.png"
-                width={70}
-                height={70}
-                alt="Picture of the author"
-              />
-              <h1 className="text-black font-sans font-semibold md:text-[24px] text-[22px] pt-5 pb-4">
+            <motion.div
+              initial={{y: 100, opacity: 0}}
+              whileInView={{
+                y: 0,
+                opacity: 1,
+                transition: {
+                  duration: 0.8,
+                  ease: [0.65, 0, 0.35, 1],
+                  delay: 0.1,
+                },
+              }}
+              viewport={{once: true}}
+              className="w-full bg-white md:px-8 md:py-10 p-5 rounded-[15px] shadow-3xl select-none">
+              <motion.div
+                initial={{y: -50, opacity: 0}}
+                whileInView={{
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.8,
+                    ease: [0.65, 0, 0.35, 1],
+                    delay: 0.2,
+                  },
+                }}
+                viewport={{once: true}}>
+                <Image
+                  src="/Smart_targeting.png"
+                  width={70}
+                  height={70}
+                  alt="Picture of the author"
+                />
+              </motion.div>
+              <motion.div
+                initial={{y: -50, opacity: 0}}
+                whileInView={{
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.8,
+                    ease: [0.65, 0, 0.35, 1],
+                    delay: 0.3,
+                  },
+                }}
+                viewport={{once: true}}
+                className="text-black font-sans font-semibold md:text-[24px] text-[22px] pt-5 pb-4">
                 Smart Targeting
-              </h1>
-              <h1 className="text-black font-sans md:text-[16px] text-[14px]">
+              </motion.div>
+              <motion.div
+                initial={{y: -50, opacity: 0}}
+                whileInView={{
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.8,
+                    ease: [0.65, 0, 0.35, 1],
+                    delay: 0.4,
+                  },
+                }}
+                viewport={{once: true}}
+                className="text-black font-sans md:text-[16px] text-[14px]">
                 Target your customer to increase your reach and redirect them to a
                 relevant page. Add a pixel to retarget them in your social media ad
                 campaign to capture tham.
-              </h1>
-            </div>
-            <div className="w-full bg-white md:px-8 md:py-10 p-5 rounded-[15px] shadow-3xl select-none">
-              <Image
-                src="/In_depth.png"
-                width={70}
-                height={70}
-                alt="Picture of the author"
-              />
-              <h1 className="text-black font-sans font-semibold md:text-[24px] text-[22px] pt-5 pb-4">
+              </motion.div>
+            </motion.div>
+            <motion.div
+              initial={{y: 100, opacity: 0}}
+              whileInView={{
+                y: 0,
+                opacity: 1,
+                transition: {
+                  duration: 0.8,
+                  ease: [0.65, 0, 0.35, 1],
+                  delay: 0.2,
+                },
+              }}
+              viewport={{once: true}}
+              className="w-full bg-white md:px-8 md:py-10 p-5 rounded-[15px] shadow-3xl select-none">
+              <motion.div
+                initial={{y: -50, opacity: 0}}
+                whileInView={{
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.8,
+                    ease: [0.65, 0, 0.35, 1],
+                    delay: 0.3,
+                  },
+                }}
+                viewport={{once: true}}>
+                <Image
+                  src="/In_depth.png"
+                  width={70}
+                  height={70}
+                  alt="Picture of the author"
+                />
+              </motion.div>
+              <motion.div
+                initial={{y: -50, opacity: 0}}
+                whileInView={{
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.8,
+                    ease: [0.65, 0, 0.35, 1],
+                    delay: 0.4,
+                  },
+                }}
+                viewport={{once: true}}
+                className="text-black font-sans font-semibold md:text-[24px] text-[22px] pt-5 pb-4">
                 In-Depth Analytics
-              </h1>
-              <h1 className="text-black font-sans md:text-[16px] text-[14px]">
+              </motion.div>
+              <motion.div
+                initial={{y: -50, opacity: 0}}
+                whileInView={{
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.8,
+                    ease: [0.65, 0, 0.35, 1],
+                    delay: 0.5,
+                  },
+                }}
+                viewport={{once: true}}
+                className="text-black font-sans md:text-[16px] text-[14px]">
                 Share your links to your network and measure data to optimize your
                 marketing campaign's performance. Reach an audience that fits your needs.
-              </h1>
-            </div>
-            <div className="w-full bg-white md:px-8 md:py-10 p-5 rounded-[15px] shadow-3xl select-none">
-              <Image
-                src="/Digital_experience2.png"
-                width={70}
-                height={70}
-                alt="Picture of the author"
-              />
-              <h1 className="text-black font-sans font-semibold md:text-[24px] text-[22px] pt-5 pb-4">
+              </motion.div>
+            </motion.div>
+            <motion.div
+              initial={{y: 100, opacity: 0}}
+              whileInView={{
+                y: 0,
+                opacity: 1,
+                transition: {
+                  duration: 0.8,
+                  ease: [0.65, 0, 0.35, 1],
+                  delay: 0.3,
+                },
+              }}
+              viewport={{once: true}}
+              className="w-full bg-white md:px-8 md:py-10 p-5 rounded-[15px] shadow-3xl select-none">
+              <motion.div
+                initial={{y: -50, opacity: 0}}
+                whileInView={{
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.8,
+                    ease: [0.65, 0, 0.35, 1],
+                    delay: 0.4,
+                  },
+                }}
+                viewport={{once: true}}>
+                <Image
+                  src="/Digital_experience2.png"
+                  width={70}
+                  height={70}
+                  alt="Picture of the author"
+                />
+              </motion.div>
+              <motion.div
+                initial={{y: -50, opacity: 0}}
+                whileInView={{
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.8,
+                    ease: [0.65, 0, 0.35, 1],
+                    delay: 0.5,
+                  },
+                }}
+                viewport={{once: true}}
+                className="text-black font-sans font-semibold md:text-[24px] text-[22px] pt-5 pb-4">
                 Digital Experience
-              </h1>
-              <h1 className="text-black font-sans md:text-[16px] text-[14px]">
+              </motion.div>
+              <motion.div
+                initial={{y: -50, opacity: 0}}
+                whileInView={{
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.8,
+                    ease: [0.65, 0, 0.35, 1],
+                    delay: 0.6,
+                  },
+                }}
+                viewport={{once: true}}
+                className="text-black font-sans md:text-[16px] text-[14px]">
                 Use various powerful tools increase conversion and provide a non-intrusive
                 experience to your customers without disengaging them.
-              </h1>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
         {!urlData ||
@@ -197,6 +381,7 @@ export default function Analytics() {
                 onClick={() => {
                   window.scrollTo(0, 0);
                 }}
+                to="/"
                 spy={true}
                 smooth={true}
                 offset={-90}
@@ -209,9 +394,21 @@ export default function Analytics() {
           ))}
         {urlData && urlData.length > 0 && (
           <>
-            <h1 className="text-black font-sans font-bold md:text-[36px] text-[28px] select-none text-center mt-2 mb-6">
+            <motion.div
+              initial={{y: 50, opacity: 0}}
+              whileInView={{
+                y: 0,
+                opacity: 1,
+                transition: {
+                  duration: 0.8,
+                  ease: [0.65, 0, 0.35, 1],
+                  delay: 0.3,
+                },
+              }}
+              viewport={{once: true}}
+              className="text-black font-sans font-bold md:text-[36px] text-[28px] select-none text-center mt-2 mb-6">
               Tracking Your Shortened Links: A History Log
-            </h1>
+            </motion.div>
             <div className="overflow-hidden w-full overflow-x-auto rounded-[10px]">
               <table className="min-w-full ">
                 <thead className=" bg-pink text-left text-white">

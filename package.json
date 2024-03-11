@@ -13,6 +13,7 @@
   "dependencies": {
     "@fontsource/public-sans": "^5.0.16",
     "@headlessui/react": "^1.7.18",
+    "@vercel/speed-insights": "^1.0.10",
     "autoprefixer": "^10.4.17",
     "bcrypt": "^5.1.1",
     "chart.js": "^4.4.2",

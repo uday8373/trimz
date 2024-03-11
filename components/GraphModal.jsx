@@ -9,17 +9,6 @@ import Image from "next/image";
 import {BiWorld} from "react-icons/bi";
 import {MdDevices} from "react-icons/md";
 
-// const getCountryFromIP = async (ip) => {
-//   try {
-//     const response = await fetch(`http://ip-api.com/json/${ip}`);
-//     const data = await response.json();
-//     return data.countryCode;
-//   } catch (error) {
-//     console.error("Error fetching country from IP:", error);
-//     return "Unknown";
-//   }
-// };
-
 const getCountryFromIP = async (ip) => {
   try {
     const response = await fetch(`https://ipapi.co/${ip}/json/`);
