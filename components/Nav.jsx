@@ -102,13 +102,32 @@ const Nav = () => {
       className={` w-full select-none border-b-2 border-primary border-opacity-20 flex items-center justify-center 2xl:border-b-2 bg-bghero fixed py-2 top-0 z-[999] md:py-4 `}>
       <div
         className={`2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6  w-full flex justify-between  max-w-screen-2xl items-center`}>
-        <div className="flex items-center justify-start flex-1 w-full py-2 xl:py-0 xl:hidden">
-          <div className="flex xl:hidden" onClick={handleMobileNavLinkClick}>
+        <div className="flex items-center justify-start flex-1 w-screen py-2 xl:py-0 xl:hidden">
+          <div
+            className="flex flex-row gap-3 xl:hidden items-center"
+            onClick={handleMobileNavLinkClick}>
             {toggle ? (
               <CgMenuRightAlt color={"#4169E1"} size={30} />
             ) : (
               <CgMenuRightAlt color={"#4169E1"} size={30} className="rotate-180" />
             )}
+            <Link
+              href="/"
+              to="/"
+              className="flex items-center "
+              onClick={() => {
+                setActive("");
+                router.push("/");
+                window.scrollTo(0, 0);
+              }}>
+              <img
+                src="/Trimz_Logo.png"
+                width={1024}
+                height={1024}
+                alt="logo"
+                className="sm:w-[160px]  sm:h-auto w-[110px] object-contain"
+              />
+            </Link>
           </div>
 
           <AnimatePresence mode="wait">
@@ -124,7 +143,7 @@ const Nav = () => {
                   <img
                     src="/Trimz_Logo.png"
                     alt="logo"
-                    className={`sm:w-[85px]  sm:h-auto w-[120px]  object-contain `}
+                    className={`sm:w-[85px]  sm:h-auto w-[120px]  object-contain pt-2`}
                   />
                   <div className="pt-2">
                     <RxCross2
@@ -179,23 +198,24 @@ const Nav = () => {
             )}
           </AnimatePresence>
         </div>
-        <div className="flex w-full xl:justify-start justify-center">
-          <Link
-            href="/"
-            to="/"
-            className="flex items-center"
-            onClick={() => {
-              setActive("");
-              router.push("/");
-              window.scrollTo(0, 0);
-            }}>
-            <img
-              src="/Trimz_Logo.png"
-              alt="logo"
-              className="sm:w-[160px] w-[110px] object-contain"
-            />
-          </Link>
-        </div>
+
+        <Link
+          href="/"
+          to="/"
+          className="xl:flex items-center hidden"
+          onClick={() => {
+            setActive("");
+            router.push("/");
+            window.scrollTo(0, 0);
+          }}>
+          <img
+            src="/Trimz_Logo.png"
+            width={1024}
+            height={1024}
+            alt="logo"
+            className="sm:w-[160px]  sm:h-auto w-[110px] object-contain"
+          />
+        </Link>
 
         <div className="flex-row hidden gap-4 list-none lg:gap-6 xl:gap-10 xl:flex">
           {navLinks.map((nav, index) => {
@@ -230,7 +250,6 @@ const Nav = () => {
                   className="relative mt-2 rounded-full shadow-3xl">
                   {userData.image ? (
                     <img
-                      draggable="false"
                       width={1024}
                       height={1024}
                       src={userData.image}
@@ -239,7 +258,6 @@ const Nav = () => {
                     />
                   ) : (
                     <Image
-                      draggable="false"
                       width={1024}
                       height={1024}
                       src="/short_logo.png"
@@ -271,7 +289,7 @@ const Nav = () => {
         </div>
 
         {/* mobile */}
-        <div className="flex items-center justify-end flex-1 w-full py-2 xl:py-0 xl:hidden">
+        <div className="flex items-center justify-end flex-1 w-screen py-2 xl:py-0 xl:hidden">
           <div>
             {!isToken ? (
               <button
@@ -286,7 +304,6 @@ const Nav = () => {
                   className="relative mt-2 rounded-full shadow-3xl">
                   {userData.image ? (
                     <img
-                      draggable="false"
                       width={1024}
                       height={1024}
                       src={userData.image}
@@ -295,7 +312,6 @@ const Nav = () => {
                     />
                   ) : (
                     <Image
-                      draggable="false"
                       width={1024}
                       height={1024}
                       src="/short_logo.png"

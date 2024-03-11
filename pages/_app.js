@@ -12,11 +12,11 @@ import {Analytics} from "@vercel/analytics/react";
 function MyApp({Component, pageProps}) {
   return (
     <>
+      <Component {...pageProps} />
+      <Cookies />
       <ToastContainer position="bottom-right" />
       <SpeedInsights />
       <Analytics />
-      <Cookies />
-      <Component {...pageProps} />
     </>
   );
 }
