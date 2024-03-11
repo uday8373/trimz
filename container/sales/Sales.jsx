@@ -32,6 +32,7 @@ export default function Sales() {
                   repeat: Infinity,
                 }}>
                 <Image
+                  draggable="false"
                   src="/sales.jpg"
                   width={600}
                   height={600}
@@ -96,7 +97,13 @@ export default function Sales() {
                   repeat: Infinity,
                 }}
                 className="absolute   bottom-14  left-2 md:left-8 lg:left-2 xl:left-8 flex items-center gap-2 px-4 py-2 bg-white shadow-2xl rounded-[10px] ">
-                <Image src="/user.png" width={500} height={500} className="w-10" />
+                <Image
+                  draggable="false"
+                  src="/user.png"
+                  width={500}
+                  height={500}
+                  className="w-10"
+                />
                 <div className="w-full text-[14px]">
                   <p>Dan Cooper</p>
                   <p className="w-full bg-[#e2deff] h-1 rounded-full mt-1"></p>
@@ -170,6 +177,7 @@ export default function Sales() {
                     className="flex items-center gap-3"
                     items-center>
                     <Image
+                      draggable="false"
                       src="/thunderbolt.svg"
                       width={500}
                       height={500}
@@ -191,6 +199,7 @@ export default function Sales() {
                     viewport={{once: true}}
                     className="flex items-center gap-3">
                     <Image
+                      draggable="false"
                       src="/analytics.svg"
                       width={500}
                       height={500}
@@ -212,6 +221,7 @@ export default function Sales() {
                     viewport={{once: true}}
                     className="flex items-center gap-3">
                     <Image
+                      draggable="false"
                       src="/profile.svg"
                       width={500}
                       height={500}
@@ -238,6 +248,7 @@ export default function Sales() {
                   repeat: Infinity,
                 }}>
                 <Image
+                  draggable="false"
                   src="/privacy_control.jpg"
                   width={600}
                   height={600}
@@ -300,12 +311,14 @@ export default function Sales() {
                 className="absolute   bottom-36  left-2 md:left-8 lg:left-2 xl:left-8 flex items-center gap-2 px-4 py-2 bg-white shadow-2xl rounded-[10px] ">
                 <div className="w-full flex justify-center items-center">
                   <Image
+                    draggable="false"
                     src="/user1.png"
                     width={500}
                     height={500}
                     className="w-10 mr-[-10%] "
                   />
                   <Image
+                    draggable="false"
                     src="/user2.png"
                     width={500}
                     height={500}
@@ -448,6 +461,7 @@ export default function Sales() {
                   repeat: Infinity,
                 }}>
                 <Image
+                  draggable="false"
                   src="/qr_code.jpg"
                   width={600}
                   height={600}

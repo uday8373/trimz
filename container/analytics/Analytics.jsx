@@ -205,6 +205,7 @@ export default function Analytics() {
                 }}
                 viewport={{once: true}}>
                 <Image
+                  draggable="false"
                   src="/Smart_targeting.png"
                   width={70}
                   height={70}
@@ -270,6 +271,7 @@ export default function Analytics() {
                 }}
                 viewport={{once: true}}>
                 <Image
+                  draggable="false"
                   src="/In_depth.png"
                   width={70}
                   height={70}
@@ -334,6 +336,7 @@ export default function Analytics() {
                 }}
                 viewport={{once: true}}>
                 <Image
+                  draggable="false"
                   src="/Digital_experience2.png"
                   width={70}
                   height={70}
@@ -541,6 +544,7 @@ export default function Analytics() {
                             <div className="flex flex-row gap-1">
                               {url.isCustom === true && (
                                 <Image
+                                  draggable="false"
                                   src="/custom.png"
                                   width={600}
                                   height={600}
@@ -549,6 +553,7 @@ export default function Analytics() {
                               )}
                               {url.isDefault === true && (
                                 <Image
+                                  draggable="false"
                                   src="/default.png"
                                   width={600}
                                   height={600}
@@ -557,6 +562,7 @@ export default function Analytics() {
                               )}
                               {url.isIpAddress === true && (
                                 <Image
+                                  draggable="false"
                                   src="/ip.png"
                                   width={600}
                                   height={600}
@@ -565,6 +571,7 @@ export default function Analytics() {
                               )}
                               {url.isOneTime === true && (
                                 <Image
+                                  draggable="false"
                                   src="/onetime.png"
                                   width={600}
                                   height={600}
@@ -691,6 +698,7 @@ export default function Analytics() {
                             <div className="flex flex-row gap-1">
                               {url.isCustom === true && (
                                 <Image
+                                  draggable="false"
                                   src="/custom.png"
                                   width={600}
                                   height={600}
@@ -699,6 +707,7 @@ export default function Analytics() {
                               )}
                               {url.isDefault === true && (
                                 <Image
+                                  draggable="false"
                                   src="/default.png"
                                   width={600}
                                   height={600}
@@ -707,6 +716,7 @@ export default function Analytics() {
                               )}
                               {url.isIpAddress === true && (
                                 <Image
+                                  draggable="false"
                                   src="/ip.png"
                                   width={600}
                                   height={600}
@@ -715,6 +725,7 @@ export default function Analytics() {
                               )}
                               {url.isOneTime === true && (
                                 <Image
+                                  draggable="false"
                                   src="/onetime.png"
                                   width={600}
                                   height={600}

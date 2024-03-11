@@ -97,6 +97,7 @@ export const QrModal = ({isOpen, setIsOpen, BaseUrl, shortUrl}) => {
                     </h1>
                     <div>
                       <Image
+                        draggable="false"
                         width={500}
                         height={500}
                         src={qrCodeData}

@@ -230,6 +230,7 @@ const Nav = () => {
                   className="relative mt-2 rounded-full shadow-3xl">
                   {userData.image ? (
                     <img
+                      draggable="false"
                       width={1024}
                       height={1024}
                       src={userData.image}
@@ -238,6 +239,7 @@ const Nav = () => {
                     />
                   ) : (
                     <Image
+                      draggable="false"
                       width={1024}
                       height={1024}
                       src="/short_logo.png"
@@ -284,6 +286,7 @@ const Nav = () => {
                   className="relative mt-2 rounded-full shadow-3xl">
                   {userData.image ? (
                     <img
+                      draggable="false"
                       width={1024}
                       height={1024}
                       src={userData.image}
@@ -292,6 +295,7 @@ const Nav = () => {
                     />
                   ) : (
                     <Image
+                      draggable="false"
                       width={1024}
                       height={1024}
                       src="/short_logo.png"

@@ -657,7 +657,13 @@ export const Hero = () => {
           }}
           viewport={{once: true}}
           className="flex items-center justify-center w-full h-full">
-          <Image src="/url.svg" width={600} height={600} alt="Picture of the author" />
+          <Image
+            draggable="false"
+            src="/url.svg"
+            width={600}
+            height={600}
+            alt="Picture of the author"
+          />
         </motion.div>
         <Modal isOpen={isOpenLogin} setIsOpen={setIsOpenLogin} />
       </div>

@@ -188,6 +188,7 @@ export const GraphModal = ({isOpen, setIsOpen, BaseUrl, selectedItem}) => {
                   {selectedItem.clicks < 1 ? (
                     <div className="flex justify-center items-center flex-col w-full h-[88%]">
                       <Image
+                        draggable="false"
                         src="/analytics_modal.png"
                         width={600}
                         height={600}
