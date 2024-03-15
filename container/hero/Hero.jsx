@@ -192,8 +192,8 @@ export const Hero = () => {
     <section
       id="home"
       className="relative flex items-center justify-center w-full min-h-full pt-16 md:pt-20 bg-bghero select-none">
-      <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col-reverse xl:flex-row w-full flex items-center max-w-screen-2xl">
-        <div className="flex flex-col w-full h-full py-10 md:py-14">
+      <div className="2xl:px-[146px]  xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col-reverse xl:flex-row w-full flex items-center max-w-screen-2xl">
+        <div className="flex flex-col  w-full h-full py-10 md:py-14">
           <div className="flex">
             <motion.div
               initial={{y: 50, opacity: 0}}
