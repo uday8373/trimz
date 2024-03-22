@@ -85,4 +85,4 @@ const LinkSchema = new mongoose.Schema(
   },
 );
 
-export default mongoose.models.LinkTree || mongoose.model("LinkTree", LinkSchema);
+export default mongoose.models.TrimzLink || mongoose.model("TrimzLink", LinkSchema);

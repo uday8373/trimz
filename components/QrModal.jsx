@@ -29,7 +29,7 @@ export const QrModal = ({isOpen, setIsOpen, BaseUrl, shortUrl}) => {
           open={isOpen}
           onClose={setIsOpen}
           as="div"
-          className="fixed inset-0 z-10 flex items-center justify-center overflow-hidden backdrop-blur-sm">
+          className="fixed inset-0 z-10 flex items-center justify-center overflow-hidden bg-black/25">
           <div className="flex flex-col h-full px-8 overflow-hidden text-center lg:pt-10 lg:pb-8 md:pt-14 md:pb-8 ">
             <Dialog.Overlay />
 
@@ -37,7 +37,7 @@ export const QrModal = ({isOpen, setIsOpen, BaseUrl, shortUrl}) => {
               onClick={handleCloseModal}
               className="fixed inset-0 transition-opacity cursor-default"
               aria-hidden="true">
-              <div className="absolute inset-0 opacity-30 bg-bghero"></div>
+              <div className="absolute inset-0 opacity-30 bg-black/40"></div>
             </button>
 
             <motion.div

@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../components/Layout";
-import Hero from "../container/linktree/Hero";
+import Hero from "../container/trimzlink/Hero";
 
 export default function linktree() {
   return (

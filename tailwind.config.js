@@ -23,6 +23,7 @@ module.exports = {
         bghover: "#19181D",
         bghero: "#E9F6FF",
         pink: "#E93266",
+        lightpink: "#FFE4E3",
       },
       fontFamily: {
         sans: ["Public Sans", "sans-serif"],

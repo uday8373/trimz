@@ -1,5 +1,5 @@
 import DbConnect from "../../utils/DbConnect";
-import LinkTree from "../../models/LinkTree";
+import TrimzLink from "../../models/TrimzLink";
 import {VerifyToken} from "../../utils/VerifyToken";
 
 export default async function handler(req, res) {
@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     const {name} = req.body;
     const token = req.headers.token;
     try {
-      const user = await LinkTree.findOne({name});
+      const user = await TrimzLink.findOne({name});
 
       if (user) {
         return res.status(201).json({success: false, message: "User name already taken"});
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
         userId: userId,
       };
 
-      const link = await LinkTree.create(linkData);
+      const link = await TrimzLink.create(linkData);
       res.status(200).json({success: true, message: "Link Create Succesful", link});
     } catch (error) {
       console.error(error);
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
       if (!userId) {
         return res.status(201).json({success: false, message: "Token Error"});
       }
-      const user = await LinkTree.findOne({name});
+      const user = await TrimzLink.findOne({name});
       if (user) {
         return res
           .status(201)

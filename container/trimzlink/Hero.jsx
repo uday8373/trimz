@@ -3,8 +3,10 @@ import {useState, useEffect} from "react";
 import Image from "next/image";
 import {motion} from "framer-motion";
 import {toast} from "react-toastify";
+import {useRouter} from "next/router";
 
 export default function Hero() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [isAvailable, setIsAvailable] = useState(false);
@@ -30,7 +32,7 @@ export default function Hero() {
         headers.token = token;
       }
 
-      const response = await fetch(`/api/linktree/?name=${name}`, {
+      const response = await fetch(`/api/trimzlink/?name=${name}`, {
         method: "GET",
         headers: headers,
       });
@@ -50,16 +52,23 @@ export default function Hero() {
     }
   };
 
+  const handleContinue = () => {
+    router.push({
+      pathname: "/appearance",
+      query: {heading: name},
+    });
+  };
+
   return (
     <section
       id="home"
-      className="relative flex items-center pt-16 md:pt-20 justify-center w-full min-h-screen  bg-[#e2deff] select-none">
+      className="relative flex items-center pt-16 md:pt-20 justify-center w-full min-h-screen  bg-[#edeaff] select-none">
       <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col-reverse xl:flex-row w-full flex items-center max-w-screen-2xl">
         <div className="w-full flex xl:flex-row flex-col-reverse  justify-between">
           <motion.div
-            initial={{x: -50, opacity: 0}}
+            initial={{y: 50, opacity: 0}}
             whileInView={{
-              x: 0,
+              y: 0,
               opacity: 1,
               transition: {
                 duration: 0.8,
@@ -70,12 +79,12 @@ export default function Hero() {
             viewport={{once: true}}
             className="w-full flex flex-col xl:mt-10">
             <div className="flex">
-              <div className="font-sans font-bold text-[12px] text-pink bg-pink bg-opacity-15 rounded-3xl py-2 px-5 text-left">
-                Create your linktree
+              <div className="font-sans font-bold text-[12px] text-purple-500 bg-purple-500 bg-opacity-15 rounded-3xl py-2 px-5 text-left">
+                Create your trimzlink
               </div>
             </div>
             <div className="font-sans font-bold text-[28px] md:text-[48px] text-black pt-5 leading-[36px] md:leading-[54px]">
-              Create and customize your Linktree in minutes
+              Create and customize your Trimzlink in minutes
             </div>
             <div className="font-sans font-medium text-[14px] lg:text-[18px] text-gray pt-5">
               Connect your TikTok, Instagram, Twitter, website, store, videos, music,
@@ -115,6 +124,7 @@ export default function Hero() {
               </div>
               <button
                 disabled={!isAvailable}
+                onClick={handleContinue}
                 className="bg-primary disabled:bg-[#E0E2D9] disabled:text-lightGray hidden md:flex w-36 justify-center items-center text-white font-sans font-semibold text-[16px] py-3 rounded-[100px] hover:bg-bghover transition-all duration-500">
                 Continue
               </button>
@@ -130,14 +140,15 @@ export default function Hero() {
 
             <button
               disabled={!isAvailable}
+              onClick={handleContinue}
               className="w-full md:hidden flex disabled:bg-[#E0E2D9] disabled:text-lightGray bg-primary justify-center items-center mb-6 text-white h-14 rounded-[100px] text-[18px] font-semibold hover:bg-bghover transition-all duration-500">
               Continue
             </button>
           </motion.div>
           <motion.div
-            initial={{x: 50, opacity: 0}}
+            initial={{y: 50, opacity: 0}}
             whileInView={{
-              x: 0,
+              y: 0,
               opacity: 1,
               transition: {
                 duration: 0.8,

@@ -110,72 +110,36 @@ export default function Sales() {
                 </div>
               </motion.div>
             </div>
-            <div className="flex flex-col justify-start w-full h-full gap-4 lg:w-1/2 select-none">
+            <motion.div
+              initial={{x: 50, opacity: 0}}
+              whileInView={{
+                x: 0,
+                opacity: 1,
+                transition: {
+                  duration: 0.8,
+                  ease: [0.65, 0, 0.35, 1],
+                  delay: 0.1,
+                },
+              }}
+              viewport={{once: true}}
+              className="flex flex-col justify-start w-full h-full gap-4 lg:w-1/2 select-none">
               <div className="flex">
-                <motion.div
-                  initial={{x: 50, opacity: 0}}
-                  whileInView={{
-                    x: 0,
-                    opacity: 1,
-                    transition: {
-                      duration: 0.8,
-                      ease: [0.65, 0, 0.35, 1],
-                      delay: 0.1,
-                    },
-                  }}
-                  viewport={{once: true}}
-                  className="font-sans font-bold text-[12px] text-pink bg-pink bg-opacity-15 rounded-3xl py-2 px-5 text-left">
+                <div className="font-sans font-bold text-[12px] text-pink bg-pink bg-opacity-15 rounded-3xl py-2 px-5 text-left">
                   Sales & Marketing
-                </motion.div>
+                </div>
               </div>
               <div className="flex flex-col gap-5">
-                <motion.div
-                  initial={{x: 50, opacity: 0}}
-                  whileInView={{
-                    x: 0,
-                    opacity: 1,
-                    transition: {
-                      duration: 0.8,
-                      ease: [0.65, 0, 0.35, 1],
-                      delay: 0.2,
-                    },
-                  }}
-                  viewport={{once: true}}
-                  className="font-sans font-bold text-[32px] md:text-[38px] text-black">
+                <div className="font-sans font-bold text-[32px] md:text-[38px] text-black">
                   Perfect for sales & marketing
-                </motion.div>
-                <motion.div
-                  initial={{x: 50, opacity: 0}}
-                  whileInView={{
-                    x: 0,
-                    opacity: 1,
-                    transition: {
-                      duration: 0.8,
-                      ease: [0.65, 0, 0.35, 1],
-                      delay: 0.3,
-                    },
-                  }}
-                  viewport={{once: true}}>
+                </div>
+                <div>
                   Understanding your users and customers will help you increase your
                   conversion. Our system allows you to track everything. Whether it is the
                   amount of clicks, the country or the referrer, the data is there for you
                   to analyze it.
-                </motion.div>
+                </div>
                 <div className="flex flex-col gap-3">
-                  <motion.div
-                    initial={{x: 50, opacity: 0}}
-                    whileInView={{
-                      x: 0,
-                      opacity: 1,
-                      transition: {
-                        duration: 0.8,
-                        ease: [0.65, 0, 0.35, 1],
-                        delay: 0.2,
-                      },
-                    }}
-                    viewport={{once: true}}
-                    className="flex items-center gap-3"
-                    items-center>
+                  <div className="flex items-center gap-3" items-center>
                     <Image
                       draggable="false"
                       src="/thunderbolt.svg"
@@ -184,20 +148,8 @@ export default function Sales() {
                       className="w-5 h-5"
                     />
                     <p>Redirection Tools</p>
-                  </motion.div>
-                  <motion.div
-                    initial={{x: 50, opacity: 0}}
-                    whileInView={{
-                      x: 0,
-                      opacity: 1,
-                      transition: {
-                        duration: 0.8,
-                        ease: [0.65, 0, 0.35, 1],
-                        delay: 0.3,
-                      },
-                    }}
-                    viewport={{once: true}}
-                    className="flex items-center gap-3">
+                  </div>
+                  <div className="flex items-center gap-3">
                     <Image
                       draggable="false"
                       src="/analytics.svg"
@@ -206,20 +158,8 @@ export default function Sales() {
                       className="w-5 h-5"
                     />
                     <p>Powerful Statistics</p>
-                  </motion.div>
-                  <motion.div
-                    initial={{x: 50, opacity: 0}}
-                    whileInView={{
-                      x: 0,
-                      opacity: 1,
-                      transition: {
-                        duration: 0.8,
-                        ease: [0.65, 0, 0.35, 1],
-                        delay: 0.4,
-                      },
-                    }}
-                    viewport={{once: true}}
-                    className="flex items-center gap-3">
+                  </div>
+                  <div className="flex items-center gap-3">
                     <Image
                       draggable="false"
                       src="/profile.svg"
@@ -228,10 +168,10 @@ export default function Sales() {
                       className="w-5 h-5"
                     />
                     <p>Beautiful Profiles</p>
-                  </motion.div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
         <div className="w-full flex flex-col-reverse  xl:flex-row items-center mt-5">
@@ -330,121 +270,49 @@ export default function Sales() {
                 </div>
               </motion.div>
             </div>
-            <div className="flex flex-col justify-start w-full h-full gap-4 lg:w-1/2 ">
-              <motion.div
-                initial={{x: -50, opacity: 0}}
-                whileInView={{
-                  x: 0,
-                  opacity: 1,
-                  transition: {
-                    duration: 0.8,
-                    ease: [0.65, 0, 0.35, 1],
-                    delay: 0.1,
-                  },
-                }}
-                viewport={{once: true}}
-                className="flex ">
+            <motion.div
+              initial={{x: -50, opacity: 0}}
+              whileInView={{
+                x: 0,
+                opacity: 1,
+                transition: {
+                  duration: 0.8,
+                  ease: [0.65, 0, 0.35, 1],
+                  delay: 0.1,
+                },
+              }}
+              viewport={{once: true}}
+              className="flex flex-col justify-start w-full h-full gap-4 lg:w-1/2 ">
+              <div className="flex ">
                 <h1 className="font-sans font-bold text-[12px] text-pink bg-pink bg-opacity-15 rounded-3xl py-2 px-5 text-left">
                   Privacy Control
                 </h1>
-              </motion.div>
-              <motion.div
-                initial={{x: -50, opacity: 0}}
-                whileInView={{
-                  x: 0,
-                  opacity: 1,
-                  transition: {
-                    duration: 0.8,
-                    ease: [0.65, 0, 0.35, 1],
-                    delay: 0.2,
-                  },
-                }}
-                viewport={{once: true}}
-                className="flex flex-col gap-5">
-                <motion.div
-                  initial={{x: -50, opacity: 0}}
-                  whileInView={{
-                    x: 0,
-                    opacity: 1,
-                    transition: {
-                      duration: 0.8,
-                      ease: [0.65, 0, 0.35, 1],
-                      delay: 0.3,
-                    },
-                  }}
-                  viewport={{once: true}}
-                  className="font-sans font-bold text-[32px] md:text-[38px] text-black">
+              </div>
+              <div className="flex flex-col gap-5">
+                <div className="font-sans font-bold text-[32px] md:text-[38px] text-black">
                   Powerful tools that work
-                </motion.div>
-                <motion.div
-                  initial={{x: -50, opacity: 0}}
-                  whileInView={{
-                    x: 0,
-                    opacity: 1,
-                    transition: {
-                      duration: 0.8,
-                      ease: [0.65, 0, 0.35, 1],
-                      delay: 0.4,
-                    },
-                  }}
-                  viewport={{once: true}}>
+                </div>
+                <div>
                   Our product lets yoyr target your users to better understand their
                   behaviour and provide them a better overall experience through smart
                   re-targeting. We provide you many powerful tools to reach them better.
-                </motion.div>
+                </div>
                 <div className="flex flex-col gap-3">
-                  <motion.div
-                    initial={{x: 50, opacity: 0}}
-                    whileInView={{
-                      x: 0,
-                      opacity: 1,
-                      transition: {
-                        duration: 0.8,
-                        ease: [0.65, 0, 0.35, 1],
-                        delay: 0.2,
-                      },
-                    }}
-                    viewport={{once: true}}
-                    className="flex items-center gap-3"
-                    items-center>
+                  <div className="flex items-center gap-3" items-center>
                     <FaLink size={20} color="#2161DF" />
                     <p>Link Management</p>
-                  </motion.div>
-                  <motion.div
-                    initial={{x: 50, opacity: 0}}
-                    whileInView={{
-                      x: 0,
-                      opacity: 1,
-                      transition: {
-                        duration: 0.8,
-                        ease: [0.65, 0, 0.35, 1],
-                        delay: 0.3,
-                      },
-                    }}
-                    viewport={{once: true}}
-                    className="flex items-center gap-3">
+                  </div>
+                  <div className="flex items-center gap-3">
                     <MdOutlinePrivacyTip size={20} color="#2161DF" />
                     <p>Privacy Control</p>
-                  </motion.div>
-                  <motion.div
-                    initial={{x: 50, opacity: 0}}
-                    whileInView={{
-                      x: 0,
-                      opacity: 1,
-                      transition: {
-                        duration: 0.8,
-                        ease: [0.65, 0, 0.35, 1],
-                        delay: 0.4,
-                      },
-                    }}
-                    viewport={{once: true}}
-                    className="flex items-center gap-3">
+                  </div>
+                  <div className="flex items-center gap-3">
                     <MdOutlineDashboard size={20} color="#2161DF" />
                     <p>Powerful Dashboard</p>
-                  </motion.div>
+                  </div>
                 </div>
-              </motion.div>
-            </div>
+              </div>
+            </motion.div>
           </div>
         </div>
         <div className="w-full flex flex-col-reverse  xl:flex-row items-center mt-5">
@@ -539,58 +407,34 @@ export default function Sales() {
                 </div>
               </motion.div>
             </div>
-            <div className="flex flex-col justify-start w-full h-full gap-4 lg:w-1/2 ">
-              <motion.div
-                initial={{x: 50, opacity: 0}}
-                whileInView={{
-                  x: 0,
-                  opacity: 1,
-                  transition: {
-                    duration: 0.8,
-                    ease: [0.65, 0, 0.35, 1],
-                    delay: 0.1,
-                  },
-                }}
-                viewport={{once: true}}
-                v
-                className="flex ">
+            <motion.div
+              initial={{x: 50, opacity: 0}}
+              whileInView={{
+                x: 0,
+                opacity: 1,
+                transition: {
+                  duration: 0.8,
+                  ease: [0.65, 0, 0.35, 1],
+                  delay: 0.1,
+                },
+              }}
+              viewport={{once: true}}
+              className="flex flex-col justify-start w-full h-full gap-4 lg:w-1/2 ">
+              <div className="flex ">
                 <h1 className="font-sans font-bold text-[12px] text-pink bg-pink bg-opacity-15 rounded-3xl py-2 px-5 text-left">
                   QR Code
                 </h1>
-              </motion.div>
+              </div>
               <div className="flex flex-col gap-5">
                 <span className="font-sans font-bold text-[32px] md:text-[38px] text-black">
                   QR Codes
                 </span>
-                <motion.div
-                  initial={{x: 50, opacity: 0}}
-                  whileInView={{
-                    x: 0,
-                    opacity: 1,
-                    transition: {
-                      duration: 0.8,
-                      ease: [0.65, 0, 0.35, 1],
-                      delay: 0.2,
-                    },
-                  }}
-                  viewport={{once: true}}>
+                <div>
                   Easy to use, dynamic and customizable QR Codes for your marketing
                   campaigns. Analyze Statistics and optimize your marketing strategy and
                   increase engagement.
-                </motion.div>
-                <motion.div
-                  initial={{x: 50, opacity: 0}}
-                  whileInView={{
-                    x: 0,
-                    opacity: 1,
-                    transition: {
-                      duration: 0.8,
-                      ease: [0.65, 0, 0.35, 1],
-                      delay: 0.3,
-                    },
-                  }}
-                  viewport={{once: true}}
-                  className="flex">
+                </div>
+                <div className="flex">
                   <ScrollLink
                     onClick={() => {
                       window.scrollTo(0, 0);
@@ -603,9 +447,9 @@ export default function Sales() {
                     className="flex cursor-pointer flex-row mt-2 px-6 py-2 border-2 border-primary rounded-full text-primary font-sans font-semibold text-[16px] hover:bg-black hover:text-white hover:border-black transition-all duration-500 delay-75">
                     Get Started
                   </ScrollLink>
-                </motion.div>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

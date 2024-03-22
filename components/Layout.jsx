@@ -35,7 +35,7 @@ const Layout = ({children}) => (
         }}></script>
     </Head>
 
-    <header className="my-4">
+    <header>
       <Nav />
     </header>
     <main>{children}</main>

@@ -1,4 +1,3 @@
-"use client";
 import {useState, useEffect} from "react";
 import React from "react";
 import {toast} from "react-toastify";
@@ -194,70 +193,22 @@ export const Hero = () => {
       className="relative flex items-center justify-center w-full min-h-full pt-16 md:pt-20 bg-bghero select-none">
       <div className="2xl:px-[146px]  xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col-reverse xl:flex-row w-full flex items-center max-w-screen-2xl">
         <div className="flex flex-col  w-full h-full py-10 md:py-14">
-          <div className="flex">
-            <motion.div
-              initial={{y: 50, opacity: 0}}
-              whileInView={{
-                y: 0,
-                opacity: 1,
-                transition: {
-                  duration: 0.8,
-                  ease: [0.65, 0, 0.35, 1],
-                  delay: 0.1,
-                },
-              }}
-              viewport={{once: true}}
-              className="font-sans font-bold text-[12px] text-pink bg-pink bg-opacity-15 rounded-3xl py-2 px-5 text-left">
+          <div className="flex ">
+            <div className="font-sans font-bold text-[12px] text-pink bg-pink bg-opacity-15 rounded-3xl py-2 px-5 text-left">
               Free link Shortening
-            </motion.div>
+            </div>
           </div>
-          <motion.div
-            initial={{y: 50, opacity: 0}}
-            whileInView={{
-              y: 0,
-              opacity: 1,
-              transition: {
-                duration: 0.8,
-                ease: [0.65, 0, 0.35, 1],
-                delay: 0.2,
-              },
-            }}
-            viewport={{once: true}}
-            className="font-sans font-bold text-[32px] md:text-[48px] text-black pt-5 leading-[42px] md:leading-[54px]">
+          <div className="font-sans font-bold text-[32px] md:text-[48px] text-black pt-5 leading-[42px] md:leading-[54px]">
             <span className="">Trimz</span> short URL & QR <br /> code generator
-          </motion.div>
-          <motion.div
-            initial={{y: 50, opacity: 0}}
-            whileInView={{
-              y: 0,
-              opacity: 1,
-              transition: {
-                duration: 0.8,
-                ease: [0.65, 0, 0.35, 1],
-                delay: 0.3,
-              },
-            }}
-            viewport={{once: true}}
-            className="font-sans font-medium text-[16px] lg:text-[18px] text-gray pt-5">
+          </div>
+          <div className="font-sans font-medium text-[16px] lg:text-[18px] text-gray pt-5">
             Advanced free short link generator for individuals & businesses, enhancing URL
             management and online presence.
-          </motion.div>
+          </div>
           <div className="w-full py-5">
             <div>
               <form onSubmit={handleSubmit}>
-                <motion.div
-                  initial={{y: -50, opacity: 0}}
-                  whileInView={{
-                    y: 0,
-                    opacity: 1,
-                    transition: {
-                      duration: 0.8,
-                      ease: [0.65, 0, 0.35, 1],
-                      delay: 0.3,
-                    },
-                  }}
-                  viewport={{once: true}}
-                  className="bg-white border-2 border-primary border-opacity-50 rounded-[100px] relative flex flex-row justify-center items-center p-2 ">
+                <div className="bg-white border-2 border-primary border-opacity-50 rounded-[100px] relative flex flex-row justify-center items-center p-2 ">
                   <FaLink size={28} color="#637887" className="mx-5" />
                   <input
                     type="text"
@@ -286,21 +237,9 @@ export const Hero = () => {
                       "Shorten"
                     )}
                   </button>
-                </motion.div>
+                </div>
 
-                <motion.div
-                  initial={{x: -50, opacity: 0}}
-                  whileInView={{
-                    x: 0,
-                    opacity: 1,
-                    transition: {
-                      duration: 0.8,
-                      ease: [0.65, 0, 0.35, 1],
-                      delay: 0.3,
-                    },
-                  }}
-                  viewport={{once: true}}
-                  className="flex items-start w-full mt-5">
+                <div className="flex items-start w-full mt-5">
                   <div className="checkbox path">
                     <input
                       id="customUrl"
@@ -330,7 +269,7 @@ export const Hero = () => {
                     }}>
                     Customize your short link
                   </label>
-                </motion.div>
+                </div>
 
                 {isCustom && (
                   <input
@@ -343,19 +282,7 @@ export const Hero = () => {
                     required
                   />
                 )}
-                <motion.div
-                  initial={{x: -50, opacity: 0}}
-                  whileInView={{
-                    x: 0,
-                    opacity: 1,
-                    transition: {
-                      duration: 0.8,
-                      ease: [0.65, 0, 0.35, 1],
-                      delay: 0.4,
-                    },
-                  }}
-                  viewport={{once: true}}
-                  className="flex items-start w-full mt-5">
+                <div className="flex items-start w-full mt-5">
                   <div className="checkbox path">
                     <input
                       id="oneTime"
@@ -385,21 +312,9 @@ export const Hero = () => {
                     className="ml-2  font-sans text-[16px] font-medium text-black cursor-pointer ">
                     Make this a one-time link that expires after one visit
                   </label>
-                </motion.div>
+                </div>
 
-                <motion.div
-                  initial={{x: -50, opacity: 0}}
-                  whileInView={{
-                    x: 0,
-                    opacity: 1,
-                    transition: {
-                      duration: 0.8,
-                      ease: [0.65, 0, 0.35, 1],
-                      delay: 0.5,
-                    },
-                  }}
-                  viewport={{once: true}}
-                  className="flex items-start w-full mt-5">
+                <div className="flex items-start w-full mt-5">
                   <div className="checkbox path">
                     <input
                       id="restrict"
@@ -429,7 +344,7 @@ export const Hero = () => {
                     className="ml-2 font-sans text-[16px] font-medium text-black cursor-pointer">
                     Restrict this link to only work for specific IP addresses
                   </label>
-                </motion.div>
+                </div>
 
                 {isIpAddress && (
                   <input
@@ -464,20 +379,20 @@ export const Hero = () => {
               </form>
               {shortUrl && (
                 <>
-                  <div className="mb-5">
-                    <motion.div
-                      initial={{y: 50, opacity: 0}}
-                      whileInView={{
-                        y: 0,
-                        opacity: 1,
-                        transition: {
-                          duration: 0.8,
-                          ease: [0.65, 0, 0.35, 1],
-                          delay: 0.1,
-                        },
-                      }}
-                      viewport={{once: true}}
-                      className="text-black text-[16px] w-full flex items-center justify-between bg-white drop-shadow-lg rounded-xl py-5 border-2 border-dotted border-opacity-50 border-primary mt-3 px-5">
+                  <motion.div
+                    initial={{y: 50, opacity: 0}}
+                    whileInView={{
+                      y: 0,
+                      opacity: 1,
+                      transition: {
+                        duration: 0.8,
+                        ease: [0.65, 0, 0.35, 1],
+                        delay: 0,
+                      },
+                    }}
+                    viewport={{once: true}}
+                    className="mb-5">
+                    <div className="text-black text-[16px] w-full flex items-center justify-between bg-white drop-shadow-lg rounded-xl py-5 border-2 border-dotted border-opacity-50 border-primary mt-3 px-5">
                       <h1 className="font-semibold">
                         {baseUrl}
                         {shortUrl}
@@ -499,20 +414,9 @@ export const Hero = () => {
                           </button>
                         </Popover>
                       </div>
-                    </motion.div>
+                    </div>
                     <div className="flex flex-row items-center justify-between w-full mt-5 overflow-hidden ">
-                      <motion.div
-                        initial={{x: -50, opacity: 0}}
-                        whileInView={{
-                          x: 0,
-                          opacity: 1,
-                          transition: {
-                            duration: 0.8,
-                            ease: [0.65, 0, 0.35, 1],
-                            delay: 0.2,
-                          },
-                        }}
-                        viewport={{once: true}}
+                      <div
                         onMouseEnter={handleQrMouseEnter}
                         onMouseLeave={handleQrMouseLeave}>
                         <Popover
@@ -537,20 +441,9 @@ export const Hero = () => {
                           BaseUrl={baseUrl}
                           shortUrl={shortUrl}
                         />
-                      </motion.div>
+                      </div>
 
-                      <motion.div
-                        initial={{x: -50, opacity: 0}}
-                        whileInView={{
-                          x: 0,
-                          opacity: 1,
-                          transition: {
-                            duration: 0.8,
-                            ease: [0.65, 0, 0.35, 1],
-                            delay: 0.3,
-                          },
-                        }}
-                        viewport={{once: true}}
+                      <div
                         onMouseEnter={handleShareMouseEnter}
                         onMouseLeave={handleShareMouseLeave}>
                         <Popover
@@ -569,20 +462,9 @@ export const Hero = () => {
                             </h1>
                           </button>
                         </Popover>
-                      </motion.div>
+                      </div>
 
-                      <motion.div
-                        initial={{x: -50, opacity: 0}}
-                        whileInView={{
-                          x: 0,
-                          opacity: 1,
-                          transition: {
-                            duration: 0.8,
-                            ease: [0.65, 0, 0.35, 1],
-                            delay: 0.4,
-                          },
-                        }}
-                        viewport={{once: true}}>
+                      <div>
                         <Popover
                           isOpen={popoverUrl}
                           body={
@@ -605,19 +487,8 @@ export const Hero = () => {
                             </h1>
                           </ScrollLink>
                         </Popover>
-                      </motion.div>
-                      <motion.div
-                        initial={{x: -50, opacity: 0}}
-                        whileInView={{
-                          x: 0,
-                          opacity: 1,
-                          transition: {
-                            duration: 0.8,
-                            ease: [0.65, 0, 0.35, 1],
-                            delay: 0.5,
-                          },
-                        }}
-                        viewport={{once: true}}
+                      </div>
+                      <div
                         onMouseEnter={handleClearMouseEnter}
                         onMouseLeave={handleClearMouseLeave}>
                         <Popover
@@ -636,27 +507,15 @@ export const Hero = () => {
                             </h1>
                           </button>
                         </Popover>
-                      </motion.div>
+                      </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </>
               )}
             </div>
           </div>
         </div>
-        <motion.div
-          initial={{x: 50, opacity: 0}}
-          whileInView={{
-            x: 0,
-            opacity: 1,
-            transition: {
-              duration: 0.8,
-              ease: [0.65, 0, 0.35, 1],
-              delay: 0.1,
-            },
-          }}
-          viewport={{once: true}}
-          className="flex items-center justify-center w-full h-full">
+        <div className="flex items-center justify-center w-full h-full md:mt-0 mt-8">
           <Image
             draggable="false"
             src="/url.svg"
@@ -664,7 +523,7 @@ export const Hero = () => {
             height={600}
             alt="Picture of the author"
           />
-        </motion.div>
+        </div>
         <Modal isOpen={isOpenLogin} setIsOpen={setIsOpenLogin} />
       </div>
     </section>
