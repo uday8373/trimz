@@ -147,7 +147,8 @@ export const Hero = () => {
   useEffect(() => {
     const fetchUrl = window?.location.href;
     const modifiedUrl = fetchUrl.replace(/www\./, "");
-    setBaseUrl(modifiedUrl);
+    const perfectUrl = modifiedUrl.split("#")[0];
+    setBaseUrl(perfectUrl);
     const token = localStorage.getItem("token");
     if (token) {
       setIsToken(true);

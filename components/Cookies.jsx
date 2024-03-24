@@ -38,7 +38,7 @@ export default function Cookies() {
                   transition: {
                     duration: 0.8,
                     ease: [0.65, 0, 0.35, 1],
-                    delay: 0.2,
+                    delay: 1,
                   },
                 }}
                 exit={{
@@ -47,7 +47,7 @@ export default function Cookies() {
                   transition: {
                     duration: 0.6,
                     ease: [0.65, 0, 0.35, 1],
-                    delay: 0.3,
+                    delay: 1,
                   },
                 }}
                 className="flex md:flex-row flex-col items-center justify-center gap-5 px-5 py-5 bg-white shadow-3xl rounded-[10px]">

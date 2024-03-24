@@ -27,7 +27,7 @@ const Nav = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 100) {
+      if (window.scrollY > 70) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -102,7 +102,7 @@ const Nav = () => {
   const handleNavLinkClick = (id) => {
     localStorage.setItem("active", id);
     setActive(id);
-    router.push(id, {scroll: false});
+    // router.push(id, {scroll: false});
   };
 
   const handleMobileNavLinkClick = (id) => {

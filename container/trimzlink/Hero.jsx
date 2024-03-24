@@ -1,15 +1,18 @@
-import React from "react";
-import {useState, useEffect} from "react";
-import Image from "next/image";
+import React, {useState, useEffect} from "react";
 import {motion} from "framer-motion";
-import {toast} from "react-toastify";
 import {useRouter} from "next/router";
+import Image from "next/image";
+import {toast} from "react-toastify";
+import UsernameInput from "../../components/trimzlink/UsernameInput";
+import ErrorMessage from "../../components/trimzlink/ErrorMessage";
+import LoadingButton from "../../components/trimzlink/LoadingButton";
 
-export default function Hero() {
+const Hero = () => {
   const router = useRouter();
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [isAvailable, setIsAvailable] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (name.length > 2) {
@@ -26,13 +29,13 @@ export default function Hero() {
         "Content-Type": "application/json",
       };
 
-      const token = await localStorage.getItem("token");
+      const token = localStorage.getItem("token");
 
       if (token) {
         headers.token = token;
       }
 
-      const response = await fetch(`/api/trimzlink/?name=${name}`, {
+      const response = await fetch(`/api/trimzlink/?trimzLink=${name}`, {
         method: "GET",
         headers: headers,
       });
@@ -47,22 +50,57 @@ export default function Hero() {
         setError(data.message);
       }
     } catch (error) {
-      console.error("Error generating link tree:", error);
-      toast.error("Error generating link tree");
+      console.error("Error generating trimzlink:", error);
+      toast.error("Error generating trimzlink");
     }
   };
 
-  const handleContinue = () => {
-    router.push({
-      pathname: "/appearance",
-      query: {heading: name},
-    });
+  const handleContinue = async () => {
+    setIsLoading(true);
+
+    try {
+      let headers = {
+        "Content-Type": "application/json",
+      };
+
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        headers.token = token;
+      }
+
+      const response = await fetch("/api/trimzlink", {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify({
+          trimzLink: name,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        await router.push({
+          pathname: "/appearance",
+          query: {heading: name},
+        });
+
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.error("Error generating trimzlink:", error);
+      toast.error("Error generating trimzlink");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <section
       id="home"
-      className="relative flex items-center pt-16 md:pt-20 justify-center w-full min-h-screen  bg-[#edeaff] select-none">
+      className="relative flex items-center pt-16 md:pt-20 justify-center w-full min-h-screen bg-gradient-to-b from-[#E9F6FF] to-[#e2deff] bg-fixed select-none">
       <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col-reverse xl:flex-row w-full flex items-center max-w-screen-2xl">
         <div className="w-full flex xl:flex-row flex-col-reverse  justify-between">
           <motion.div
@@ -92,58 +130,37 @@ export default function Hero() {
               page designed to convert.
             </div>
 
-            <div className="flex w-full mt-6 xl:mb-0 mb-6 items-center bg-white pl-8 pr-3 rounded-full justify-between">
-              <div className="flex md:py-5 py-4">
-                <label
-                  htmlFor="url"
-                  className="md:text-[18px] text-[14px] text-[#637887] font-sans font-medium ">
-                  trimz.me/
-                </label>
-                <input
-                  id="url"
-                  type="text"
-                  value={name}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value.length <= 30) {
-                      setName(value);
-                      if (value.length > 2) {
-                        setError("");
-                      } else {
-                        setIsAvailable(false);
-                      }
-                    } else {
-                      setIsAvailable(false);
-                      setError("Usernames cannot be longer than 30 characters");
-                    }
-                  }}
-                  placeholder="username"
-                  className=" w-full placeholder-[#637887] font-sans font-medium md:text-[18px] text-[14px] relative focus:outline-none"
-                  required
-                />
-              </div>
-              <button
-                disabled={!isAvailable}
-                onClick={handleContinue}
-                className="bg-primary disabled:bg-[#E0E2D9] disabled:text-lightGray hidden md:flex w-36 justify-center items-center text-white font-sans font-semibold text-[16px] py-3 rounded-[100px] hover:bg-bghover transition-all duration-500">
-                Continue
-              </button>
-            </div>
-            <div className="w-full flex mt-2 pl-8">
-              <h1
-                className={`md:text-[16px] text-[14px] font-sans font-medium ${
-                  isAvailable ? "text-green-600" : "text-red-500"
-                }`}>
-                {error}
-              </h1>
-            </div>
+            <UsernameInput
+              value={name}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/\s/.test(value)) {
+                  setError("Spaces are not allowed in usernames");
+                  setIsAvailable(false);
+                } else if (value.length <= 30) {
+                  setName(value);
+                  if (value.length > 2) {
+                    setError("");
+                  } else {
+                    setIsAvailable(false);
+                  }
+                } else {
+                  setIsAvailable(false);
+                  setError("Usernames cannot be longer than 30 characters");
+                }
+              }}
+              isAvailable={isAvailable}
+              isLoading={isLoading}
+              handleContinue={handleContinue}
+            />
 
-            <button
+            <ErrorMessage error={error} isAvailable={isAvailable} />
+
+            <LoadingButton
               disabled={!isAvailable}
-              onClick={handleContinue}
-              className="w-full md:hidden flex disabled:bg-[#E0E2D9] disabled:text-lightGray bg-primary justify-center items-center mb-6 text-white h-14 rounded-[100px] text-[18px] font-semibold hover:bg-bghover transition-all duration-500">
-              Continue
-            </button>
+              isLoading={isLoading}
+              handleContinue={handleContinue}
+            />
           </motion.div>
           <motion.div
             initial={{y: 50, opacity: 0}}
@@ -170,4 +187,6 @@ export default function Hero() {
       </div>
     </section>
   );
-}
+};
+
+export default Hero;

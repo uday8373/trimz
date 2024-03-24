@@ -6,10 +6,10 @@ export default async function handler(req, res) {
   await DbConnect();
 
   if (req.method === "POST") {
-    const {name} = req.body;
+    const {trimzLink} = req.body;
     const token = req.headers.token;
     try {
-      const user = await TrimzLink.findOne({name});
+      const user = await TrimzLink.findOne({trimzLink});
 
       if (user) {
         return res.status(201).json({success: false, message: "User name already taken"});
@@ -21,7 +21,8 @@ export default async function handler(req, res) {
       }
 
       const linkData = {
-        name,
+        name: trimzLink,
+        trimzLink,
         userId: userId,
       };
 
@@ -33,14 +34,14 @@ export default async function handler(req, res) {
     }
   }
   if (req.method === "GET") {
-    const {name} = req.query;
+    const {trimzLink} = req.query;
     const token = req.headers.token;
     try {
       const userId = await VerifyToken(token);
       if (!userId) {
         return res.status(201).json({success: false, message: "Token Error"});
       }
-      const user = await TrimzLink.findOne({name});
+      const user = await TrimzLink.findOne({trimzLink});
       if (user) {
         return res
           .status(201)
@@ -48,5 +49,38 @@ export default async function handler(req, res) {
       }
       return res.status(200).json({success: true, message: "User name available"});
     } catch (error) {}
+  }
+  if (req.method === "PATCH") {
+    const {trimzLink} = req.query;
+    const {name, about, backgroundColor, image, socialLinks} = req.body;
+    const token = req.headers.token;
+
+    try {
+      // Verify user token
+      const userId = await VerifyToken(token);
+      if (!userId) {
+        return res.status(401).json({success: false, message: "Token Error"});
+      }
+      const id = {trimzLink: trimzLink};
+
+      const updatedFields = {
+        name,
+        about,
+        backgroundColor,
+        image,
+        socialLinks,
+      };
+
+      const trimzLinkDoc = await TrimzLink.findOneAndUpdate(id, updatedFields);
+
+      return res.status(200).json({
+        success: true,
+        message: "TrimzLink updated successfully",
+        trimzLink: trimzLinkDoc,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({success: false, error: "Internal server error"});
+    }
   }
 }

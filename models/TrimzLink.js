@@ -2,9 +2,13 @@ import mongoose from "mongoose";
 
 const LinkSchema = new mongoose.Schema(
   {
-    name: {
+    trimzLink: {
       type: String,
       required: true,
+    },
+    name: {
+      type: String,
+      required: false,
     },
     about: {
       type: String,
@@ -12,61 +16,13 @@ const LinkSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      required: true,
-    },
-    email: {
-      type: String,
       required: false,
     },
-    instagram: {
-      type: String,
+    socialLinks: {
+      type: Array,
       required: false,
     },
-    threads: {
-      type: String,
-      required: false,
-    },
-    facebook: {
-      type: String,
-      required: false,
-    },
-    youtube: {
-      type: String,
-      required: false,
-    },
-    instagram: {
-      type: String,
-      required: false,
-    },
-    xTwitter: {
-      type: String,
-      required: false,
-    },
-    tiktok: {
-      type: String,
-      required: false,
-    },
-    snapchat: {
-      type: String,
-      required: false,
-    },
-    discord: {
-      type: String,
-      required: false,
-    },
-    github: {
-      type: String,
-      required: false,
-    },
-    linkedin: {
-      type: String,
-      required: false,
-    },
-    telegram: {
-      type: String,
-      required: false,
-    },
-    twitch: {
+    backgroundColor: {
       type: String,
       required: false,
     },

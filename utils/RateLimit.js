@@ -2,7 +2,7 @@
 import {RateLimiterMemory} from "rate-limiter-flexible";
 
 const opts = {
-  points: 100, // 100 requests
+  points: 10, // 10 requests
   duration: 24 * 60 * 60, // per 24 hours
 };
 

@@ -9,6 +9,23 @@ import {GoChevronRight} from "react-icons/go";
 import {IoIosArrowBack} from "react-icons/io";
 import {linkButton} from "../constants";
 
+import {TfiEmail} from "react-icons/tfi";
+import {BsThreads} from "react-icons/bs";
+import {FaSquareFacebook} from "react-icons/fa6";
+import {FiInstagram} from "react-icons/fi";
+
+import {
+  RiYoutubeLine,
+  RiTiktokFill,
+  RiSnapchatLine,
+  RiDiscordLine,
+  RiGithubLine,
+  RiLinkedinLine,
+  RiTelegramLine,
+  RiTwitchLine,
+  RiTwitterXLine,
+} from "react-icons/ri";
+
 export default function LinkModels({isOpen, setIsOpen, addPlatformLink}) {
   const [platform, setPlatform] = useState("");
   const [link, setLink] = useState("");
@@ -56,6 +73,39 @@ export default function LinkModels({isOpen, setIsOpen, addPlatformLink}) {
   const validateLink = (link, pattern) => {
     const regex = new RegExp(pattern);
     return regex.test(link);
+  };
+
+  const renderSocialIcon = (platform) => {
+    switch (platform) {
+      case "Instagram":
+        return <FiInstagram color="#5A5A5A" size={25} />;
+      case "Facebook":
+        return <FaSquareFacebook color="#5A5A5A" size={25} />;
+      case "Youtube":
+        return <RiYoutubeLine color="#5A5A5A" size={25} />;
+      case "Tiktok":
+        return <RiTiktokFill color="#5A5A5A" size={25} />;
+      case "Snapchat":
+        return <RiSnapchatLine color="#5A5A5A" size={25} />;
+      case "Discord":
+        return <RiDiscordLine color="#5A5A5A" size={25} />;
+      case "Github":
+        return <RiGithubLine color="#5A5A5A" size={25} />;
+      case "Linkedin":
+        return <RiLinkedinLine color="#5A5A5A" size={25} />;
+      case "Telegram":
+        return <RiTelegramLine color="#5A5A5A" size={25} />;
+      case "Twitch":
+        return <RiTwitchLine color="#5A5A5A" size={25} />;
+      case "X":
+        return <RiTwitterXLine color="#5A5A5A" size={25} />;
+      case "Email":
+        return <TfiEmail color="#5A5A5A" size={25} />;
+      case "Threads":
+        return <BsThreads color="#5A5A5A" size={25} />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -186,7 +236,7 @@ export default function LinkModels({isOpen, setIsOpen, addPlatformLink}) {
                               }}
                               className="w-full flex flex-row justify-between items-center px-4 hover:bg-[#F6F7F5] rounded-[10px] ">
                               <div className="flex items-center gap-3">
-                                <link.icon size={25} />
+                                {renderSocialIcon(link.title)}
                                 <p className="py-3 font-sans text-[16px]">{link.title}</p>
                               </div>
 
