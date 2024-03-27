@@ -11,6 +11,7 @@ import Header from "../../components/appearance/Header";
 import Profile from "../../components/appearance/Profile";
 import Background from "../../components/appearance/Background";
 import Sidebar from "../../components/appearance/Sidebar";
+import {ThreeDots} from "react-loader-spinner";
 
 import {
   RiYoutubeLine,
@@ -37,6 +38,7 @@ export default function Appearance() {
   const [baseUrl, setBaseUrl] = useState("");
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [authorized, setAuthorized] = useState(false);
 
   const addPlatformLink = (platformData) => {
     const index = platformLinks.findIndex((link) => link.id === platformData.id);
@@ -59,10 +61,6 @@ export default function Appearance() {
   };
 
   useEffect(() => {
-    console.log("platformLinks---------->", platformLinks);
-  }, [platformLinks]);
-
-  useEffect(() => {
     const fetchUrl = window?.location.href;
     const modifiedUrl = fetchUrl.split("appearance")[0];
     setBaseUrl(modifiedUrl);
@@ -76,7 +74,7 @@ export default function Appearance() {
 
   const copyToClipboard = () => {
     navigator.clipboard
-      .writeText(`${baseUrl}profile/${heading}`)
+      .writeText(`${baseUrl}profile/${trimzLink}`)
       .then(() => {
         setCopied(true);
         toast.success("Copy Successfully");
@@ -144,20 +142,19 @@ export default function Appearance() {
       const data = await response.json();
 
       if (data.success) {
+        setAuthorized(true);
         setUploadedImage(data.user.image);
         setHeading(data.user.name);
         setSubHeading(data.user.about);
         setBackground(data.user.backgroundColor);
         setPlatformLinks(data.user.socialLinks);
-        console.log("platformLink", data.user.socialLinks);
-
-        console.log(data);
       } else {
+        router.push("/");
         console.error(data.message);
       }
     } catch (error) {
+      router.push("/");
       console.error("Error generating trimzlink:", error);
-      toast.error("Error generating trimzlink");
     }
   };
 
@@ -199,51 +196,78 @@ export default function Appearance() {
       id="home"
       className="relative flex items-center  justify-center w-full min-h-screen bg-gradient-to-b from-[#E9F6FF] to-[#c2e9fb] bg-fixed ">
       <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 h-full flex-col-reverse xl:flex-row w-full flex items-center max-w-screen-2xl">
-        <div className="flex w-full justify-between h-full">
-          <div className="w-full flex xl:w-[70%] bg-transparent xl:border-r-2 border-lightGray border-dotted">
-            <div className="flex xl:py-14 py-5 flex-col w-full xl:pr-28">
-              <h1 className="text-black font-sans text-[24px] font-semibold">
-                TrimzLink
-              </h1>
-              <Header
-                baseUrl={baseUrl}
-                trimzLink={trimzLink}
-                copyToClipboard={copyToClipboard}
-                copied={copied}
-                saveChanges={saveChanges}
-                loading={loading}
-              />
-              <h1 className="text-black font-sans text-[24px] font-semibold ">Profile</h1>
-              <Profile
-                setLinkModal={setLinkModal}
-                uploadedImage={uploadedImage}
-                setUploadModal={setUploadModal}
-                heading={heading}
-                subHeading={subHeading}
-                platformLinks={platformLinks}
-                deletePlatformLink={deletePlatformLink}
-                renderSocialIcon={renderSocialIcon}
-                uploadModal={uploadModal}
-                setUploadedImage={setUploadedImage}
-                linkModal={linkModal}
-                setHeading={setHeading}
-                setSubHeading={setSubHeading}
-              />
-              <h1 className="text-black font-sans text-[24px] font-semibold mt-5">
-                Background
-              </h1>
-              <Background setBackground={setBackground} background={background} />
+        {authorized ? (
+          <div className="flex w-full justify-between h-full">
+            <div className="w-full flex xl:w-[70%] bg-transparent xl:border-r-2 border-lightGray border-dotted">
+              <div className="flex xl:py-14 py-5 flex-col w-full xl:pr-28">
+                <div className="w-full flex justify-between ">
+                  <h1 className="text-black font-sans text-[24px] font-semibold">
+                    TrimzLink
+                  </h1>
+                  <button
+                    onClick={() => {
+                      router.push("/trimzlink");
+                    }}
+                    className="font-sans font-semibold bg-pink text-white text-[16px] py-2 px-5 rounded-[10px] hover:bg-bghover transition-all duration-500 delay-75">
+                    Back
+                  </button>
+                </div>
+                <Header
+                  baseUrl={baseUrl}
+                  trimzLink={trimzLink}
+                  copyToClipboard={copyToClipboard}
+                  copied={copied}
+                  saveChanges={saveChanges}
+                  loading={loading}
+                />
+                <h1 className="text-black font-sans text-[24px] font-semibold ">
+                  Profile
+                </h1>
+                <Profile
+                  setLinkModal={setLinkModal}
+                  uploadedImage={uploadedImage}
+                  setUploadModal={setUploadModal}
+                  heading={heading}
+                  subHeading={subHeading}
+                  platformLinks={platformLinks}
+                  deletePlatformLink={deletePlatformLink}
+                  renderSocialIcon={renderSocialIcon}
+                  uploadModal={uploadModal}
+                  setUploadedImage={setUploadedImage}
+                  linkModal={linkModal}
+                  setHeading={setHeading}
+                  setSubHeading={setSubHeading}
+                />
+                <h1 className="text-black font-sans text-[24px] font-semibold mt-5">
+                  Background
+                </h1>
+                <Background setBackground={setBackground} background={background} />
+              </div>
             </div>
+            <Sidebar
+              uploadedImage={uploadedImage}
+              heading={heading}
+              subHeading={subHeading}
+              platformLinks={platformLinks}
+              renderSocialIcon={renderSocialIcon}
+              background={background}
+            />
           </div>
-          <Sidebar
-            uploadedImage={uploadedImage}
-            heading={heading}
-            subHeading={subHeading}
-            platformLinks={platformLinks}
-            renderSocialIcon={renderSocialIcon}
-            background={background}
-          />
-        </div>
+        ) : (
+          <div className="w-full h-screen flex justify-center items-center">
+            <ThreeDots
+              visible={true}
+              height="120"
+              width="120"
+              color="#E93266"
+              radius="9"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+            />
+          </div>
+        )}
+
         <UploadModal
           isOpen={uploadModal}
           setIsOpen={setUploadModal}

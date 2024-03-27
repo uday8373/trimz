@@ -4,11 +4,27 @@ import {VerifyToken} from "../../utils/VerifyToken";
 
 export default async function handler(req, res) {
   await DbConnect();
+  const RESERVED_TRIMZ_LINKS = [
+    "erex",
+    "Erex",
+    "EREX",
+    "erexstudio",
+    "ErexStudio",
+    "EREXSTUDIO",
+    "appearance",
+    "trimzlink",
+    "trimzLink",
+    "TrimzLink",
+    "trimzMe",
+    "TrimzMe",
+    "Trimz",
+  ];
 
   if (req.method === "POST") {
     const {trimzLink} = req.body;
     const token = req.headers.token;
     try {
+      const MAX_TRIMZLINK_PER_USER = 10;
       const user = await TrimzLink.findOne({trimzLink});
 
       if (user) {
@@ -18,6 +34,19 @@ export default async function handler(req, res) {
       const userId = await VerifyToken(token);
       if (!userId) {
         return res.status(201).json({success: false, message: "Token Error"});
+      }
+      const userTrimzLinksCount = await TrimzLink.countDocuments({userId});
+      if (userTrimzLinksCount >= MAX_TRIMZLINK_PER_USER) {
+        return res.status(201).json({
+          success: false,
+          message: "Maximum limit reached",
+        });
+      }
+
+      if (RESERVED_TRIMZ_LINKS.includes(trimzLink)) {
+        return res
+          .status(201)
+          .json({success: false, message: "This trimzLink is reserved"});
       }
 
       const linkData = {
@@ -37,9 +66,10 @@ export default async function handler(req, res) {
     const {trimzLink} = req.query;
     const token = req.headers.token;
     try {
-      const userId = await VerifyToken(token);
-      if (!userId) {
-        return res.status(201).json({success: false, message: "Token Error"});
+      if (RESERVED_TRIMZ_LINKS.includes(trimzLink)) {
+        return res
+          .status(201)
+          .json({success: false, message: "This trimzLink is reserved"});
       }
       const user = await TrimzLink.findOne({trimzLink});
       if (user) {
@@ -61,7 +91,12 @@ export default async function handler(req, res) {
       if (!userId) {
         return res.status(401).json({success: false, message: "Token Error"});
       }
+
       const id = {trimzLink: trimzLink};
+      const data = await TrimzLink.findOne(id);
+      if (data.userId.toString() !== userId) {
+        return res.status(403).json({success: false, message: "Unauthorized access"});
+      }
 
       const updatedFields = {
         name,

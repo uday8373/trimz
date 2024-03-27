@@ -14,10 +14,13 @@ import {CgMail} from "react-icons/cg";
 import {FiLogOut} from "react-icons/fi";
 import {toast} from "react-toastify";
 import Link from "next/link";
+import {usePathname} from "next/navigation";
 
 const Nav = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const [active, setActive] = useState("");
+
   const [toggle, setToggle] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isToken, setIsToken] = useState(false);
@@ -27,7 +30,7 @@ const Nav = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 70) {
+      if (window.scrollY > 50) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -102,11 +105,9 @@ const Nav = () => {
   const handleNavLinkClick = (id) => {
     localStorage.setItem("active", id);
     setActive(id);
-    // router.push(id, {scroll: false});
   };
 
   const handleMobileNavLinkClick = (id) => {
-    // router.push(id, {scroll: false});
     handleNavLinkClick(id);
     setToggle(!toggle);
   };
@@ -117,6 +118,11 @@ const Nav = () => {
       setIsToken(false);
       router.refresh();
     }
+  };
+
+  const handleLinkPage = (id) => {
+    router.push(id, {scroll: false});
+    setToggle(!toggle);
   };
   return (
     <>
@@ -188,45 +194,65 @@ const Nav = () => {
                       </div>
                     </div>
                     <ul className="list-none flex flex-col px-6 gap-[0.5rem]  pt-10  items-start justify-center w-full">
-                      {navLinks.map((nav, index) => {
-                        return (
-                          <motion.div
-                            key={index}
-                            initial={{x: 100, opacity: 0}}
-                            animate={{
-                              x: 0,
-                              opacity: 1,
-                              transition: {
-                                duration: 0.8,
-                                ease: [0.65, 0, 0.35, 1],
-                                delay: 0.2 * index,
-                              },
-                            }}
-                            exit={{
-                              x: -100,
-                              opacity: 0,
-                              transition: {
-                                duration: 0.6,
-                                ease: [0.65, 0, 0.35, 1],
-                                delay: 0.3 * index,
-                              },
-                            }}>
-                            <ScrollLink
-                              onClick={() => handleMobileNavLinkClick(nav.id)}
-                              key={index}
-                              className={`${
-                                active === nav.title ? "text-heading" : "text-heading"
-                              } hover:text-primary text-[24px] mt-5 font-medium font-roboto uppercase cursor-pointer w-full  flex`}
-                              to={nav.id}
-                              spy={true}
-                              smooth={true}
-                              offset={-70}
-                              duration={300}>
-                              {nav.title}
-                            </ScrollLink>
-                          </motion.div>
-                        );
-                      })}
+                      <Link
+                        href="/"
+                        onClick={() => {
+                          handleLinkPage("/");
+                        }}
+                        className={` hover:text-primary text-[24px] mt-5 font-medium font-roboto uppercase cursor-pointer w-full  flex`}>
+                        Home
+                      </Link>
+                      <Link
+                        href="trimzlink"
+                        onClick={() => {
+                          handleLinkPage("trimzlink");
+                        }}
+                        className={` hover:text-primary text-[24px] mt-5 font-medium font-roboto uppercase cursor-pointer w-full  flex`}>
+                        Trimzlink
+                      </Link>
+                      {pathname === "/" && (
+                        <>
+                          {navLinks.map((nav, index) => {
+                            return (
+                              <motion.div
+                                key={index}
+                                initial={{x: 100, opacity: 0}}
+                                animate={{
+                                  x: 0,
+                                  opacity: 1,
+                                  transition: {
+                                    duration: 0.8,
+                                    ease: [0.65, 0, 0.35, 1],
+                                    delay: 0.2 * index,
+                                  },
+                                }}
+                                exit={{
+                                  x: -100,
+                                  opacity: 0,
+                                  transition: {
+                                    duration: 0.6,
+                                    ease: [0.65, 0, 0.35, 1],
+                                    delay: 0.3 * index,
+                                  },
+                                }}>
+                                <ScrollLink
+                                  onClick={() => handleMobileNavLinkClick(nav.id)}
+                                  key={index}
+                                  className={`${
+                                    active === nav.title ? "text-heading" : "text-heading"
+                                  } hover:text-primary text-[24px] mt-5 font-medium font-roboto uppercase cursor-pointer w-full  flex`}
+                                  to={nav.id}
+                                  spy={true}
+                                  smooth={true}
+                                  offset={-70}
+                                  duration={300}>
+                                  {nav.title}
+                                </ScrollLink>
+                              </motion.div>
+                            );
+                          })}
+                        </>
+                      )}
                     </ul>
                   </motion.div>
                 )}
@@ -252,24 +278,41 @@ const Nav = () => {
             </Link>
 
             <div className="flex-row hidden gap-4 list-none lg:gap-6 xl:gap-10 xl:flex">
-              {navLinks.map((nav, index) => {
-                return (
-                  <ScrollLink
-                    key={index}
-                    className={`${active === nav.id ? "text-primary" : "text-heading"}
+              <Link
+                href="/"
+                className={`
+                hover:text-primary text-[16px] lg:text-[18px] px-4 py-4 font-medium font-roboto cursor-pointer  `}>
+                Home
+              </Link>
+              <Link
+                href="/trimzlink"
+                className={`
+                hover:text-primary text-[16px] lg:text-[18px] px-4 py-4 font-medium font-roboto cursor-pointer  `}>
+                Trimzlink
+              </Link>
+              {pathname === "/" && (
+                <>
+                  {navLinks.map((nav, index) => {
+                    return (
+                      <ScrollLink
+                        key={index}
+                        className={`${active === nav.id ? "text-primary" : "text-heading"}
                 hover:text-primary text-[16px] lg:text-[18px] px-4 py-4 font-medium font-roboto cursor-pointer  `}
-                    to={nav.id}
-                    spy={true}
-                    smooth={true}
-                    offset={-90}
-                    duration={300}
-                    onClick={() => {
-                      handleNavLinkClick(nav.id);
-                    }}>
-                    {nav.title}
-                  </ScrollLink>
-                );
-              })}
+                        to={nav.id}
+                        spy={true}
+                        smooth={true}
+                        offset={-90}
+                        duration={300}
+                        onClick={() => {
+                          handleNavLinkClick(nav.id);
+                        }}>
+                        {nav.title}
+                      </ScrollLink>
+                    );
+                  })}
+                </>
+              )}
+
               <div>
                 {!isToken ? (
                   <button
@@ -440,45 +483,65 @@ const Nav = () => {
                       </div>
                     </div>
                     <ul className="list-none flex flex-col px-6 gap-[0.5rem]  pt-10  items-start justify-center w-full">
-                      {navLinks.map((nav, index) => {
-                        return (
-                          <motion.div
-                            key={index}
-                            initial={{x: 100, opacity: 0}}
-                            animate={{
-                              x: 0,
-                              opacity: 1,
-                              transition: {
-                                duration: 0.8,
-                                ease: [0.65, 0, 0.35, 1],
-                                delay: 0.2 * index,
-                              },
-                            }}
-                            exit={{
-                              x: -100,
-                              opacity: 0,
-                              transition: {
-                                duration: 0.6,
-                                ease: [0.65, 0, 0.35, 1],
-                                delay: 0.3 * index,
-                              },
-                            }}>
-                            <ScrollLink
-                              onClick={() => handleMobileNavLinkClick(nav.id)}
-                              key={index}
-                              className={`${
-                                active === nav.title ? "text-heading" : "text-heading"
-                              } hover:text-primary text-[24px] mt-5 font-medium font-roboto uppercase cursor-pointer w-full  flex`}
-                              to={nav.id}
-                              spy={true}
-                              smooth={true}
-                              offset={-70}
-                              duration={300}>
-                              {nav.title}
-                            </ScrollLink>
-                          </motion.div>
-                        );
-                      })}
+                      <Link
+                        href="/"
+                        onClick={() => {
+                          handleLinkPage("/");
+                        }}
+                        className={` hover:text-primary text-[24px] mt-5 font-medium font-roboto uppercase cursor-pointer w-full  flex`}>
+                        Home
+                      </Link>
+                      <Link
+                        href="trimzlink"
+                        onClick={() => {
+                          handleLinkPage("trimzlink");
+                        }}
+                        className={` hover:text-primary text-[24px] mt-5 font-medium font-roboto uppercase cursor-pointer w-full  flex`}>
+                        Trimzlink
+                      </Link>
+                      {pathname === "/" && (
+                        <>
+                          {navLinks.map((nav, index) => {
+                            return (
+                              <motion.div
+                                key={index}
+                                initial={{x: 100, opacity: 0}}
+                                animate={{
+                                  x: 0,
+                                  opacity: 1,
+                                  transition: {
+                                    duration: 0.8,
+                                    ease: [0.65, 0, 0.35, 1],
+                                    delay: 0.2 * index,
+                                  },
+                                }}
+                                exit={{
+                                  x: -100,
+                                  opacity: 0,
+                                  transition: {
+                                    duration: 0.6,
+                                    ease: [0.65, 0, 0.35, 1],
+                                    delay: 0.3 * index,
+                                  },
+                                }}>
+                                <ScrollLink
+                                  onClick={() => handleMobileNavLinkClick(nav.id)}
+                                  key={index}
+                                  className={`${
+                                    active === nav.title ? "text-heading" : "text-heading"
+                                  } hover:text-primary text-[24px] mt-5 font-medium font-roboto uppercase cursor-pointer w-full  flex`}
+                                  to={nav.id}
+                                  spy={true}
+                                  smooth={true}
+                                  offset={-70}
+                                  duration={300}>
+                                  {nav.title}
+                                </ScrollLink>
+                              </motion.div>
+                            );
+                          })}
+                        </>
+                      )}
                     </ul>
                   </motion.div>
                 )}
@@ -504,24 +567,40 @@ const Nav = () => {
             </Link>
 
             <div className="flex-row hidden gap-4 list-none lg:gap-6 xl:gap-10 xl:flex">
-              {navLinks.map((nav, index) => {
-                return (
-                  <ScrollLink
-                    key={index}
-                    className={`${active === nav.id ? "text-primary" : "text-heading"}
+              <Link
+                href="/"
+                className={`
+                hover:text-primary text-[16px] lg:text-[18px] px-4 py-4 font-medium font-roboto cursor-pointer  `}>
+                Home
+              </Link>
+              <Link
+                href="/trimzlink"
+                className={`
+                hover:text-primary text-[16px] lg:text-[18px] px-4 py-4 font-medium font-roboto cursor-pointer  `}>
+                Trimzlink
+              </Link>
+              {pathname === "/" && (
+                <>
+                  {navLinks.map((nav, index) => {
+                    return (
+                      <ScrollLink
+                        key={index}
+                        className={`${active === nav.id ? "text-primary" : "text-heading"}
                 hover:text-primary text-[16px] lg:text-[18px] px-4 py-4 font-medium font-roboto cursor-pointer  `}
-                    to={nav.id}
-                    spy={true}
-                    smooth={true}
-                    offset={-90}
-                    duration={300}
-                    onClick={() => {
-                      handleNavLinkClick(nav.id);
-                    }}>
-                    {nav.title}
-                  </ScrollLink>
-                );
-              })}
+                        to={nav.id}
+                        spy={true}
+                        smooth={true}
+                        offset={-90}
+                        duration={300}
+                        onClick={() => {
+                          handleNavLinkClick(nav.id);
+                        }}>
+                        {nav.title}
+                      </ScrollLink>
+                    );
+                  })}
+                </>
+              )}
               <div>
                 {!isToken ? (
                   <button

@@ -1,8 +1,8 @@
 export const navLinks = [
-  {
-    id: "home",
-    title: "Home",
-  },
+  // {
+  //   id: "home",
+  //   title: "Home",
+  // },
 
   {
     id: "myurls",
@@ -12,10 +12,6 @@ export const navLinks = [
     id: "feature",
     title: "Feature",
   },
-  // {
-  //   id: "/trimzlink#home",
-  //   title: "Trimzlink",
-  // },
 ];
 
 export const linkButton = [

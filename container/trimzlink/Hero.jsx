@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
-import {motion} from "framer-motion";
 import {useRouter} from "next/router";
 import Image from "next/image";
 import {toast} from "react-toastify";
+import {Modal} from "../../components/LoginModels";
 import UsernameInput from "../../components/trimzlink/UsernameInput";
 import ErrorMessage from "../../components/trimzlink/ErrorMessage";
 import LoadingButton from "../../components/trimzlink/LoadingButton";
@@ -13,10 +13,16 @@ const Hero = () => {
   const [error, setError] = useState("");
   const [isAvailable, setIsAvailable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
 
   useEffect(() => {
     if (name.length > 2) {
-      fetchLinkTree();
+      const timeOut = setTimeout(() => {
+        fetchLinkTree();
+      }, 1000);
+      return () => {
+        clearTimeout(timeOut);
+      };
     } else if (name.length > 1) {
       setIsAvailable(false);
       setError("Usernames must be 3 characters or longer");
@@ -67,6 +73,9 @@ const Hero = () => {
 
       if (token) {
         headers.token = token;
+      } else {
+        setIsOpenLogin(true);
+        return;
       }
 
       const response = await fetch("/api/trimzlink", {
@@ -103,19 +112,7 @@ const Hero = () => {
       className="relative flex items-center pt-16 md:pt-20 justify-center w-full min-h-screen bg-gradient-to-b from-[#E9F6FF] to-[#e2deff] bg-fixed select-none">
       <div className="2xl:px-[146px] xl:px-36 lg:px-32 md:px-22 sm:px-16 px-6 flex-col-reverse xl:flex-row w-full flex items-center max-w-screen-2xl">
         <div className="w-full flex xl:flex-row flex-col-reverse  justify-between">
-          <motion.div
-            initial={{y: 50, opacity: 0}}
-            whileInView={{
-              y: 0,
-              opacity: 1,
-              transition: {
-                duration: 0.8,
-                ease: [0.65, 0, 0.35, 1],
-                delay: 0.1,
-              },
-            }}
-            viewport={{once: true}}
-            className="w-full flex flex-col xl:mt-10">
+          <div className="w-full flex flex-col xl:mt-10 xl:mb-0 mb-10">
             <div className="flex">
               <div className="font-sans font-bold text-[12px] text-purple-500 bg-purple-500 bg-opacity-15 rounded-3xl py-2 px-5 text-left">
                 Create your trimzlink
@@ -161,20 +158,8 @@ const Hero = () => {
               isLoading={isLoading}
               handleContinue={handleContinue}
             />
-          </motion.div>
-          <motion.div
-            initial={{y: 50, opacity: 0}}
-            whileInView={{
-              y: 0,
-              opacity: 1,
-              transition: {
-                duration: 0.8,
-                ease: [0.65, 0, 0.35, 1],
-                delay: 0.1,
-              },
-            }}
-            viewport={{once: true}}
-            className="w-full flex items-end xl:justify-end justify-center ">
+          </div>
+          <div className="w-full flex items-end xl:justify-end justify-center ">
             <Image
               draggable="false"
               src="/linktree.svg"
@@ -182,8 +167,9 @@ const Hero = () => {
               height={500}
               alt="Picture of the author"
             />
-          </motion.div>
+          </div>
         </div>
+        <Modal isOpen={isOpenLogin} setIsOpen={setIsOpenLogin} />
       </div>
     </section>
   );

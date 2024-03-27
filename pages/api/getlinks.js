@@ -14,6 +14,9 @@ export default async function handler(req, res) {
         return res.status(201).json({success: false, message: "Token Error"});
       }
       const user = await TrimzLink.findOne({trimzLink});
+      if (user.userId.toString() !== userId) {
+        return res.status(403).json({success: false, message: "Unauthorized access"});
+      }
       if (user) {
         return res
           .status(200)

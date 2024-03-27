@@ -50,7 +50,7 @@ const Sidebar = ({
               {platformLinks.map((selectedLink, index) => (
                 <div
                   key={index}
-                  className="w-full flex flex-row items-center bg-white justify-between px-3 rounded-[10px] shadow-3xl">
+                  className="w-full flex flex-row items-center bg-transparent justify-between px-3 rounded-[10px] shadow-3xl">
                   <div>{renderSocialIcon(selectedLink.title)}</div>
                   <p className=" text-black font-sans font-medium text-[14px] bg-transparent py-2 outline-none ">
                     {selectedLink.title}

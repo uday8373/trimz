@@ -7,6 +7,21 @@ import rateLimit from "../../utils/RateLimit";
 
 export default async function handler(req, res) {
   await DbConnect();
+  const RESERVED_TRIMZ_LINKS = [
+    "erex",
+    "Erex",
+    "EREX",
+    "erexstudio",
+    "ErexStudio",
+    "EREXSTUDIO",
+    "appearance",
+    "trimzlink",
+    "trimzLink",
+    "TrimzLink",
+    "trimzMe",
+    "TrimzMe",
+    "Trimz",
+  ];
 
   if (req.method === "POST") {
     const {
@@ -31,6 +46,11 @@ export default async function handler(req, res) {
         if (!userId) {
           return res.status(201).json({success: false, message: "Token Error"});
         }
+      }
+      if (RESERVED_TRIMZ_LINKS.includes(customUrl)) {
+        return res
+          .status(201)
+          .json({success: false, message: "This custom URL is reserved"});
       }
 
       const shortUrl = isCustom ? customUrl : shortid.generate().substring(0, 4);
