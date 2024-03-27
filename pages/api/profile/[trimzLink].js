@@ -8,10 +8,11 @@ export default async function handler(req, res) {
 
   try {
     const data = await TrimzLink.findOne({trimzLink});
-    if (data) {
+    if (!data) {
+      res.status(500).json({error: "Trimzlink not found"});
+    } else {
       res.json(data);
     }
-    res.status(500).json({error: "Trimzlink not found"});
   } catch (error) {
     res.status(500).json({error: "Internal server error"});
   }
