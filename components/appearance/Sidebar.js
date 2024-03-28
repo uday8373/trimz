@@ -23,7 +23,7 @@ const Sidebar = ({
                 src={uploadedImage}
                 width={75}
                 height={75}
-                alt="Picture of the author"
+                alt="Link shortener"
                 className="rounded-full"
               />
             </div>
@@ -34,7 +34,7 @@ const Sidebar = ({
                 src="/defaultUser.jpg"
                 width={75}
                 height={75}
-                alt="Picture of the author"
+                alt="Link shortener"
                 className="rounded-full"
               />
             </div>

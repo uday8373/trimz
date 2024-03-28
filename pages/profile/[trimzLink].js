@@ -110,7 +110,7 @@ export default function TrimzLinks() {
             src="/404_page.svg"
             width={0}
             height={0}
-            alt="logo"
+            alt="URL shortener for businesses"
             className="sm:w-[350px]  sm:h-auto w-[250px] object-contain"
           />
           <h1 className="text-black font-sans font-semibold text-[26px] md:[32px]">
@@ -142,7 +142,7 @@ export default function TrimzLinks() {
                   src={uploadedImage}
                   width={125}
                   height={125}
-                  alt="Picture of the author"
+                  alt="URL shortener for businesses"
                   className="rounded-full"
                 />
               </div>
@@ -153,7 +153,7 @@ export default function TrimzLinks() {
                   src="/defaultUser.jpg"
                   width={100}
                   height={100}
-                  alt="Picture of the author"
+                  alt="URL shortener for businesses"
                   className="rounded-full"
                 />
               </div>
@@ -177,7 +177,11 @@ export default function TrimzLinks() {
                       {renderSocialIcon(selectedLink.title)}
                     </a>
                     <a
-                      href={selectedLink.link}
+                      href={
+                        selectedLink.title === "Email"
+                          ? `mailto:${selectedLink.link}`
+                          : selectedLink.link
+                      }
                       target="_blank"
                       className=" text-black  font-sans font-medium text-[16px] bg-transparent py-4 outline-none w-[80%] justify-center flex">
                       {selectedLink.title}
@@ -195,13 +199,16 @@ export default function TrimzLinks() {
             </div>
           </div>
           <div className="flex w-full items-end justify-center pb-10">
-            <div className="">
+            <div className="flex flex-col justify-center items-center">
+              <h1 className="font-sans font-semibold text-[16px] text-primary">
+                Powered by -
+              </h1>
               <Image
                 draggable="false"
                 src="/Trimz_Logo.png"
                 width={150}
                 height={150}
-                alt="Picture of the author"
+                alt="Shorten links"
               />
             </div>
           </div>

@@ -84,7 +84,7 @@ export const linkButton = [
   {
     id: "email",
     title: "Email",
-    validationPattern: "^mailto:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+    validationPattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
     validationMessage: "Please enter a valid email address.",
   },
   {

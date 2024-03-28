@@ -9,6 +9,7 @@ import {BiEditAlt} from "react-icons/bi";
 import {QrModalTrimzlink} from "../../components/QrModalTrimzlink";
 import {useRouter} from "next/router";
 import {AiOutlineLoading3Quarters} from "react-icons/ai";
+import {Link as ScrollLink} from "react-scroll";
 
 export default function MyTrimzlink() {
   const router = useRouter();
@@ -107,146 +108,183 @@ export default function MyTrimzlink() {
           <h1 className="text-black font-sans font-bold md:text-[36px] text-[28px] select-none">
             My Trimzlinks
           </h1>
-          <div className="overflow-hidden w-full overflow-x-auto rounded-[10px]">
-            <table className="min-w-full ">
-              <thead className=" bg-pink text-left text-white">
-                <tr>
-                  <th scope="col" className="px-6 py-4 font-sans font-medium select-none">
-                    Trimzlink
-                  </th>
 
-                  <th scope="col" className="px-6 py-4 font-sans font-medium select-none">
-                    Name
-                  </th>
-                  <th scope="col" className="px-6 py-4 font-sans font-medium select-none">
-                    Date
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-4 font-sans font-medium select-none "></th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((link, index) => (
-                  <tr
-                    key={index}
-                    className="bg-primary border-y-[5px] border-white bg-opacity-10">
-                    <td className="whitespace-nowrap px-6 py-3 font-medium">
-                      {baseUrl}/profile/{link.trimzLink}
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-3 font-medium">
-                      {link.name}
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-3 font-medium">
-                      {moment(link.updated_at).format("MMM D, YYYY")}
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-3 font-medium flex flex-row items-center gap-5 justify-end">
-                      <div>
-                        <Popover
-                          isOpen={popoverRedirect === index}
-                          body={
-                            <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
-                              Click to redirect
-                            </div>
-                          }>
-                          <a
-                            href={`${baseUrl}/profile/${link.trimzLink}`}
-                            target="_blank">
-                            <button
-                              onMouseEnter={() => setPopoverRedirect(index)}
-                              onMouseLeave={() => setPopoverRedirect(-1)}
-                              className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
-                              <IoMdOpen size={20} color="#E93266" />
-                            </button>
-                          </a>
-                        </Popover>
-                      </div>
-                      <div>
-                        <Popover
-                          isOpen={popoverCopy === index}
-                          body={
-                            <div className="px-4 py-2 text-white rounded-t-md shadow-xl popover-content bg-bghover">
-                              Copy to clipboard
-                            </div>
-                          }>
-                          <button
-                            onMouseEnter={() => setPopoverCopy(index)}
-                            onMouseLeave={() => setPopoverCopy(-1)}
-                            onClick={() => {
-                              copyToClipboard(link.trimzLink);
-                            }}
-                            className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
-                            <MdOutlineContentCopy size={20} color="#E93266" />
-                          </button>
-                        </Popover>
-                      </div>
-                      <div>
-                        <Popover
-                          isOpen={popoverQr === index}
-                          body={
-                            <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
-                              Generate QR Code
-                            </div>
-                          }>
-                          <button
-                            onMouseEnter={() => setPopoverQr(index)}
-                            onMouseLeave={() => setPopoverQr(-1)}
-                            onClick={() => toggleModal("qrModal", link)}
-                            className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
-                            <MdOutlineQrCode size={20} color="#E93266" />
-                          </button>
-                        </Popover>
-                      </div>
-                      <div>
-                        <Popover
-                          isOpen={popoverShare === index}
-                          body={
-                            <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
-                              Click to share it
-                            </div>
-                          }>
-                          <button
-                            onMouseEnter={() => setPopoverShare(index)}
-                            onMouseLeave={() => setPopoverShare(-1)}
-                            onClick={() => {
-                              handleShare(link.trimzLink);
-                            }}
-                            className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
-                            <LuShare2 size={20} color="#E93266" />
-                          </button>
-                        </Popover>
-                      </div>
-                      <div>
-                        <Popover
-                          isOpen={popoverEdit === index}
-                          body={
-                            <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
-                              Click to edit your trimzlink
-                            </div>
-                          }>
-                          <button
-                            onMouseEnter={() => setPopoverEdit(index)}
-                            onMouseLeave={() => setPopoverEdit(-1)}
-                            onClick={() => {
-                              handleUpdate(link.trimzLink, index);
-                            }}
-                            className={`bg-pink px-3 py-3 rounded-full bg-opacity-10 hover:bg-white transition-all duration-500 delay-75 ease-in-out ${
-                              clickedIndex === index ? "animate-spin" : ""
-                            }`}>
-                            {loading && clickedIndex === index ? (
-                              <AiOutlineLoading3Quarters size={20} color="#E93266" />
-                            ) : (
-                              <BiEditAlt size={20} color="#E93266" />
-                            )}
-                          </button>
-                        </Popover>
-                      </div>
-                    </td>
+          {!data ? (
+            <div
+              initial={{y: 50, opacity: 0}}
+              whileInView={{
+                y: 0,
+                opacity: 1,
+                transition: {
+                  duration: 0.8,
+                  ease: [0.65, 0, 0.35, 1],
+                  delay: 0.1,
+                },
+              }}
+              viewport={{once: true}}
+              className="w-full py-5 bg-pink mb-2 rounded-[15px] flex justify-center items-center bg-opacity-20">
+              <ScrollLink
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+                to="/"
+                spy={true}
+                smooth={true}
+                offset={-90}
+                duration={300}
+                className="text-pink font-semibold font-sans underline underline-offset-2 pr-2 cursor-pointer">
+                Create Trimzlink
+              </ScrollLink>{" "}
+              to see your history
+            </div>
+          ) : (
+            <div className="overflow-hidden w-full overflow-x-auto rounded-[10px]">
+              <table className="min-w-full ">
+                <thead className=" bg-pink text-left text-white">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-4 font-sans font-medium select-none">
+                      Trimzlink
+                    </th>
+
+                    <th
+                      scope="col"
+                      className="px-6 py-4 font-sans font-medium select-none">
+                      Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-4 font-sans font-medium select-none">
+                      Date
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-4 font-sans font-medium select-none "></th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {data.map((link, index) => (
+                    <tr
+                      key={index}
+                      className="bg-primary border-y-[5px] border-white bg-opacity-10">
+                      <td className="whitespace-nowrap px-6 py-3 font-medium">
+                        {baseUrl}/profile/{link.trimzLink}
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-3 font-medium">
+                        {link.name}
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-3 font-medium">
+                        {moment(link.updated_at).format("MMM D, YYYY")}
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-3 font-medium flex flex-row items-center gap-5 justify-end">
+                        <div>
+                          <Popover
+                            isOpen={popoverRedirect === index}
+                            body={
+                              <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
+                                Click to redirect
+                              </div>
+                            }>
+                            <a
+                              href={`${baseUrl}/profile/${link.trimzLink}`}
+                              target="_blank">
+                              <button
+                                onMouseEnter={() => setPopoverRedirect(index)}
+                                onMouseLeave={() => setPopoverRedirect(-1)}
+                                className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
+                                <IoMdOpen size={20} color="#E93266" />
+                              </button>
+                            </a>
+                          </Popover>
+                        </div>
+                        <div>
+                          <Popover
+                            isOpen={popoverCopy === index}
+                            body={
+                              <div className="px-4 py-2 text-white rounded-t-md shadow-xl popover-content bg-bghover">
+                                Copy to clipboard
+                              </div>
+                            }>
+                            <button
+                              onMouseEnter={() => setPopoverCopy(index)}
+                              onMouseLeave={() => setPopoverCopy(-1)}
+                              onClick={() => {
+                                copyToClipboard(link.trimzLink);
+                              }}
+                              className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
+                              <MdOutlineContentCopy size={20} color="#E93266" />
+                            </button>
+                          </Popover>
+                        </div>
+                        <div>
+                          <Popover
+                            isOpen={popoverQr === index}
+                            body={
+                              <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
+                                Generate QR Code
+                              </div>
+                            }>
+                            <button
+                              onMouseEnter={() => setPopoverQr(index)}
+                              onMouseLeave={() => setPopoverQr(-1)}
+                              onClick={() => toggleModal("qrModal", link)}
+                              className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
+                              <MdOutlineQrCode size={20} color="#E93266" />
+                            </button>
+                          </Popover>
+                        </div>
+                        <div>
+                          <Popover
+                            isOpen={popoverShare === index}
+                            body={
+                              <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
+                                Click to share it
+                              </div>
+                            }>
+                            <button
+                              onMouseEnter={() => setPopoverShare(index)}
+                              onMouseLeave={() => setPopoverShare(-1)}
+                              onClick={() => {
+                                handleShare(link.trimzLink);
+                              }}
+                              className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
+                              <LuShare2 size={20} color="#E93266" />
+                            </button>
+                          </Popover>
+                        </div>
+                        <div>
+                          <Popover
+                            isOpen={popoverEdit === index}
+                            body={
+                              <div className="px-4 py-2 text-white rounded-md shadow-xl popover-content bg-bghover">
+                                Click to edit your trimzlink
+                              </div>
+                            }>
+                            <button
+                              onMouseEnter={() => setPopoverEdit(index)}
+                              onMouseLeave={() => setPopoverEdit(-1)}
+                              onClick={() => {
+                                handleUpdate(link.trimzLink, index);
+                              }}
+                              className={`bg-pink px-3 py-3 rounded-full bg-opacity-10 hover:bg-white transition-all duration-500 delay-75 ease-in-out ${
+                                clickedIndex === index ? "animate-spin" : ""
+                              }`}>
+                              {loading && clickedIndex === index ? (
+                                <AiOutlineLoading3Quarters size={20} color="#E93266" />
+                              ) : (
+                                <BiEditAlt size={20} color="#E93266" />
+                              )}
+                            </button>
+                          </Popover>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
         <QrModalTrimzlink
           isOpen={isOpen}

@@ -326,11 +326,11 @@ const Nav = () => {
                       onClick={handleProfileClick}
                       className="relative mt-2 rounded-full shadow-3xl">
                       {userData.image ? (
-                        <img
+                        <Image
                           width={1024}
                           height={1024}
                           src={userData.image}
-                          alt="Profile"
+                          alt="Url Shortener Profile"
                           className="w-[44px] rounded-full border-2 border-primary "
                         />
                       ) : (
@@ -338,7 +338,7 @@ const Nav = () => {
                           width={1024}
                           height={1024}
                           src="/short_logo.png"
-                          alt="Profile"
+                          alt="Link Shortener profile"
                           className="w-[44px] rounded-full border-2 border-primary "
                         />
                       )}
@@ -380,11 +380,11 @@ const Nav = () => {
                       onClick={handleProfileClick}
                       className="relative mt-2 rounded-full shadow-3xl">
                       {userData.image ? (
-                        <img
+                        <Image
                           width={1024}
                           height={1024}
                           src={userData.image}
-                          alt="Profile"
+                          alt="Url Shortener Profile"
                           className="w-[44px] rounded-full border-2 border-primary "
                         />
                       ) : (
@@ -392,7 +392,7 @@ const Nav = () => {
                           width={1024}
                           height={1024}
                           src="/short_logo.png"
-                          alt="Profile"
+                          alt="Link Shortener Profile"
                           className="w-[44px] rounded-full border-2 border-primary "
                         />
                       )}
@@ -614,11 +614,11 @@ const Nav = () => {
                       onClick={handleProfileClick}
                       className="relative mt-2 rounded-full shadow-3xl">
                       {userData.image ? (
-                        <img
+                        <Image
                           width={1024}
                           height={1024}
                           src={userData.image}
-                          alt="Profile"
+                          alt="Url Shortener Profile"
                           className="w-[44px] rounded-full border-2 border-primary "
                         />
                       ) : (
@@ -626,7 +626,7 @@ const Nav = () => {
                           width={1024}
                           height={1024}
                           src="/short_logo.png"
-                          alt="Profile"
+                          alt="Image Shortener Profile"
                           className="w-[44px] rounded-full border-2 border-primary "
                         />
                       )}
@@ -668,11 +668,11 @@ const Nav = () => {
                       onClick={handleProfileClick}
                       className="relative mt-2 rounded-full shadow-3xl">
                       {userData.image ? (
-                        <img
+                        <Image
                           width={1024}
                           height={1024}
                           src={userData.image}
-                          alt="Profile"
+                          alt="Url Shortener Profile"
                           className="w-[44px] rounded-full border-2 border-primary "
                         />
                       ) : (
@@ -680,7 +680,7 @@ const Nav = () => {
                           width={1024}
                           height={1024}
                           src="/short_logo.png"
-                          alt="Profile"
+                          alt="Url Shortener Profile"
                           className="w-[44px] rounded-full border-2 border-primary "
                         />
                       )}

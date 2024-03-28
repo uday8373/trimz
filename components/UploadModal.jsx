@@ -184,7 +184,7 @@ export default function UploadModal({isOpen, setIsOpen, handleUploadedImage}) {
                     ) : null}
                     {croppedImage && (
                       <div className="flex justify-center">
-                        <img src={croppedImage} alt="Cropped" />
+                        <Image src={croppedImage} alt="Cropped Profile" />
                       </div>
                     )}
                   </div>

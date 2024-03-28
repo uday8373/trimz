@@ -44,7 +44,7 @@ export default function RedirectPage() {
             src="/404_page.svg"
             width={0}
             height={0}
-            alt="logo"
+            alt="URL shortener for businesses"
             className="sm:w-[350px]  sm:h-auto w-[250px] object-contain"
           />
           <h1 className="text-black font-sans font-semibold text-[26px] md:[32px]">

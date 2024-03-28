@@ -34,6 +34,7 @@ export const Hero = () => {
   const [isToken, setIsToken] = useState(false);
   const [popoverUrl, setPopoverUrl] = useState(false);
   const [isOpenLogin, setIsOpenLogin] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [baseUrl, setBaseUrl] = useState("");
 
@@ -86,6 +87,8 @@ export const Hero = () => {
         toast.success(data.message);
       } else {
         toast.error(data.message);
+        setErrorMessage(data.message);
+        setTimeout(() => setErrorMessage(""), 5000);
       }
     } catch (error) {
       console.error("Error generating short URL:", error);
@@ -185,6 +188,7 @@ export const Hero = () => {
     setIpAddress("");
     setIsIpAddress(false);
     setShortUrl("");
+    setErrorMessage("");
     localStorage.removeItem("shortUrl");
   };
 
@@ -239,6 +243,11 @@ export const Hero = () => {
                     )}
                   </button>
                 </div>
+                {errorMessage && (
+                  <h1 className="w-full flex text-red-600 font-sans text[16px] xl:ml-5 ml-2 mt-3">
+                    {errorMessage}
+                  </h1>
+                )}
 
                 <div className="flex items-start w-full mt-5">
                   <div className="checkbox path">
@@ -520,9 +529,10 @@ export const Hero = () => {
           <Image
             draggable="false"
             src="/url.svg"
+            priority
             width={600}
             height={600}
-            alt="Picture of the author"
+            alt="Personalized short URLs"
           />
         </div>
         <Modal isOpen={isOpenLogin} setIsOpen={setIsOpenLogin} />

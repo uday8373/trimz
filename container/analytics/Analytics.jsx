@@ -177,7 +177,7 @@ export default function Analytics() {
                   src="/Smart_targeting.png"
                   width={70}
                   height={70}
-                  alt="Picture of the author"
+                  alt="URL shortener with analytics"
                 />
               </div>
               <div className="text-black font-sans font-semibold md:text-[24px] text-[22px] pt-5 pb-4">
@@ -208,7 +208,7 @@ export default function Analytics() {
                   src="/In_depth.png"
                   width={70}
                   height={70}
-                  alt="Picture of the author"
+                  alt="URL shortener with analytics"
                 />
               </div>
               <div className="text-black font-sans font-semibold md:text-[24px] text-[22px] pt-5 pb-4">
@@ -238,7 +238,7 @@ export default function Analytics() {
                   src="/Digital_experience2.png"
                   width={70}
                   height={70}
-                  alt="Picture of the author"
+                  alt="URL shortener with analytics"
                 />
               </div>
               <div className="text-black font-sans font-semibold md:text-[24px] text-[22px] pt-5 pb-4">
@@ -447,6 +447,7 @@ export default function Analytics() {
                                   width={600}
                                   height={600}
                                   className="w-10 h-10"
+                                  alt="URL shortener with analytics"
                                 />
                               )}
                               {url.isDefault === true && (
@@ -456,6 +457,7 @@ export default function Analytics() {
                                   width={600}
                                   height={600}
                                   className="w-10 h-10"
+                                  alt="URL shortener with analytics"
                                 />
                               )}
                               {url.isIpAddress === true && (
@@ -465,6 +467,7 @@ export default function Analytics() {
                                   width={600}
                                   height={600}
                                   className="w-10 h-10"
+                                  alt="URL shortener with analytics"
                                 />
                               )}
                               {url.isOneTime === true && (
@@ -474,6 +477,7 @@ export default function Analytics() {
                                   width={600}
                                   height={600}
                                   className="w-10 h-10"
+                                  alt="URL shortener with analytics"
                                 />
                               )}
                             </div>
@@ -601,6 +605,7 @@ export default function Analytics() {
                                   width={600}
                                   height={600}
                                   className="w-10 h-10"
+                                  alt="URL shortener with analytics"
                                 />
                               )}
                               {url.isDefault === true && (
@@ -610,6 +615,7 @@ export default function Analytics() {
                                   width={600}
                                   height={600}
                                   className="w-10 h-10"
+                                  alt="URL shortener with analytics"
                                 />
                               )}
                               {url.isIpAddress === true && (
@@ -619,6 +625,7 @@ export default function Analytics() {
                                   width={600}
                                   height={600}
                                   className="w-10 h-10"
+                                  alt="URL shortener with analytics"
                                 />
                               )}
                               {url.isOneTime === true && (
@@ -628,6 +635,7 @@ export default function Analytics() {
                                   width={600}
                                   height={600}
                                   className="w-10 h-10"
+                                  alt="URL shortener with analytics"
                                 />
                               )}
                             </div>

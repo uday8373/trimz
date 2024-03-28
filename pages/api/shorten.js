@@ -22,6 +22,14 @@ export default async function handler(req, res) {
     "TrimzMe",
     "Trimz",
   ];
+  const RESERVED_URL = [
+    "trimzMe",
+    "TrimzMe",
+    "https://www.trimz.me/",
+    "https://trimz.me/",
+    "https://trimz.me",
+    "trimz.me",
+  ];
 
   if (req.method === "POST") {
     const {
@@ -51,6 +59,12 @@ export default async function handler(req, res) {
         return res
           .status(201)
           .json({success: false, message: "This custom URL is reserved"});
+      }
+
+      if (RESERVED_URL.some((reservedUrl) => originalUrl.includes(reservedUrl))) {
+        return res
+          .status(201)
+          .json({success: false, message: "Restricted url ! please try different URL."});
       }
 
       const shortUrl = isCustom ? customUrl : shortid.generate().substring(0, 4);

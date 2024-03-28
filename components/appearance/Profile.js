@@ -33,7 +33,7 @@ const Profile = ({
               src={uploadedImage}
               width={150}
               height={150}
-              alt="Profile"
+              alt="Upload Profile"
               className="rounded-full"
             />
           </button>
@@ -48,7 +48,7 @@ const Profile = ({
               src="/defaultUser.jpg"
               width={150}
               height={150}
-              alt="Profile"
+              alt="Upload Profile"
               className="rounded-full"
             />
           </button>

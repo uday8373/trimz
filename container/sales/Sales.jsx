@@ -37,6 +37,7 @@ export default function Sales() {
                   width={600}
                   height={600}
                   className="md:w-[400px] lg:w-[300px] px-8 md:px-0 w-full h-auto rounded-[10px]"
+                  alt="Secure URL shortener"
                 />
               </motion.div>
               <motion.div
@@ -103,6 +104,7 @@ export default function Sales() {
                   width={500}
                   height={500}
                   className="w-10"
+                  alt="Secure URL shortener"
                 />
                 <div className="w-full text-[14px]">
                   <p>Dan Cooper</p>
@@ -139,13 +141,14 @@ export default function Sales() {
                   to analyze it.
                 </div>
                 <div className="flex flex-col gap-3">
-                  <div className="flex items-center gap-3" items-center>
+                  <div className="flex items-center gap-3">
                     <Image
                       draggable="false"
                       src="/thunderbolt.svg"
                       width={500}
                       height={500}
                       className="w-5 h-5"
+                      alt="Secure URL shortener"
                     />
                     <p>Redirection Tools</p>
                   </div>
@@ -156,6 +159,7 @@ export default function Sales() {
                       width={500}
                       height={500}
                       className="w-5 h-5"
+                      alt="Secure URL shortener"
                     />
                     <p>Powerful Statistics</p>
                   </div>
@@ -166,6 +170,7 @@ export default function Sales() {
                       width={500}
                       height={500}
                       className="w-5 h-5"
+                      alt="Secure URL shortener"
                     />
                     <p>Beautiful Profiles</p>
                   </div>
@@ -193,6 +198,7 @@ export default function Sales() {
                   width={600}
                   height={600}
                   className="md:w-[400px] lg:w-[300px] px-8 md:px-0 w-full h-auto rounded-[10px]"
+                  alt="Secure URL shortener"
                 />
               </motion.div>
               <motion.div
@@ -256,6 +262,7 @@ export default function Sales() {
                     width={500}
                     height={500}
                     className="w-10 mr-[-10%] "
+                    alt="Link tracking"
                   />
                   <Image
                     draggable="false"
@@ -263,6 +270,7 @@ export default function Sales() {
                     width={500}
                     height={500}
                     className="w-10 mr-[-10%] "
+                    alt="Link tracking"
                   />
                   <div className="w-10 h-10 bg-white  rounded-full flex justify-center items-center shadow-3xl">
                     <RiLockPasswordLine size={20} color="#2161DF" />
@@ -298,7 +306,7 @@ export default function Sales() {
                   re-targeting. We provide you many powerful tools to reach them better.
                 </div>
                 <div className="flex flex-col gap-3">
-                  <div className="flex items-center gap-3" items-center>
+                  <div className="flex items-center gap-3">
                     <FaLink size={20} color="#2161DF" />
                     <p>Link Management</p>
                   </div>
@@ -334,6 +342,7 @@ export default function Sales() {
                   width={600}
                   height={600}
                   className="md:w-[400px] lg:w-[300px] px-8 md:px-0 w-full h-auto rounded-[10px]"
+                  alt="Link tracking"
                 />
               </motion.div>
               <motion.div
