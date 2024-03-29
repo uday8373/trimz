@@ -15,6 +15,7 @@ import {QrModal} from "../../components/QrModal";
 import {Link as ScrollLink} from "react-scroll";
 import {Modal} from "../../components/LoginModels";
 import {motion} from "framer-motion";
+import {VscClearAll} from "react-icons/vsc";
 
 export const Hero = () => {
   const [originalUrl, setOriginalUrl] = useState("");
@@ -35,12 +36,37 @@ export const Hero = () => {
   const [popoverUrl, setPopoverUrl] = useState(false);
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [error, setError] = useState("");
   const [baseUrl, setBaseUrl] = useState("");
+
+  const validateCustomUrl = (customUrl) => {
+    switch (true) {
+      case customUrl.length >= 1 && customUrl.length < 3:
+        setError("custom URL must be 3 characters or longer");
+        return false;
+      case customUrl.length > 30:
+        setError("custom URL cannot be longer than 30 characters");
+        return false;
+      case !/^[a-zA-Z_-]*$/.test(customUrl):
+        setError("custom URL can only contain letters, hyphens (-), and underscores (_)");
+        return false;
+      default:
+        setError("");
+        return true;
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    if (isCustom) {
+      const isCustomUrlValid = validateCustomUrl(customUrl);
+      if (!isCustomUrlValid) {
+        setLoading(false);
+        return;
+      }
+    }
 
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
@@ -292,6 +318,11 @@ export const Hero = () => {
                     required
                   />
                 )}
+                {error && (
+                  <h1 className="w-full flex text-red-600 font-sans text[16px] xl:ml-5 ml-2 mt-3">
+                    {error}
+                  </h1>
+                )}
                 <div className="flex items-start w-full mt-5">
                   <div className="checkbox path">
                     <input
@@ -511,7 +542,7 @@ export const Hero = () => {
                           <button
                             onClick={handleClear}
                             className="flex flex-row justify-center items-center gap-3 bg-pink  px-5 py-3 rounded-[15px] hover:bg-bghover transition-all duration-500">
-                            <GrPowerReset size={25} color="white" />
+                            <VscClearAll size={25} color="white" />
                             <h1 className="font-sans font-medium text-[18px] text-white hidden md:flex">
                               Clear
                             </h1>

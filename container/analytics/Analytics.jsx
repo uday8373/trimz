@@ -441,44 +441,52 @@ export default function Analytics() {
                           <td className="whitespace-nowrap px-6 py-3">
                             <div className="flex flex-row gap-1">
                               {url.isCustom === true && (
-                                <Image
-                                  draggable="false"
-                                  src="/custom.png"
-                                  width={600}
-                                  height={600}
-                                  className="w-10 h-10"
-                                  alt="URL shortener with analytics"
-                                />
+                                <div className="w-11 h-11 bg-white rounded-full flex justify-center items-center">
+                                  <Image
+                                    draggable="false"
+                                    src="/Customize_Link.svg"
+                                    width={600}
+                                    height={600}
+                                    className="  px-3 py-3"
+                                    alt="URL shortener with analytics"
+                                  />
+                                </div>
                               )}
                               {url.isDefault === true && (
-                                <Image
-                                  draggable="false"
-                                  src="/default.png"
-                                  width={600}
-                                  height={600}
-                                  className="w-10 h-10"
-                                  alt="URL shortener with analytics"
-                                />
+                                <div className="w-11 h-11 bg-white rounded-full flex justify-center items-center">
+                                  <Image
+                                    draggable="false"
+                                    src="/default_link.svg"
+                                    width={600}
+                                    height={600}
+                                    className="  px-3 py-3"
+                                    alt="URL shortener with analytics"
+                                  />
+                                </div>
                               )}
                               {url.isIpAddress === true && (
-                                <Image
-                                  draggable="false"
-                                  src="/ip.png"
-                                  width={600}
-                                  height={600}
-                                  className="w-10 h-10"
-                                  alt="URL shortener with analytics"
-                                />
+                                <div className="w-11 h-11 bg-white rounded-full flex justify-center items-center">
+                                  <Image
+                                    draggable="false"
+                                    src="/IP_Protected.svg"
+                                    width={600}
+                                    height={600}
+                                    className=" px-3 py-3"
+                                    alt="URL shortener with analytics"
+                                  />
+                                </div>
                               )}
                               {url.isOneTime === true && (
-                                <Image
-                                  draggable="false"
-                                  src="/onetime.png"
-                                  width={600}
-                                  height={600}
-                                  className="w-10 h-10"
-                                  alt="URL shortener with analytics"
-                                />
+                                <div className="w-11 h-11 bg-white rounded-full flex justify-center items-center">
+                                  <Image
+                                    draggable="false"
+                                    src="/OnetimeLink.svg"
+                                    width={600}
+                                    height={600}
+                                    className=" px-3 py-3"
+                                    alt="URL shortener with analytics"
+                                  />
+                                </div>
                               )}
                             </div>
                           </td>
@@ -599,44 +607,54 @@ export default function Analytics() {
                           <td className="whitespace-nowrap px-6 py-3">
                             <div className="flex flex-row gap-1">
                               {url.isCustom === true && (
-                                <Image
-                                  draggable="false"
-                                  src="/custom.png"
-                                  width={600}
-                                  height={600}
-                                  className="w-10 h-10"
-                                  alt="URL shortener with analytics"
-                                />
+                                <div className="w-11 h-11 bg-white rounded-full flex justify-center items-center">
+                                  <Image
+                                    draggable="false"
+                                    src="/Customize_Link.svg"
+                                    width={600}
+                                    height={600}
+                                    className="px-3 py-3"
+                                    alt="URL shortener with analytics"
+                                  />
+                                </div>
                               )}
                               {url.isDefault === true && (
-                                <Image
-                                  draggable="false"
-                                  src="/default.png"
-                                  width={600}
-                                  height={600}
-                                  className="w-10 h-10"
-                                  alt="URL shortener with analytics"
-                                />
+                                <div className="w-11 h-11 bg-white rounded-full flex justify-center items-center">
+                                  <Image
+                                    draggable="false"
+                                    src="/default_link.svg"
+                                    width={600}
+                                    height={600}
+                                    className="px-3 py-3"
+                                    alt="URL shortener with analytics"
+                                  />
+                                </div>
                               )}
+
                               {url.isIpAddress === true && (
-                                <Image
-                                  draggable="false"
-                                  src="/ip.png"
-                                  width={600}
-                                  height={600}
-                                  className="w-10 h-10"
-                                  alt="URL shortener with analytics"
-                                />
+                                <div className="w-11 h-11 bg-white rounded-full flex justify-center items-center">
+                                  <Image
+                                    draggable="false"
+                                    src="/IP_Protected.svg"
+                                    width={600}
+                                    height={600}
+                                    className="px-3 py-3"
+                                    alt="URL shortener with analytics"
+                                  />
+                                </div>
                               )}
+
                               {url.isOneTime === true && (
-                                <Image
-                                  draggable="false"
-                                  src="/onetime.png"
-                                  width={600}
-                                  height={600}
-                                  className="w-10 h-10"
-                                  alt="URL shortener with analytics"
-                                />
+                                <div className="w-11 h-11 bg-white rounded-full flex justify-center items-center">
+                                  <Image
+                                    draggable="false"
+                                    src="/OnetimeLink.svg"
+                                    width={600}
+                                    height={600}
+                                    className="px-3 py-3"
+                                    alt="URL shortener with analytics"
+                                  />
+                                </div>
                               )}
                             </div>
                           </td>

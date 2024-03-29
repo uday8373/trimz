@@ -1,3 +1,4 @@
+"use client";
 import React, {useState} from "react";
 import {Dialog} from "@headlessui/react";
 import {motion} from "framer-motion";
@@ -5,6 +6,7 @@ import {RxCross2} from "react-icons/rx";
 import {GoUpload} from "react-icons/go";
 import AvatarEditor from "react-avatar-editor";
 import {toast} from "react-toastify";
+import Image from "next/image";
 
 export default function UploadModal({isOpen, setIsOpen, handleUploadedImage}) {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -26,7 +28,7 @@ export default function UploadModal({isOpen, setIsOpen, handleUploadedImage}) {
 
   const handleCrop = () => {
     if (editorRef) {
-      const canvasScaled = editorRef.getImageScaledToCanvas().toDataURL("image/jpeg", 1);
+      const canvasScaled = editorRef.getImageScaledToCanvas().toDataURL("image/png", 1);
       setCroppedImage(canvasScaled);
       setShowEditor(false);
     }
@@ -184,7 +186,12 @@ export default function UploadModal({isOpen, setIsOpen, handleUploadedImage}) {
                     ) : null}
                     {croppedImage && (
                       <div className="flex justify-center">
-                        <Image src={croppedImage} alt="Cropped Profile" />
+                        <Image
+                          width={500}
+                          height={500}
+                          src={croppedImage}
+                          alt="Cropped Profile"
+                        />
                       </div>
                     )}
                   </div>

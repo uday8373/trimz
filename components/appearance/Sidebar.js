@@ -14,7 +14,7 @@ const Sidebar = ({
   return (
     <div className="w-full xl:flex hidden xl:w-[30%] h-screen bg-transparent items-center justify-end">
       <div
-        className={`mobile fixed w-[262px] h-[512px] bg-[${background}] rounded-[30px] border-[10px] border-black overflow-y-auto`}>
+        className={`mobile shadow-2xl  fixed w-[262px] h-[512px] bg-[${background}] rounded-[30px] border-[10px] border-black overflow-y-auto`}>
         <div className="w-full flex flex-col justify-center mt-10">
           {uploadedImage ? (
             <div className="flex items-center justify-center">
@@ -31,7 +31,7 @@ const Sidebar = ({
             <div className="flex items-center justify-center">
               <Image
                 draggable="false"
-                src="/defaultUser.jpg"
+                src="/short_logo.png"
                 width={75}
                 height={75}
                 alt="Link shortener"

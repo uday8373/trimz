@@ -1,3 +1,4 @@
+"use client";
 import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import UploadModal from "../../components/UploadModal";
@@ -201,9 +202,13 @@ export default function Appearance() {
             <div className="w-full flex xl:w-[70%] bg-transparent xl:border-r-2 border-lightGray border-dotted">
               <div className="flex xl:py-14 py-5 flex-col w-full xl:pr-28">
                 <div className="w-full flex justify-between ">
-                  <h1 className="text-black font-sans text-[24px] font-semibold">
+                  <button
+                    onClick={() => {
+                      router.push("/trimzlink");
+                    }}
+                    className="text-black font-sans text-[24px] font-semibold">
                     TrimzLink
-                  </h1>
+                  </button>
                   <button
                     onClick={() => {
                       router.push("/trimzlink");

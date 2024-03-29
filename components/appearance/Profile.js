@@ -45,11 +45,11 @@ const Profile = ({
             className="flex items-center justify-center">
             <Image
               draggable="false"
-              src="/defaultUser.jpg"
+              src="/short_logo.png"
               width={150}
               height={150}
               alt="Upload Profile"
-              className="rounded-full"
+              className="rounded-full border-2 border-lightGray"
             />
           </button>
         )}
@@ -80,11 +80,11 @@ const Profile = ({
             setHeading(e.target.value);
           }}
           placeholder="Enter your profile name"
-          className="px-6 xl:py-5 py-4 bg-[#F6F7F5] w-full rounded-[15px]"
+          className="px-6 xl:py-5 py-4 bg-[#F6F7F5] w-full rounded-[15px] text-black"
         />
       </div>
       <h1 className="mt-5 text-black font-sans text-[16px] font-medium">Bio</h1>
-      <div className="w-full flex mt-2 pb-8 border-b-2 border-lightGray border-dotted flex-col gap-5">
+      <div className="w-full flex mt-2 pb-8 border-b-2 text-black border-lightGray border-dotted flex-col gap-5">
         <textarea
           value={subHeading}
           onChange={(e) => {
@@ -92,7 +92,7 @@ const Profile = ({
           }}
           rows="3"
           placeholder="Enter your bio"
-          className="px-6 xl:py-5 py-4 bg-[#F6F7F5] w-full rounded-[15px] "
+          className="px-6 xl:py-5 py-4 bg-[#F6F7F5] w-full rounded-[15px] text-black"
         />
         {platformLinks.map((selectedLink, index) => (
           <div

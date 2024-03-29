@@ -150,7 +150,7 @@ export default function TrimzLinks() {
               <div className="flex items-center justify-center">
                 <Image
                   draggable="false"
-                  src="/defaultUser.jpg"
+                  src="/short_logo.png"
                   width={100}
                   height={100}
                   alt="URL shortener for businesses"

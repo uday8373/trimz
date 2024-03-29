@@ -26,7 +26,11 @@ export default function MyTrimzlink() {
   const [clickedIndex, setClickedIndex] = useState(-1);
 
   useEffect(() => {
-    fetchData();
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetchData();
+    }
+
     const fetchUrl = window?.location.href;
     const modifiedUrl = fetchUrl.replace(/www\./, "");
     const perfectUrl = modifiedUrl.split("/trimzlink")[0];
@@ -109,7 +113,7 @@ export default function MyTrimzlink() {
             My Trimzlinks
           </h1>
 
-          {!data ? (
+          {data.length === 0 ? (
             <div
               initial={{y: 50, opacity: 0}}
               whileInView={{
@@ -134,7 +138,7 @@ export default function MyTrimzlink() {
                 duration={300}
                 className="text-pink font-semibold font-sans underline underline-offset-2 pr-2 cursor-pointer">
                 Create Trimzlink
-              </ScrollLink>{" "}
+              </ScrollLink>
               to see your history
             </div>
           ) : (

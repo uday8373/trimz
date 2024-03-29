@@ -191,7 +191,7 @@ export default function LinkModels({isOpen, setIsOpen, addPlatformLink}) {
                   <div className={`flex flex-col items-center justify-center px-8 py-5 `}>
                     {platform ? (
                       <>
-                        <div className="w-full flex flex-row items-center bg-[#F6F7F5] gap-3 px-4 rounded-[10px] border-2 border-[#F6F7F5] hover:border-lightGray duration-500 delay-75 transition-all">
+                        <div className="w-full flex flex-row text-black items-center bg-[#F6F7F5] gap-3 px-4 rounded-[10px] border-2 border-[#F6F7F5] hover:border-lightGray duration-500 delay-75 transition-all">
                           <input
                             id={platform}
                             onChange={(e) => setLink(e.target.value)}
@@ -199,7 +199,7 @@ export default function LinkModels({isOpen, setIsOpen, addPlatformLink}) {
                             type="text"
                             pattern={platform.validationPattern}
                             title={platform.validationMessage}
-                            className="w-full bg-transparent py-3 outline-none"
+                            className="w-full bg-transparent py-3 outline-none text-black"
                           />
                         </div>
                         {linkError && (
@@ -214,7 +214,7 @@ export default function LinkModels({isOpen, setIsOpen, addPlatformLink}) {
                       </>
                     ) : (
                       <>
-                        <div className="w-full flex flex-row items-center bg-[#F6F7F5] gap-3 px-4 rounded-[10px] border-2 border-[#F6F7F5] hover:border-lightGray duration-500 delay-75 transition-all">
+                        <div className="w-full flex flex-row items-center text-black bg-[#F6F7F5] gap-3 px-4 rounded-[10px] border-2 border-[#F6F7F5] hover:border-lightGray duration-500 delay-75 transition-all">
                           <label htmlFor="search" className="cursor-text">
                             <LuSearch size={25} />
                           </label>
@@ -224,7 +224,7 @@ export default function LinkModels({isOpen, setIsOpen, addPlatformLink}) {
                             type="search"
                             value={searchQuery}
                             onChange={handleSearchInputChange}
-                            className="w-full bg-transparent py-3 outline-none"
+                            className="w-full bg-transparent py-3 outline-none text-black"
                           />
                         </div>
                         <div className="w-full flex h-[250px] mt-3 flex-col overflow-y-auto">

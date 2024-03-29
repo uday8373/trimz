@@ -16,16 +16,30 @@ const Hero = () => {
   const [isOpenLogin, setIsOpenLogin] = useState(false);
 
   useEffect(() => {
-    if (name.length > 2) {
-      const timeOut = setTimeout(() => {
-        fetchLinkTree();
-      }, 1000);
-      return () => {
-        clearTimeout(timeOut);
-      };
-    } else if (name.length > 1) {
-      setIsAvailable(false);
-      setError("Usernames must be 3 characters or longer");
+    switch (true) {
+      case name.length >= 1 && name.length < 3:
+        setIsAvailable(false);
+        setError("Usernames must be 3 characters or longer");
+        break;
+      case name.length > 30:
+        setIsAvailable(false);
+        setError("Usernames cannot be longer than 30 characters");
+        break;
+      case !/^[a-zA-Z_-]*$/.test(name):
+        setIsAvailable(false);
+        setError("Usernames can only contain letters, hyphens (-), and underscores (_)");
+        break;
+      case name.length > 2 && name.length < 30:
+        setError("");
+        const timeOut = setTimeout(() => {
+          fetchLinkTree();
+        }, 1000);
+        return () => {
+          clearTimeout(timeOut);
+        };
+
+      default:
+        break;
     }
   }, [name]);
 
@@ -130,21 +144,7 @@ const Hero = () => {
             <UsernameInput
               value={name}
               onChange={(e) => {
-                const value = e.target.value;
-                if (/\s/.test(value)) {
-                  setError("Spaces are not allowed in usernames");
-                  setIsAvailable(false);
-                } else if (value.length <= 30) {
-                  setName(value);
-                  if (value.length > 2) {
-                    setError("");
-                  } else {
-                    setIsAvailable(false);
-                  }
-                } else {
-                  setIsAvailable(false);
-                  setError("Usernames cannot be longer than 30 characters");
-                }
+                setName(e.target.value);
               }}
               isAvailable={isAvailable}
               isLoading={isLoading}

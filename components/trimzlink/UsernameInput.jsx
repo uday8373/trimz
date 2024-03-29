@@ -16,7 +16,7 @@ const UsernameInput = ({value, onChange, isAvailable, isLoading, handleContinue}
           value={value}
           onChange={onChange}
           placeholder="username"
-          className="w-full placeholder-[#637887] font-sans font-medium md:text-[18px] text-[14px] relative focus:outline-none"
+          className="w-full placeholder-[#637887] font-sans text-black font-medium md:text-[18px] text-[14px] relative focus:outline-none"
           required
         />
       </div>

@@ -151,7 +151,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
           onClose={setIsOpen}
           as="div"
           className="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto bg-black/25">
-          <div className="flex flex-col h-full px-8 pt-5 overflow-hidden text-center lg:pt-10 lg:pb-8 md:pt-14 md:pb-8 ">
+          <div className="flex flex-col h-full md:px-8 pt-5 overflow-hidden text-center lg:pt-10 lg:pb-8 md:pt-14 md:pb-8 ">
             <Dialog.Overlay />
 
             <button
@@ -162,7 +162,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
             </button>
 
             <motion.div
-              className="flex items-center justify-center min-h-screen px-4 md:pb-0 text-center sm:block sm:p-0 "
+              className="flex items-center justify-center min-h-screen md:px-4 md:pb-0 text-center sm:block sm:p-0 "
               initial={{
                 opacity: 0,
                 scale: 0.75,
@@ -194,7 +194,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
                 aria-modal="true"
                 aria-labelledby="modal-headline">
                 <div className="md:w-[400px] w-full h-auto ">
-                  <div className="relative flex w-full px-4 py-4 border-b border-dashed border-opacity-70 border-lightGray ">
+                  <div className="relative flex w-full md:px-4 py-4 border-b border-dashed border-opacity-70 border-lightGray ">
                     <div className="flex items-center justify-center w-full ">
                       <p className="font-sans text-2xl font-semibold text-gray ">
                         {isSignUp ? "Sign Up" : "Sign In"}
@@ -253,7 +253,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
                               onChange={(e) => setName(e.target.value)}
                               type="text"
                               placeholder="Name"
-                              className="w-full h-12  rounded-l-[10px] pl-5  outline-none bg-white"
+                              className="w-full h-12  rounded-l-[10px] pl-5 text-black outline-none bg-white"
                             />
                           </div>
                           <div className="flex items-center justify-center w-1/5  rounded-r-[10px] bg-white">
@@ -268,7 +268,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
                             onChange={(e) => setEmail(e.target.value)}
                             type="email"
                             placeholder="Email"
-                            className="w-full h-12  rounded-l-[10px] pl-5  outline-none bg-white"
+                            className="w-full h-12  rounded-l-[10px] pl-5 text-black outline-none bg-white"
                           />
                         </div>
                         <div className="flex items-center justify-center w-1/5  rounded-r-[10px] bg-white">
@@ -283,7 +283,7 @@ export const Modal = ({isOpen, setIsOpen}) => {
                             onChange={(e) => setPassword(e.target.value)}
                             type={!isVisible ? "password" : "text"}
                             placeholder="Password"
-                            className="w-full h-12  rounded-l-[10px] pl-5  outline-none bg-white"
+                            className="w-full h-12  rounded-l-[10px] pl-5 text-black outline-none bg-white"
                           />
                         </div>
                         <div
