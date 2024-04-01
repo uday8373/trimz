@@ -3,6 +3,7 @@ import {RiInstagramFill} from "react-icons/ri";
 import {FaFacebookSquare} from "react-icons/fa";
 import {Link as ScrollLink} from "react-scroll";
 import {motion} from "framer-motion";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -71,7 +72,7 @@ export default function Footer() {
               }}
               viewport={{once: true}}
               className=" gap-5 flex">
-              <a
+              <Link
                 href="https://www.instagram.com/erexstudio?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                 target="_blank">
                 <RiInstagramFill
@@ -79,8 +80,8 @@ export default function Footer() {
                   color="#fff"
                   className="hover:scale-125 transition-all duration-500 delay-75 ease-in-out"
                 />
-              </a>
-              <a
+              </Link>
+              <Link
                 href="https://www.facebook.com/erexstudio/?show_switched_toast=0&show_invite_to_follow=0&show_switched_tooltip=0&show_podcast_settings=0&show_community_review_changes=0&show_community_rollback=0&show_follower_visibility_disclosure=0"
                 target="_blank">
                 <FaFacebookSquare
@@ -88,7 +89,7 @@ export default function Footer() {
                   color="#fff"
                   className="hover:scale-125 transition-all duration-500 delay-75 ease-in-out"
                 />
-              </a>
+              </Link>
             </motion.div>
           </div>
           <div className="w-full bg-white h-[1.5px] xl:hidden flex"></div>
@@ -111,12 +112,12 @@ export default function Footer() {
             </h1>
             <h1 className="md:text-[16px] text-[14px] text-white font-sans text-left">
               Developed by{" "}
-              <a
+              <Link
                 href="https://erex.in/"
                 target="_blank"
                 className="underline underline-offset-2">
                 Erex Studio
-              </a>
+              </Link>
             </h1>
           </div>
         </div>

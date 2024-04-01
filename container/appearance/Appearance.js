@@ -204,14 +204,14 @@ export default function Appearance() {
                 <div className="w-full flex justify-between ">
                   <button
                     onClick={() => {
-                      router.push("/trimzlink");
+                      router.back();
                     }}
                     className="text-black font-sans text-[24px] font-semibold">
                     TrimzLink
                   </button>
                   <button
                     onClick={() => {
-                      router.push("/trimzlink");
+                      router.back();
                     }}
                     className="font-sans font-semibold bg-pink text-white text-[16px] py-2 px-5 rounded-[10px] hover:bg-bghover transition-all duration-500 delay-75">
                     Back

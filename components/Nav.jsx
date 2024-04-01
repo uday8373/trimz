@@ -25,8 +25,9 @@ const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isToken, setIsToken] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -75,6 +76,9 @@ const Nav = () => {
       fetchUser();
     } else {
       setIsToken(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
     return () => {
       localStorage.removeItem("active");
@@ -99,6 +103,10 @@ const Nav = () => {
       }
     } catch (error) {
       console.error("Error signing in:", error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
   };
 
@@ -154,8 +162,8 @@ const Nav = () => {
                 }}>
                 <img
                   src="/Trimz_Logo.png"
-                  width={1024}
-                  height={1024}
+                  // width={1024}
+                  // height={1024}
                   alt="logo"
                   className="sm:w-[160px]  sm:h-auto w-[110px] object-contain"
                 />
@@ -262,8 +270,8 @@ const Nav = () => {
             }}>
             <img
               src="/Trimz_Logo.png"
-              width={1024}
-              height={1024}
+              // width={1024}
+              // height={1024}
               alt="logo"
               className="sm:w-[160px]  sm:h-auto w-[110px] object-contain"
             />
@@ -304,112 +312,124 @@ const Nav = () => {
                 })}
               </>
             )}
-            <div>
-              {!isToken ? (
-                <button
-                  onClick={() => setIsOpen(!isOpen)}
-                  className="relative mt-2 flex h-[44px] rounded-[100px] w-32 items-center justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-pink  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
-                  <span className="relative z-10 font-roboto text-[16px]">Sign In</span>
-                </button>
-              ) : (
-                <div className="relative">
+            {loading ? (
+              <div className="flex w-full justify-end items-center">
+                <div className="w-10 rounded-full h-10 animate-pulse bg-slate-300"></div>
+              </div>
+            ) : (
+              <div>
+                {!userData ? (
                   <button
-                    onClick={handleProfileClick}
-                    className="relative mt-2 rounded-full shadow-3xl">
-                    {userData.image ? (
-                      <img
-                        width={1024}
-                        height={1024}
-                        src={userData.image}
-                        alt="Url Shortener Profile"
-                        className="w-[44px] rounded-full border-2 border-primary "
-                      />
-                    ) : (
-                      <img
-                        width={1024}
-                        height={1024}
-                        src="/short_logo.png"
-                        alt="Image Shortener Profile"
-                        className="w-[44px] rounded-full border-2 border-primary "
-                      />
-                    )}
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="relative mt-2 flex h-[44px] rounded-[100px] w-32 items-center justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-pink  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
+                    <span className="relative z-10 font-roboto text-[16px]">Sign In</span>
                   </button>
-                  {showDropdown && (
-                    <div className="absolute top-16 right-0 bg-bghero rounded-md shadow-3xl px-5 py-5">
-                      <div className="flex items-center gap-3 py-2">
-                        <FiAtSign size={20} /> <p>{userData.name}</p>
-                      </div>
-                      <div className="flex items-center gap-3 pt-2 pb-4 border-b-2 border-dotted border-lightGray">
-                        <CgMail size={20} /> <p>{userData.email}</p>
-                      </div>
+                ) : (
+                  <div className="relative">
+                    <button
+                      onClick={handleProfileClick}
+                      className="relative mt-2 rounded-full shadow-3xl">
+                      {userData.image ? (
+                        <img
+                          // width={1024}
+                          // height={1024}
+                          src={userData.image}
+                          alt="Url Shortener Profile"
+                          className="w-[44px] rounded-full border-2 border-primary "
+                        />
+                      ) : (
+                        <img
+                          // width={1024}
+                          // height={1024}
+                          src="/short_logo.png"
+                          alt="Url Shortener Profile"
+                          className="w-[44px] rounded-full border-2 border-primary "
+                        />
+                      )}
+                    </button>
+                    {showDropdown && (
+                      <div className="absolute top-16 right-0 bg-bghero rounded-md shadow-3xl px-5 py-5">
+                        <div className="flex items-center gap-3 py-2">
+                          <FiAtSign size={20} /> <p>{userData.name}</p>
+                        </div>
+                        <div className="flex items-center gap-3 pt-2 pb-4 border-b-2 border-dotted border-lightGray">
+                          <CgMail size={20} /> <p>{userData.email}</p>
+                        </div>
 
-                      <button
-                        onClick={handleLogout}
-                        className="flex w-full px-5 py-2 items-center gap-3 bg-primary text-white justify-center rounded-md mt-5 hover:bg-black duration-500 delay-75 transition-all">
-                        <FiLogOut size={20} />
-                        <p>Logout</p>
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+                        <button
+                          onClick={handleLogout}
+                          className="flex w-full px-5 py-2 items-center gap-3 bg-primary text-white justify-center rounded-md mt-5 hover:bg-black duration-500 delay-75 transition-all">
+                          <FiLogOut size={20} />
+                          <p>Logout</p>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* mobile */}
           <div className="flex items-center justify-end flex-1 w-screen py-2 xl:py-0 xl:hidden">
-            <div>
-              {!isToken ? (
-                <button
-                  onClick={() => setIsOpen(!isOpen)}
-                  className="relative mt-2 flex h-[44px] rounded-[100px] w-32 items-center justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-pink  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
-                  <span className="relative z-10 font-roboto text-[16px]">Sign In</span>
-                </button>
-              ) : (
-                <div className="relative">
+            {loading ? (
+              <div className="flex w-full  justify-end items-center">
+                <div className="w-11 rounded-full h-11 animate-pulse bg-slate-300 "></div>
+              </div>
+            ) : (
+              <div>
+                {!userData ? (
                   <button
-                    onClick={handleProfileClick}
-                    className="relative mt-2 rounded-full shadow-3xl">
-                    {userData.image ? (
-                      <img
-                        width={1024}
-                        height={1024}
-                        src={userData.image}
-                        alt="Url Shortener Profile"
-                        className="w-[44px] rounded-full border-2 border-primary "
-                      />
-                    ) : (
-                      <img
-                        width={1024}
-                        height={1024}
-                        src="/short_logo.png"
-                        alt="Url Shortener Profile"
-                        className="w-[44px] rounded-full border-2 border-primary "
-                      />
-                    )}
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="relative mt-2 flex h-[44px] rounded-[100px] w-32 items-center justify-center overflow-hidden bg-gray-800 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full bg-pink  before:bg-bghover before:duration-500 before:ease-out hover:shadow-bghover hover:before:h-56 hover:before:w-56">
+                    <span className="relative z-10 font-roboto text-[16px]">Sign In</span>
                   </button>
-                  {showDropdown && (
-                    <div className="absolute top-16 right-0 bg-bghero rounded-md shadow-3xl px-5 py-5">
-                      <div className="flex items-center gap-3 py-2">
-                        <FiAtSign size={20} /> <p>{userData.name}</p>
-                      </div>
-                      <div className="flex items-center gap-3 pt-2 pb-4 border-b-2 border-dotted border-lightGray">
-                        <CgMail size={20} /> <p>{userData.email}</p>
-                      </div>
+                ) : (
+                  <div className="relative">
+                    <button
+                      onClick={handleProfileClick}
+                      className="relative mt-2 rounded-full shadow-3xl">
+                      {userData.image ? (
+                        <img
+                          // width={1024}
+                          // height={1024}
+                          src={userData.image}
+                          alt="Url Shortener Profile"
+                          className="w-[44px] rounded-full border-2 border-primary "
+                        />
+                      ) : (
+                        <img
+                          // width={1024}
+                          // height={1024}
+                          src="/short_logo.png"
+                          alt="Url Shortener Profile"
+                          className="w-[44px] rounded-full border-2 border-primary "
+                        />
+                      )}
+                    </button>
+                    {showDropdown && (
+                      <div className="absolute top-16 right-0 bg-bghero rounded-md shadow-3xl px-5 py-5">
+                        <div className="flex items-center gap-3 py-2">
+                          <FiAtSign size={20} /> <p>{userData.name}</p>
+                        </div>
+                        <div className="flex items-center gap-3 pt-2 pb-4 border-b-2 border-dotted border-lightGray">
+                          <CgMail size={20} /> <p>{userData.email}</p>
+                        </div>
 
-                      <button
-                        onClick={handleLogout}
-                        className="flex w-full px-5 py-2 items-center gap-3 bg-primary text-white justify-center rounded-md mt-5 hover:bg-black duration-500 delay-75 transition-all">
-                        <FiLogOut size={20} />
-                        <p>Logout</p>
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
+                        <button
+                          onClick={handleLogout}
+                          className="flex w-full px-5 py-2 items-center gap-3 bg-primary text-white justify-center rounded-md mt-5 hover:bg-black duration-500 delay-75 transition-all">
+                          <FiLogOut size={20} />
+                          <p>Logout</p>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
 
-              <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
-            </div>
+            <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
           </div>
         </div>
       </nav>

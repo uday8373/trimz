@@ -8,7 +8,6 @@ import {IoListSharp} from "react-icons/io5";
 import {LuCopy, LuCopyCheck} from "react-icons/lu";
 import {ThreeDots} from "react-loader-spinner";
 import {MdOutlineQrCode} from "react-icons/md";
-import {GrPowerReset} from "react-icons/gr";
 import {IoMdShare} from "react-icons/io";
 import Popover from "react-popover";
 import {QrModal} from "../../components/QrModal";
@@ -218,6 +217,12 @@ export const Hero = () => {
     localStorage.removeItem("shortUrl");
   };
 
+  const handleCustomUrlChange = (e) => {
+    const value = e.target.value;
+    setCustomUrl(value);
+    validateCustomUrl(value);
+  };
+
   return (
     <section
       id="home"
@@ -312,7 +317,7 @@ export const Hero = () => {
                     type="text"
                     value={customUrl}
                     maxlength="10"
-                    onChange={(e) => setCustomUrl(e.target.value)}
+                    onChange={handleCustomUrlChange}
                     className="bg-white drop-shadow-sm mt-3 font-medium text-black text-[16px] placeholder-gray-[#637887] w-full  px-8 py-3 rounded-[100px] focus:outline-none"
                     placeholder="/example"
                     required

@@ -402,22 +402,22 @@ export default function Analytics() {
                                     Click to redirect
                                   </div>
                                 }>
-                                <a
+                                <Link
                                   href={`${baseUrl}${url.shortUrl}`}
                                   target="_blank"
                                   onMouseEnter={() => setPopoverRedirect(index)}
                                   onMouseLeave={() => setPopoverRedirect(-1)}
                                   className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
                                   <RiShareForwardLine size={20} color="#E93266" />
-                                </a>
+                                </Link>
                               </Popover>
                             </div>
                           </td>
                           <td className="whitespace-nowrap px-6 py-3 font-medium  ">
                             <div className="flex flex-row gap-3 items-center">
                               <p>
-                                {url.originalUrl.length > 30
-                                  ? `${url.originalUrl.substring(0, 30)}...`
+                                {url.originalUrl.length > 20
+                                  ? `${url.originalUrl.substring(0, 20)}...`
                                   : url.originalUrl}
                               </p>
                               <div>
@@ -569,22 +569,22 @@ export default function Analytics() {
                                     Click to redirect
                                   </div>
                                 }>
-                                <a
+                                <Link
                                   href={`${baseUrl}${url.shortUrl}`}
                                   target="_blank"
                                   onMouseEnter={() => setPopoverRedirect(index)}
                                   onMouseLeave={() => setPopoverRedirect(-1)}
                                   className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
                                   <RiShareForwardLine size={20} color="#E93266" />
-                                </a>
+                                </Link>
                               </Popover>
                             </div>
                           </td>
                           <td className="whitespace-nowrap px-6 py-3 font-medium  ">
                             <div className="flex flex-row gap-3">
                               <p>
-                                {url.originalUrl.length > 30
-                                  ? `${url.originalUrl.substring(0, 30)}...`
+                                {url.originalUrl.length > 20
+                                  ? `${url.originalUrl.substring(0, 20)}...`
                                   : url.originalUrl}
                               </p>
                               <div>

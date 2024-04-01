@@ -10,6 +10,7 @@ import {QrModalTrimzlink} from "../../components/QrModalTrimzlink";
 import {useRouter} from "next/router";
 import {AiOutlineLoading3Quarters} from "react-icons/ai";
 import {Link as ScrollLink} from "react-scroll";
+import Link from "next/link";
 
 export default function MyTrimzlink() {
   const router = useRouter();
@@ -190,7 +191,7 @@ export default function MyTrimzlink() {
                                 Click to redirect
                               </div>
                             }>
-                            <a
+                            <Link
                               href={`${baseUrl}/profile/${link.trimzLink}`}
                               target="_blank">
                               <button
@@ -199,7 +200,7 @@ export default function MyTrimzlink() {
                                 className="bg-pink px-3 py-3 rounded-full bg-opacity-10  hover:bg-white  transition-all duration-500 delay-75 ease-in-out">
                                 <IoMdOpen size={20} color="#E93266" />
                               </button>
-                            </a>
+                            </Link>
                           </Popover>
                         </div>
                         <div>

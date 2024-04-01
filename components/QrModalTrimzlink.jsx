@@ -4,6 +4,7 @@ import {motion, AnimatePresence} from "framer-motion";
 import {RxCross2} from "react-icons/rx";
 import QRCode from "qrcode-generator";
 import Image from "next/image";
+import Link from "next/link";
 
 export const QrModalTrimzlink = ({isOpen, setIsOpen, BaseUrl, selectedItem}) => {
   const [qrCodeData, setQRCodeData] = useState(null);
@@ -105,12 +106,12 @@ export const QrModalTrimzlink = ({isOpen, setIsOpen, BaseUrl, selectedItem}) => 
                         className="w-40 lg:w-56"
                       />
                     </div>
-                    <a
+                    <Link
                       href={qrCodeData}
                       download="qrcode.png"
                       className=" flex bg-primary justify-center items-center mt-5 mb-2 px-10 py-3 text-white rounded-[100px] text-[18px] font-medium hover:bg-bghover transition-all duration-500">
                       Download
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

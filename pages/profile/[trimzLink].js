@@ -7,6 +7,7 @@ import {FiInstagram} from "react-icons/fi";
 import {TfiEmail} from "react-icons/tfi";
 import {BsThreads} from "react-icons/bs";
 import {FaSquareFacebook} from "react-icons/fa6";
+import Link from "next/link";
 
 import {
   RiYoutubeLine,
@@ -173,10 +174,10 @@ export default function TrimzLinks() {
                     target="_blank"
                     key={index}
                     className={`w-full flex flex-row items-center bg-transparent justify-between px-5 rounded-[10px] shadow-3xl hover:-translate-y-0.5 transition-all duration-500 delay-75 ease-in-out`}>
-                    <a href={selectedLink.link} target="_blank" className="w-[10%]">
+                    <Link href={selectedLink.link} target="_blank" className="w-[10%]">
                       {renderSocialIcon(selectedLink.title)}
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href={
                         selectedLink.title === "Email"
                           ? `mailto:${selectedLink.link}`
@@ -185,7 +186,7 @@ export default function TrimzLinks() {
                       target="_blank"
                       className=" text-black  font-sans font-medium text-[16px] bg-transparent py-4 outline-none w-[80%] justify-center flex">
                       {selectedLink.title}
-                    </a>
+                    </Link>
                     <button
                       onClick={() => {
                         handleShare(selectedLink.link);
