@@ -16,6 +16,7 @@ import {Link as ScrollLink} from "react-scroll";
 import {GraphModal} from "../../components/GraphModal";
 import {RiShareForwardLine} from "react-icons/ri";
 import {motion} from "framer-motion";
+import Link from "next/link";
 
 export default function Analytics() {
   const [urlData, setUrlData] = useState([]);
