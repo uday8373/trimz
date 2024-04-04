@@ -6,7 +6,7 @@ import {Link as ScrollLink} from "react-scroll";
 import {RxCross2} from "react-icons/rx";
 import {CgMenuRightAlt} from "react-icons/cg";
 import Image from "next/image";
-import {menuSilde} from "../constants";
+import {menuSilde} from "../constants/farmer_motion";
 import {useRouter} from "next/navigation";
 import {Modal} from "./LoginModels";
 import {FiAtSign} from "react-icons/fi";

@@ -164,9 +164,11 @@ export default function TrimzLinks() {
               <h1 className="text-black font-sans font-semibold md:text-[20px] text-[16px] flex text-center">
                 {heading}
               </h1>
-              <h1 className="text-black font-sans font-medium md:text-[16px] text-[14px] flex text-center w-full">
-                {subHeading}
-              </h1>
+              <div className="flex justify-center items-center">
+                <h1 className="text-black font-sans font-medium md:text-[16px] text-[14px] flex text-center w-full">
+                  {subHeading}
+                </h1>
+              </div>
               <div className="w-full flex flex-col justify-center items-center my-5 gap-3 md:px-16">
                 {platformLinks.map((selectedLink, index) => (
                   <div

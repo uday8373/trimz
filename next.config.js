@@ -2,7 +2,13 @@
 
 module.exports = {
   images: {
-    domains: ["lh3.googleusercontent.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "**",
+      },
+    ],
   },
   async redirects() {
     return [

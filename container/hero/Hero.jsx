@@ -36,6 +36,7 @@ export const Hero = () => {
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [error, setError] = useState("");
+  const [iperror, setIpError] = useState("");
   const [baseUrl, setBaseUrl] = useState("");
 
   const validateCustomUrl = (customUrl) => {
@@ -55,6 +56,12 @@ export const Hero = () => {
     }
   };
 
+  const validateIpAddress = (ipAddress) => {
+    const ipv4Regex =
+      /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    return ipv4Regex.test(ipAddress);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -65,6 +72,11 @@ export const Hero = () => {
         setLoading(false);
         return;
       }
+    }
+    if (isIpAddress && !validateIpAddress(ipAddress)) {
+      setIpError("Invalid IPv4 address");
+      setLoading(false);
+      return;
     }
 
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
@@ -397,10 +409,26 @@ export const Hero = () => {
                     type="text"
                     value={ipAddress}
                     onChange={(e) => setIpAddress(e.target.value)}
+                    onBlur={() => {
+                      if (
+                        isIpAddress &&
+                        ipAddress.trim() !== "" &&
+                        !validateIpAddress(ipAddress)
+                      ) {
+                        setIpError("Invalid IPv4 address");
+                      } else {
+                        setIpError("");
+                      }
+                    }}
                     className="bg-white mt-3 drop-shadow-sm text-black font-medium text-[16px] rounded-[100px] placeholder-gray-[#637887] w-full  px-8 py-3 focus:outline-none"
                     placeholder="xx.xx.xx.xx"
                     required
                   />
+                )}
+                {iperror && (
+                  <h1 className="w-full flex text-red-600 font-sans text[16px] xl:ml-5 ml-2 mt-3">
+                    {iperror}
+                  </h1>
                 )}
 
                 <button

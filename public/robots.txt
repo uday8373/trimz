@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.trimz.me
+
+# Sitemaps
+Sitemap: https://www.trimz.me/sitemap.xml

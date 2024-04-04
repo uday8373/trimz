@@ -73,10 +73,10 @@ export const menuSilde = {
   },
   enter: {
     y: "0%",
-    transition: { duration: 0.8, ease: [0.65, 0, 0.35, 1] },
+    transition: {duration: 0.8, ease: [0.65, 0, 0.35, 1]},
   },
   exit: {
     y: "-100%",
-    transition: { duration: 0.8, ease: [0.65, 0, 0.35, 1], delay: 0.3 },
+    transition: {duration: 0.8, ease: [0.65, 0, 0.35, 1], delay: 0.3},
   },
 };
